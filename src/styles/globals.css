@@ -10,6 +10,49 @@
   font-family: "Roboto", sans-serif;
 }
 
+.search__wrapper{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  max-width: 1070px;
+  margin: 0 auto;
+  /* margin-left: 950px; */
+  height: 100%;
+}
+
+.search__input{
+  height: 40px;
+  width: 100%;
+  max-width: 340px;
+  padding: 0 16px;
+  outline: none;
+  background-color: #f1f6f4;
+  color: #042330;
+  border: 2px solid #e1e7ea;
+  border-radius: 8px;
+  margin-top: 28px;
+  margin-left: 710px;
+}
+
+.row{
+  max-width: 1070px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.for-you-title{
+  font-size: 22px;
+  font-weight: 700;
+  color: #032b41;
+  margin-bottom: 16px;
+}
+.hoverAnimation{
+  @apply  hover:bg-black hover:bg-opacity-5 xl:p-3 cursor-pointer
+}
+
 body {
   max-width: 100%;
   overflow-x: hidden;
