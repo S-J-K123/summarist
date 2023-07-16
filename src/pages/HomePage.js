@@ -4,11 +4,25 @@ import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 import React, { useState, useEffect } from "react";
 import { Modal } from "@mui/material";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
-  const handleClose =() => setIsOpen(false)
-  const handleOpen =() => setIsOpen(true)
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("")
+
+  
+  
+  async function handleSignUp() {
+    const userCredientials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  }
 
   return (
     <div>
@@ -18,7 +32,9 @@ export default function HomePage() {
             <img className="nav__img" src="assets/logo.png" alt="" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li className="nav__list nav__list--login">Login</li>
+            <li onClick={handleOpen} className="nav__list nav__list--login">
+              Login
+            </li>
             <li className="nav__list nav__list--mobile">About</li>
             <li className="nav__list nav__list--mobile">Contact</li>
             <li className="nav__list nav__list--mobile">Help</li>
@@ -41,9 +57,13 @@ export default function HomePage() {
                   <br className="remove--tablet" />
                   and even people who don’t like to read.
                 </div>
-                <Modal className="flex justify-center items-center" open={isOpen} onClose={handleClose}>
+                <Modal
+                  className="flex justify-center items-center"
+                  open={isOpen}
+                  onClose={handleClose}
+                >
                   <div
-                    className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[65%]
+                    className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
             flex justify-center ml-10 "
                   >
                     <div className="w-full mt-8 flex flex-col">
@@ -62,7 +82,7 @@ export default function HomePage() {
                       <h1 className="text-center mt-2 text-black text-lg mb-2">
                         or
                       </h1>
-                      
+
                       <input
                         placeholder="Email Address"
                         className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"
@@ -79,15 +99,18 @@ export default function HomePage() {
                       <p className="text-[#116BE9] flex justify-center mt-6">
                         Forgot your password?
                       </p>
+
                       <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-                        <button className="text-[#116BE9] flex justify-center mb-1 w-full">
+                        <p onClick={handleSignUp} className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2">
                           Don't have an account?
-                        </button>
+                        </p>
                       </div>
                     </div>
                   </div>
                 </Modal>
-                <button onClick={handleOpen} className="btn home__cta--btn">Login</button>
+                <button onClick={handleOpen} className="btn home__cta--btn">
+                  Login
+                </button>
               </div>
               <figure className="landing__image--mask">
                 <img src="assets/landing.png" alt="" />
