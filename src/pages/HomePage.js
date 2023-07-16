@@ -2,20 +2,18 @@ import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
+import { auth } from "firebase/auth";
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const handleOpen = () => setIsOpen(true);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
 
-  
-  
   async function handleSignUp() {
     const userCredientials = await createUserWithEmailAndPassword(
       auth,
@@ -101,7 +99,10 @@ export default function HomePage() {
                       </p>
 
                       <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-                        <p onClick={handleSignUp} className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2">
+                        <p
+                          onClick={handleSignUp}
+                          className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
+                        >
                           Don't have an account?
                         </p>
                       </div>
