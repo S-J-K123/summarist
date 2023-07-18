@@ -15,8 +15,6 @@ export default function ForYou() {
     getSelectedBooks();
   }, []);
 
-
-  
   return (
     <div>
       <SideBar />
@@ -32,9 +30,38 @@ export default function ForYou() {
         <div>
           <h1 className="for-you-title">Selected just for you</h1>
         </div>
-        {selected.map((selected) => {
-          return <p>{selected?.author}</p>;
-        })}
+        <div className="selected-book-container">
+          {selected.map((selected) => {
+            return (
+              <div key={selected.id}>
+                <div className="w-[40%] color-[#032b41]">
+                  <p className=" color-[#032b41]; width-[40%]">
+                    {selected.subTitle}
+                  </p>
+                </div>
+                <div className="book-details">
+                      <img
+                    className="w-[165px]"
+                    src={selected.imageLink}
+                    alt="Book Cover"
+                  />
+                  <p className="font-bold color-[#032b41] mb-[8px]">
+                    {selected.title}
+                  </p>
+                  <div>
+                      <p>{selected.author}</p>
+                     </div>
+                
+
+              
+                  {/* <audio controls>
+                    <source src={selected.audioLink} type="audio/mpeg" />
+                  </audio> */}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -8,12 +8,12 @@ import Reset from "@component/components/modals/Reset"
 export default function Home() {
   return (
 <div>
-{/* <HomePage/> */}
+<HomePage/>
 {/* <LoginModal/> */}
 {/* <SideBar/> */}
 {/* <ForYou/> */}
 {/* <SignUpModal/> */}
-<Reset/>
+{/* <Reset/> */}
     </div>
   )
 }
