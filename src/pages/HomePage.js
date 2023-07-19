@@ -7,14 +7,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSignUpModal, openSignUpModal } from "@component/redux/ModalSlice";
 import { useState } from "react";
-import { getAuth } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
-import { auth } from "firebase/auth";
+import { auth } from "../../firebase"
+
 
 
 
 export default function HomePage() {
-const auth = getAuth()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
