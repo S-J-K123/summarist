@@ -5,7 +5,7 @@ import { RiLeafLine } from "react-icons/ri";
 import { Modal } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSignUpModal, openSignUpModal } from "@component/redux/ModalSlice";
+import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal } from "@component/redux/ModalSlice";
 import { useState } from "react";
 import { auth } from "../../firebase"
 
@@ -17,12 +17,12 @@ export default function HomePage() {
   const [password, setPassword] = useState("");
 
 
-const isOpen =  useSelector(state => state.modals.signUpModalOpen)
+const isOpen =  useSelector(state => state.modals.loginModalOpen)
 const dispatch = useDispatch()
 console.log(isOpen)
 
 
-  
+  // this needs to be changed, this is needed for creating account
   async function handleSignUp() {
     const userCredientials = await createUserWithEmailAndPassword(
       auth,
@@ -39,7 +39,7 @@ console.log(isOpen)
             <img className="nav__img" src="assets/logo.png" alt="" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li onClick={() => dispatch(openSignUpModal())} className="nav__list nav__list--login">
+            <li onClick={() => dispatch(openLoginModal())} className="nav__list nav__list--login">
               Login
             </li>
             <li className="nav__list nav__list--mobile">About</li>
@@ -67,7 +67,7 @@ console.log(isOpen)
                 <Modal
                   className="flex justify-center items-center"
                   open={isOpen}
-                  onClose={() => dispatch(closeSignUpModal())}
+                  onClose={() => dispatch(closeLoginModal())}
                 >
                   <div
                     className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
@@ -109,8 +109,8 @@ console.log(isOpen)
                         Forgot your password?
                       </p>
 
-                      <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-                        <p
+                      <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5 cursor-pointer">
+                        <p onClick={() =>dispatch(openSignUpModal())}
                           className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
                         >
                           Don't have an account?
@@ -119,7 +119,7 @@ console.log(isOpen)
                     </div>
                   </div>
                 </Modal>
-                <button onClick={() => dispatch(openSignUpModal())} className="btn home__cta--btn">
+                <button onClick={() => dispatch(openLoginModal())} className="btn home__cta--btn">
                   Login
                 </button>
               </div>
