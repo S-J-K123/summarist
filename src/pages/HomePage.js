@@ -9,13 +9,12 @@ import { closeSignUpModal, openSignUpModal } from "@component/redux/ModalSlice";
 import { useState } from "react";
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
-
+import { auth } from "firebase/auth";
 
 
 
 export default function HomePage() {
-  const app = initializeApp(firebaseConfig);
-const auth = getAuth(auth)
+const auth = getAuth()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
