@@ -2,19 +2,30 @@ import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
-import React, { useState } from "react";
 import { Modal } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSignUpModal, openSignUpModal } from "@component/redux/ModalSlice";
+import { useState } from "react";
+import { getAuth } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+
+
 
 
 export default function HomePage() {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => setIsOpen(false);
-  const handleOpen = () => setIsOpen(true);
+  const app = initializeApp(firebaseConfig);
+const auth = getAuth(auth)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+
+const isOpen =  useSelector(state => state.modals.signUpModalOpen)
+const dispatch = useDispatch()
+console.log(isOpen)
+
+
+  
   async function handleSignUp() {
     const userCredientials = await createUserWithEmailAndPassword(
       auth,
@@ -31,7 +42,7 @@ export default function HomePage() {
             <img className="nav__img" src="assets/logo.png" alt="" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li onClick={handleOpen} className="nav__list nav__list--login">
+            <li onClick={() => dispatch(openSignUpModal())} className="nav__list nav__list--login">
               Login
             </li>
             <li className="nav__list nav__list--mobile">About</li>
@@ -59,7 +70,7 @@ export default function HomePage() {
                 <Modal
                   className="flex justify-center items-center"
                   open={isOpen}
-                  onClose={handleClose}
+                  onClose={() => dispatch(closeSignUpModal())}
                 >
                   <div
                     className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
@@ -86,13 +97,15 @@ export default function HomePage() {
                         placeholder="Email Address"
                         className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"
                         type={"email"}
+                        onChange={e => setEmail(e.target.value)}
                       />
                       <input
                         placeholder="Password"
                         className="h-10 rounded-md p-4 mt-7 w-[80%] m-auto border border-black"
                         type={"password"}
+                        onChange={e => setPassword(e.target.value)}
                       />
-                      <button className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
+                      <button onClick={handleSignUp} className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
                         Login
                       </button>
                       <p className="text-[#116BE9] flex justify-center mt-6">
@@ -101,7 +114,6 @@ export default function HomePage() {
 
                       <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
                         <p
-                          onClick={handleSignUp}
                           className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
                         >
                           Don't have an account?
@@ -110,7 +122,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </Modal>
-                <button onClick={handleOpen} className="btn home__cta--btn">
+                <button onClick={() => dispatch(openSignUpModal())} className="btn home__cta--btn">
                   Login
                 </button>
               </div>
