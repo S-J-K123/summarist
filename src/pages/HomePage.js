@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal } from "@component/redux/ModalSlice";
 import { useState } from "react";
 import { auth } from "../../firebase"
+import SignUpModal from "@component/components/modals/SignUpModal";
 
 
 
@@ -110,7 +111,7 @@ console.log(isOpen)
                       </p>
 
                       <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5 cursor-pointer">
-                        <p onClick={() =>dispatch(openSignUpModal())}
+                        <p onClick={<SignUpModal/>}
                           className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
                         >
                           Don't have an account?
