@@ -1,4 +1,4 @@
-import { closeSignUpModal, openSignUpModal } from "@component/redux/ModalSlice";
+import { closeSignUpModal, openSignUpModal, toggleSignUpModal } from "@component/redux/ModalSlice";
 import { Modal } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +10,13 @@ export default function () {
 
   return (
     <div>
-        <div onClick={() => dispatch(openSignUpModal())} className="text-[#116BE9]">
+        <div onClick={() => dispatch(toggleSignUpModal())} className="text-[#116BE9]">
         Don't have an account?
       </div>
       <Modal
         className="flex justify-center items-center"
         open={isOpen}
-        onClose={() => dispatch(closeSignUpModal())}
+        onClose={() => dispatch(toggleSignUpModal())}
       >
         <div
           className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[54%]

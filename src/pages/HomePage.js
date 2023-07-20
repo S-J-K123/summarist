@@ -5,7 +5,7 @@ import { RiLeafLine } from "react-icons/ri";
 import { Modal } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal } from "@component/redux/ModalSlice";
+import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal, toggleLoginModal } from "@component/redux/ModalSlice";
 import { useState } from "react";
 import { auth } from "../../firebase"
 import SignUpModal from "@component/components/modals/SignUpModal";
@@ -28,13 +28,13 @@ console.log(isOpen)
   // Function to handle the opening of SignUpModal
   const handleOpenSignUpModal = () => {
     setIsSignUpOpen(true);
-    dispatch(closeLoginModal()); // Close the loginModal
+    dispatch(toggleLoginModal()); // Close the loginModal
   };
 
   // Function to handle the closing of SignUpModal
   const handleCloseSignUpModal = () => {
     setIsSignUpOpen(false);
-    dispatch(openLoginModal()); // Open the loginModal
+    dispatch(toggleLoginModal()); // Open the loginModal
   };
 
   // this needs to be changed, this is needed for creating account

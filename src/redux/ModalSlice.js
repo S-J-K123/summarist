@@ -10,27 +10,20 @@ const ModalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    openLoginModal: (state) => {
-      state.loginModalOpen = true;
-    },
-    closeLoginModal: (state) => {
-        state.loginModalOpen = false;
-      },
-      openSignUpModal: (state) => {
-        state.signUpModalOpen = true;
-      },
-      closeSignUpModal: (state) => {
-          state.signUpModalOpen = false;
-        },
-        openResetModal: (state) => {
-          state.resetModalOpen = true;
-        },
-        closeResetModal: (state) => {
-            state.resetModalOpen = false;
-          },
+   toggleLoginModal: (state) => {
+state.loginModalOpen = !state.loginModalOpen
+   },
+   toggleSignUpModal: (state) => {
+    state.signUpModalOpen = !state.signUpModalOpen
+       },
+       toggleResetModal: (state) => {
+        state.resetModalOpen = !state.resetModalOpen
+           },
+      
+  
   },
 });
 
-export const {openSignUpModal, closeSignUpModal, openLoginModal, closeLoginModal, openResetModal, closeResetModal} = ModalSlice.actions;
+export const {toggleLoginModal, toggleSignUpModal, toggleResetModal} = ModalSlice.actions;
 
 export default ModalSlice.reducer;

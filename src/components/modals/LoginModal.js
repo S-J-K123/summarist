@@ -1,3 +1,8 @@
+import ResetModal from "./ResetModal";
+import SignUpModal from "./SignUpModal";
+
+
+
 export default function LoginModal() {
     return (
       <div>
@@ -31,17 +36,8 @@ export default function LoginModal() {
             <button className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
               Login
             </button>
-            <p className="text-[#116BE9] flex justify-center mt-6">
-              Forgot your password?
-            </p>
-  
-            <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-              <p
-                className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
-              >
-                Don't have an account?
-              </p>
-            </div>
+      <ResetModal/>
+      <SignUpModal/>
           </div>
         </div>
       </div>

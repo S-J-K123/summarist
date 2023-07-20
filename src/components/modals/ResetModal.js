@@ -1,4 +1,4 @@
-import { closeResetModal, openResetModal } from "@component/redux/ModalSlice";
+import { closeResetModal, openResetModal, toggleResetModal } from "@component/redux/ModalSlice";
 import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,7 +9,7 @@ export default function ResetModal() {
   return (
     <div>
       <div
-        onClick={() => dispatch(openResetModal())}
+        onClick={() => dispatch(toggleResetModal())}
         className="text-[#116BE9] cursor-pointer"
       >
         Reset your password
