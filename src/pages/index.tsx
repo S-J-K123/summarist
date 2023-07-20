@@ -3,7 +3,7 @@ import LoginModal from "@component/components/modals/LoginModal"
 import SideBar from "../components/SideBar"
 import ForYou from "../pages/ForYou"
 import SignUpModal from "@component/components/modals/SignUpModal"
-import Reset from "@component/components/modals/Reset"
+import Reset from "@component/components/modals/ResetModal"
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
 {/* <SideBar/> */}
 {/* <ForYou/> */}
 {/* <SignUpModal/> */}
-{/* <Reset/> */}
+{/* <ResetModal/> */}
     </div>
   )
 }

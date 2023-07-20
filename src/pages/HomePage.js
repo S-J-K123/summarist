@@ -9,6 +9,7 @@ import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal } fr
 import { useState } from "react";
 import { auth } from "../../firebase"
 import SignUpModal from "@component/components/modals/SignUpModal";
+import ResetModal from "@component/components/modals/ResetModal";
 
 
 
@@ -106,16 +107,12 @@ console.log(isOpen)
                       <button onClick={handleSignUp} className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
                         Login
                       </button>
-                      <p className="text-[#116BE9] flex justify-center mt-6">
-                        Forgot your password?
+                      <p className="text-[#116BE9] flex justify-center mt-6 cursor-pointer">
+                        <ResetModal/>
                       </p>
 
                       <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5 cursor-pointer">
-                        <p onClick={<SignUpModal/>}
-                          className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2"
-                        >
-                          Don't have an account?
-                        </p>
+                     <SignUpModal/>
                       </div>
                     </div>
                   </div>
