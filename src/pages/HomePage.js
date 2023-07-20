@@ -17,12 +17,25 @@ import ResetModal from "@component/components/modals/ResetModal";
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
 
 const isOpen =  useSelector(state => state.modals.loginModalOpen)
 const dispatch = useDispatch()
 console.log(isOpen)
 
+
+  // Function to handle the opening of SignUpModal
+  const handleOpenSignUpModal = () => {
+    setIsSignUpOpen(true);
+    dispatch(closeLoginModal()); // Close the loginModal
+  };
+
+  // Function to handle the closing of SignUpModal
+  const handleCloseSignUpModal = () => {
+    setIsSignUpOpen(false);
+    dispatch(openLoginModal()); // Open the loginModal
+  };
 
   // this needs to be changed, this is needed for creating account
   async function handleSignUp() {
@@ -41,7 +54,7 @@ console.log(isOpen)
             <img className="nav__img" src="assets/logo.png" alt="" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li onClick={() => dispatch(openLoginModal())} className="nav__list nav__list--login">
+            <li onClick={handleOpenSignUpModal} className="nav__list nav__list--login">
               Login
             </li>
             <li className="nav__list nav__list--mobile">About</li>
@@ -68,8 +81,8 @@ console.log(isOpen)
                 </div>
                 <Modal
                   className="flex justify-center items-center"
-                  open={isOpen}
-                  onClose={() => dispatch(closeLoginModal())}
+                  open={isSignUpOpen}
+                  onClose={handleCloseSignUpModal}
                 >
                   <div
                     className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
@@ -117,7 +130,7 @@ console.log(isOpen)
                     </div>
                   </div>
                 </Modal>
-                <button onClick={() => dispatch(openLoginModal())} className="btn home__cta--btn">
+                <button onClick={handleOpenSignUpModal} className="btn home__cta--btn">
                   Login
                 </button>
               </div>
