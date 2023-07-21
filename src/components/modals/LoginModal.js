@@ -1,12 +1,38 @@
+import { useDispatch, useSelector } from "react-redux";
 import ResetModal from "./ResetModal";
 import SignUpModal from "./SignUpModal";
+import { Modal } from "@mui/material";
+import { toggleLoginModal } from "@component/redux/ModalSlice";
+
+
 
 
 
 export default function LoginModal() {
+
+
+
+  const isLoginUpModal = useSelector((state) => state.modals.LoginModalOpen);
+  const dispatch = useDispatch()
+
+function hideLoginModal() {
+  setEmail("");
+  setPassword("");
+  dispatch(toggleLoginModal());
+  dispatch(toggleSignUpModal());
+}
+
     return (
       <div>
-        <div
+         <div onClick={hideLoginModal} className="text-[#116BE9]">
+       login
+      </div>
+        <Modal
+        open={isLoginUpModal}
+        onClose={() => dispatch(toggleLoginModal)}
+        is
+        className="flex justify-center items-center">
+               <div
           className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
               flex justify-center ml-10 "
         >
@@ -40,6 +66,8 @@ export default function LoginModal() {
       <SignUpModal/>
           </div>
         </div>
+        </Modal>
+   
       </div>
     );
   }

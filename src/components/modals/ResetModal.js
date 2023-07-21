@@ -1,22 +1,33 @@
-import { closeResetModal, openResetModal, toggleResetModal } from "@component/redux/ModalSlice";
+import { closeResetModal, openResetModal, toggleLoginModal, toggleResetModal, toggleSignUpModal } from "@component/redux/ModalSlice";
 import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function ResetModal() {
-  const isOpen = useSelector((state) => state.modals.ResetModalOpen);
+  const [email, setEmail] = useState("")
+  const isResetModal = useSelector((state) => state.modals.ResetModalOpen);
   const dispatch = useDispatch();
-  console.log(isOpen);
+
+
+
+  function hideLoginModal() {
+    setEmail("");
+    dispatch(toggleLoginModal());
+    dispatch(toggleSignUpModal());
+  }
+
+
   return (
     <div>
       <div
-        onClick={() => dispatch(toggleResetModal())}
+        onClick={hideLoginModal}
         className="text-[#116BE9] cursor-pointer"
       >
         Reset your password
       </div>
       <Modal
         className="flex justify-center items-center"
-        open={isOpen}
+        open={isResetModal}
         onClose={() => dispatch(closeResetModal())}
       >
         <div

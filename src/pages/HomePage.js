@@ -5,25 +5,27 @@ import { RiLeafLine } from "react-icons/ri";
 import { Modal } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLoginModal, closeSignUpModal, openLoginModal, openSignUpModal, toggleLoginModal } from "@component/redux/ModalSlice";
+import {
+  closeLoginModal,
+  closeSignUpModal,
+  openLoginModal,
+  openSignUpModal,
+  toggleLoginModal,
+} from "@component/redux/ModalSlice";
 import { useState } from "react";
-import { auth } from "../../firebase"
+import { auth } from "../../firebase";
 import SignUpModal from "@component/components/modals/SignUpModal";
 import ResetModal from "@component/components/modals/ResetModal";
-
-
-
+import LoginModal from "@component/components/modals/LoginModal";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
-
-const isOpen =  useSelector(state => state.modals.loginModalOpen)
-const dispatch = useDispatch()
-console.log(isOpen)
-
+  const isOpen = useSelector((state) => state.modals.loginModalOpen);
+  const dispatch = useDispatch();
+  console.log(isOpen);
 
   // Function to handle the opening of SignUpModal
   const handleOpenSignUpModal = () => {
@@ -54,7 +56,10 @@ console.log(isOpen)
             <img className="nav__img" src="assets/logo.png" alt="" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li onClick={handleOpenSignUpModal} className="nav__list nav__list--login">
+            <li
+              onClick={handleOpenSignUpModal}
+              className="nav__list nav__list--login"
+            >
               Login
             </li>
             <li className="nav__list nav__list--mobile">About</li>
@@ -79,7 +84,12 @@ console.log(isOpen)
                   <br className="remove--tablet" />
                   and even people who don’t like to read.
                 </div>
-                <Modal
+               <div className="display-none">
+                <LoginModal/>
+                <SignUpModal/>
+                <ResetModal/>
+               </div>
+                {/* <Modal
                   className="flex justify-center items-center"
                   open={isSignUpOpen}
                   onClose={handleCloseSignUpModal}
@@ -129,8 +139,11 @@ console.log(isOpen)
                       </div>
                     </div>
                   </div>
-                </Modal>
-                <button onClick={handleOpenSignUpModal} className="btn home__cta--btn">
+                </Modal> */}
+                <button
+                  onClick={handleOpenSignUpModal}
+                  className="btn home__cta--btn"
+                >
                   Login
                 </button>
               </div>

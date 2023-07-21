@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function ForYou() {
   const [selected, setSelected] = useState([]);
+  const [recommended, setRecommended] = useState([]);
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -13,6 +14,16 @@ export default function ForYou() {
       setSelected(data);
     }
     getSelectedBooks();
+  }, []);
+
+  useEffect(() => {
+    async function getRecommendedBooks() {
+      const { data } = await axios.get(
+        "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=recommended"
+      );
+      setRecommended(data);
+    }
+    getRecommendedBooks();
   }, []);
 
   return (
@@ -31,55 +42,77 @@ export default function ForYou() {
           <h1 className="for-you-title">Selected just for you</h1>
         </div>
         <div className="selected-book-container">
-          {selected.map((selected) => {
-            return (
-              <div key={selected.id}>
-                <div className="w-[40%] color-[#032b41]">
-                  <p className=" color-[#032b41]; width-[40%]">
-                    {selected.subTitle}
-                  </p>
+          {selected.map((selected) => (
+            <>
+              <div className="w-[40%] color-[#032b41]">
+                <p>{selected.subTitle}</p>
+              </div>
+              <div className="book-details flex flex-row">
+                <img
+                  className="w-[165px]"
+                  src={selected.imageLink}
+                  alt="Book Cover"
+                />
+                <p className="font-bold color-[#032b41] mb-[8px]">
+                  {selected.title}
+                </p>
+                <div>
+                  <p>{selected.author}</p>
                 </div>
-                <div className="book-details">
-                      <img
-                    className="w-[165px]"
-                    src={selected.imageLink}
-                    alt="Book Cover"
-                  />
-                  <p className="font-bold color-[#032b41] mb-[8px]">
-                    {selected.title}
-                  </p>
-                  <div>
-                      <p>{selected.author}</p>
-                     </div>
-                
 
-              
-                  {/* <audio controls>
+                {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
                   </audio> */}
+              </div>
+            </>
+          ))}
+        </div>
+
+        <div>
+          <h1 className="for-you-title">Recommended For You</h1>
+          <p>We think you'll like this</p>
+        </div>
+        <div className="books-container flex">
+          {recommended.map((recommended) => {
+            return (
+              <div className="">
+                <div className="user-list">
+                  <div className="user">
+                    <div className="user-card hoverAnimation">
+                      <div className="user-card__container flex justify-center flex-col items-center">
+                        <img
+                          className="w-[100%] mb-2 mt-6"
+                          src={recommended.imageLink}
+                          alt="Book Cover"
+                        />
+                        <div className="book-details-container">
+                          <div>
+                            {" "}
+                            <p className="book-title">{recommended.title}</p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p className="book-author">{recommended.author}</p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p className="book-subtitle">
+                              {recommended.subTitle}
+                            </p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p>{recommended.averageRating}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
-
-        {/* <div class="container">
-    <div class="row">
-      <div class="user-list">
-        <div class="user">
-          <div class="user-card">
-            <div class="user-card__container">
-              <h3>User's Name</h4>
-                <p><b>Email:</b> email@email.com</p>
-                <p><b>Phone:</b> 0000000000</p>
-                <p><b>Website:</b> <a href="https://website.website" target="_blank">website.website</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> */}
-
       </div>
     </div>
   );
