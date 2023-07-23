@@ -39,14 +39,9 @@ export default function HomePage() {
     dispatch(toggleLoginModal()); // Open the loginModal
   };
 
-  // this needs to be changed, this is needed for creating account
-  async function handleSignUp() {
-    const userCredientials = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-  }
+
+  const username = useSelector(state => state.user.username)
+console.log(username)
 
   return (
     <div>

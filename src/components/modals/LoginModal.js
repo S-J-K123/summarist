@@ -12,7 +12,7 @@ export default function LoginModal() {
 
 
 
-  const isLoginUpModal = useSelector((state) => state.modals.LoginModalOpen);
+  const isLoginUpModal = useSelector((state) => state.modals.loginModalOpen);
   const dispatch = useDispatch()
 
 function hideLoginModal() {
@@ -29,7 +29,7 @@ function hideLoginModal() {
       </div>
         <Modal
         open={isLoginUpModal}
-        onClose={() => dispatch(toggleLoginModal)}
+        onClose={() => dispatch(toggleLoginModal())}
         is
         className="flex justify-center items-center">
                <div

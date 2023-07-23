@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function ResetModal() {
   const [email, setEmail] = useState("")
-  const isResetModal = useSelector((state) => state.modals.ResetModalOpen);
+  const isResetModal = useSelector((state) => state.modals.resetModalOpen);
   const dispatch = useDispatch();
 
 
@@ -13,7 +13,7 @@ export default function ResetModal() {
   function hideLoginModal() {
     setEmail("");
     dispatch(toggleLoginModal());
-    dispatch(toggleSignUpModal());
+    dispatch(toggleResetModal());
   }
 
 
@@ -21,17 +21,17 @@ export default function ResetModal() {
     <div>
       <div
         onClick={hideLoginModal}
-        className="text-[#116BE9] cursor-pointer"
+        className="text-[#116BE9] cursor-pointer flex justify-center mt-6 "
       >
         Reset your password
       </div>
       <Modal
         className="flex justify-center items-center"
         open={isResetModal}
-        onClose={() => dispatch(closeResetModal())}
+        onClose={() => dispatch(toggleResetModal())}
       >
         <div
-          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
+          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[35%]
             flex justify-center ml-10 "
         >
           <div className="w-full mt-8 flex flex-col">
@@ -44,7 +44,7 @@ export default function ResetModal() {
               className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"
               type={"email"}
             />
-            <button className="bg-[#2BD97C] text-black font-bold p-2 mt-4 w-[80%] m-auto">
+            <button className="bg-[#2BD97C] text-black p-2 w-[80%] m-auto">
               Send reset password link
             </button>
 

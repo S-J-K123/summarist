@@ -5,6 +5,10 @@ import axios from "axios";
 export default function ForYou() {
   const [selected, setSelected] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  const [suggested, setSuggested] = useState([])
+
+
+
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -16,6 +20,9 @@ export default function ForYou() {
     getSelectedBooks();
   }, []);
 
+
+
+
   useEffect(() => {
     async function getRecommendedBooks() {
       const { data } = await axios.get(
@@ -25,6 +32,22 @@ export default function ForYou() {
     }
     getRecommendedBooks();
   }, []);
+
+
+
+
+  useEffect(() => {
+  async function getSuggestedBooks() {
+  const { data } = await axios.get(
+    "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
+  )
+  setSuggested(data)
+}
+getSuggestedBooks()
+  }, [])
+
+
+
 
   return (
     <div>
@@ -53,12 +76,18 @@ export default function ForYou() {
                   src={selected.imageLink}
                   alt="Book Cover"
                 />
-                <p className="font-bold color-[#032b41] mb-[8px]">
+                <div className="book-obj-wrapper">
+                     <div>
+                    <p className="font-bold color-[#032b41] mb-[8px]">
                   {selected.title}
                 </p>
+                </div>
+              
                 <div>
                   <p>{selected.author}</p>
                 </div>
+                </div>
+             
 
                 {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
@@ -113,6 +142,56 @@ export default function ForYou() {
             );
           })}
         </div>
+
+
+
+        <div>
+          <h1 className="for-you-title">Recommended For You</h1>
+          <p>Browse those books</p>
+        </div>
+        <div className="books-container flex">
+          {suggested.map((suggested) => {
+            return (
+              <div className="">
+                <div className="user-list">
+                  <div className="user">
+                    <div className="user-card hoverAnimation">
+                      <div className="user-card__container flex justify-center flex-col items-center">
+                        <img
+                          className="w-[100%] mb-2 mt-6"
+                          src={suggested.imageLink}
+                          alt="Book Cover"
+                        />
+                        <div className="book-details-container">
+                          <div>
+                            {" "}
+                            <p className="book-title">{suggested.title}</p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p className="book-author">{suggested.author}</p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p className="book-subtitle">
+                              {suggested.subTitle}
+                            </p>
+                          </div>
+                          <div>
+                            {" "}
+                            <p>{suggested.averageRating}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+
       </div>
     </div>
   );
