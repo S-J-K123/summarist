@@ -81,7 +81,7 @@ console.log(username)
                 </div>
                <div className="display-none">
                 <LoginModal/>
-                <SignUpModal/>
+               {! username && <SignUpModal/>}
                 <ResetModal/>
                </div>
                 {/* <Modal
