@@ -90,12 +90,12 @@ dispatch(
             </button>
 
             <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-              <p
+              <div onClick={hideLoginModal}
                 
                 className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2 cursor-pointer"
               >
                 Already have an account?
-              </p>
+              </div>
             </div>
           </div>
         </div>

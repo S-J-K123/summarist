@@ -1,14 +1,12 @@
 import SideBar from "@component/components/SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BsFillPlayCircleFill } from "react-icons/bs";
 
 export default function ForYou() {
   const [selected, setSelected] = useState([]);
   const [recommended, setRecommended] = useState([]);
-  const [suggested, setSuggested] = useState([])
-
-
-
+  const [suggested, setSuggested] = useState([]);
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -20,9 +18,6 @@ export default function ForYou() {
     getSelectedBooks();
   }, []);
 
-
-
-
   useEffect(() => {
     async function getRecommendedBooks() {
       const { data } = await axios.get(
@@ -33,27 +28,22 @@ export default function ForYou() {
     getRecommendedBooks();
   }, []);
 
-
-
-
   useEffect(() => {
-  async function getSuggestedBooks() {
-  const { data } = await axios.get(
-    "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
-  )
-  setSuggested(data)
-}
-getSuggestedBooks()
-  }, [])
-
-
-
+    async function getSuggestedBooks() {
+      const { data } = await axios.get(
+        "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
+      );
+      setSuggested(data);
+    }
+    getSuggestedBooks();
+  }, []);
 
   return (
     <div>
       <SideBar />
       <div className="row">
-        <div className="search__wrapper">
+        <div className="whole-container ml-[90px]">
+           <div className="search__wrapper">
           <input
             className="search__input"
             type="text"
@@ -67,27 +57,33 @@ getSuggestedBooks()
         <div className="selected-book-container">
           {selected.map((selected) => (
             <>
-              <div className="w-[40%] color-[#032b41]">
+              <div className="w-[37%] color-[#032b41]">
                 <p>{selected.subTitle}</p>
               </div>
+              <div className="selected-book-line"></div>
               <div className="book-details flex flex-row">
                 <img
-                  className="w-[165px]"
+                  className="w-[140px] mr-[53px] "
                   src={selected.imageLink}
                   alt="Book Cover"
                 />
-                <div className="book-obj-wrapper">
-                     <div>
-                    <p className="font-bold color-[#032b41] mb-[8px]">
-                  {selected.title}
-                </p>
-                </div>
-              
-                <div>
-                  <p>{selected.author}</p>
-                </div>
-                </div>
-             
+            
+                  <div className="book-obj-wrapper">
+                    <div>
+                      <p className="font-bold color-[#032b41] mb-[8px]">
+                        {selected.title}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p>{selected.author}</p>
+                    </div>
+                    <div className="p-4 ml-[-33px] flex items-center">
+                      <BsFillPlayCircleFill className="w-[100%] h-[33px]" />
+                      <p className="text-sm">3 mins 23 secs</p>
+                    </div>
+                  </div>
+           
 
                 {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
@@ -101,13 +97,13 @@ getSuggestedBooks()
           <h1 className="for-you-title">Recommended For You</h1>
           <p>We think you'll like this</p>
         </div>
-        <div className="books-container flex">
+        <div className="books-container flex overflow-x-auto gap-4 mb-[32px] items-center">
           {recommended.map((recommended) => {
             return (
               <div className="">
                 <div className="user-list">
-                  <div className="user">
-                    <div className="user-card hoverAnimation">
+                  <div className="user ">
+                    <div className="user-card hover-books">
                       <div className="user-card__container flex justify-center flex-col items-center">
                         <img
                           className="w-[100%] mb-2 mt-6"
@@ -144,18 +140,18 @@ getSuggestedBooks()
         </div>
 
 
-
-        <div>
-          <h1 className="for-you-title">Recommended For You</h1>
+<div className="suggested-container mb-[70px]">
+  <div>
+          <h1 className="for-you-title">Suggested Books</h1>
           <p>Browse those books</p>
         </div>
-        <div className="books-container flex">
+        <div className="books-container flex gap-4">
           {suggested.map((suggested) => {
             return (
               <div className="">
                 <div className="user-list">
                   <div className="user">
-                    <div className="user-card hoverAnimation">
+                    <div className="user-card hover-books">
                       <div className="user-card__container flex justify-center flex-col items-center">
                         <img
                           className="w-[100%] mb-2 mt-6"
@@ -190,8 +186,10 @@ getSuggestedBooks()
             );
           })}
         </div>
-
-
+</div>
+      
+        </div>
+       
       </div>
     </div>
   );

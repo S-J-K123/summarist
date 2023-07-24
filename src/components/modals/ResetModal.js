@@ -16,6 +16,11 @@ export default function ResetModal() {
     dispatch(toggleResetModal());
   }
 
+  function hideResetModal() {
+    dispatch(toggleLoginModal());
+    dispatch(toggleResetModal());
+  }
+
 
   return (
     <div>
@@ -49,9 +54,9 @@ export default function ResetModal() {
             </button>
 
             <div className="bg-[#F1F6F4] flex justify-center mt-5 p-1.5">
-              <p className="text-[#116BE9] flex justify-center bg-[#F1F6F4] pb-1 cursor-pointer">
+              <div onClick={hideResetModal} className="text-[#116BE9] flex justify-center bg-[#F1F6F4] pb-1 cursor-pointer">
                 Go to login
-              </p>
+              </div>
             </div>
           </div>
         </div>

@@ -7,14 +7,12 @@ import Reset from "@component/components/modals/ResetModal"
 import { useSelector } from "react-redux"
 
 export default function Home() {
-  const username = useSelector(state => state.user.username)
-console.log(username)
   return (
 <div>
-<HomePage/>
+{/* <HomePage/> */}
 {/* <LoginModal/> */}
 {/* <SideBar/> */}
-{/* <ForYou/> */}
+<ForYou/>
 {/* <SignUpModal/> */}
 {/* <ResetModal/> */}
     </div>
