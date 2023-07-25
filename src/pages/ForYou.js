@@ -2,6 +2,12 @@ import SideBar from "@component/components/SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BsFillPlayCircleFill } from "react-icons/bs";
+import { PiMagnifyingGlass } from "react-icons/pi"
+
+
+
+
+
 
 export default function ForYou() {
   const [selected, setSelected] = useState([]);
@@ -49,7 +55,12 @@ export default function ForYou() {
             type="text"
             placeholder="Search for books"
           />
+          <div className="search-icon">
+            <PiMagnifyingGlass/>
+          </div>
+
         </div>
+       
         <hr className="mt-5 mb-9"></hr>
         <div>
           <h1 className="for-you-title">Selected just for you</h1>
@@ -82,12 +93,13 @@ export default function ForYou() {
                       <BsFillPlayCircleFill className="w-[100%] h-[33px]" />
                       <p className="text-sm">3 mins 23 secs</p>
                     </div>
+                     {/* <audio controls>
+                    <source src={selected.audioLink} type="audio/mpeg" />
+                  </audio> */}
                   </div>
            
 
-                {/* <audio controls>
-                    <source src={selected.audioLink} type="audio/mpeg" />
-                  </audio> */}
+               
               </div>
             </>
           ))}
@@ -97,20 +109,21 @@ export default function ForYou() {
           <h1 className="for-you-title">Recommended For You</h1>
           <p>We think you'll like this</p>
         </div>
-        <div className="books-container flex overflow-x-auto gap-4 mb-[32px] items-center">
+        <div className="books-container flex overflow-x-auto gap-4 mb-[32px] ">
           {recommended.map((recommended) => {
             return (
-              <div className="">
-                <div className="user-list">
-                  <div className="user ">
+           
+              <>
+                
+                  <div className="for-you__recommended--books-link ">
                     <div className="user-card hover-books">
-                      <div className="user-card__container flex justify-center flex-col items-center">
+                      <div className="user-card__container flex justify-center flex-col ">
                         <img
                           className="w-[100%] mb-2 mt-6"
                           src={recommended.imageLink}
                           alt="Book Cover"
                         />
-                        <div className="book-details-container">
+                        {/* <div className="book-details-container"> */}
                           <div>
                             {" "}
                             <p className="book-title">{recommended.title}</p>
@@ -132,9 +145,9 @@ export default function ForYou() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  {/* </div> */}
+    
+              </>
             );
           })}
         </div>
