@@ -80,7 +80,7 @@ console.log(username)
                   and even people who don’t like to read.
                 </div>
                <div className="display-none">
-                <LoginModal/>
+            <LoginModal/>
                 <SignUpModal/>
                 <ResetModal/>
                </div>

@@ -29,6 +29,8 @@ function hideLoginModal() {
       email,
       password
     );
+
+    dispatch(toggleSignUpModal())
   }
 
   useEffect(() => {

@@ -10,6 +10,9 @@
   font-family: "Roboto", sans-serif;
 }
 
+
+/*  For you page  */
+
 .search__wrapper{
   position: relative;
   display: flex;
@@ -65,7 +68,7 @@
 
 
 
-/*  For you page  */
+
 .for-you-title{
   font-size: 22px;
   font-weight: 700;
@@ -223,6 +226,22 @@ width: 177px;
   width: 100%;
 }
 
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+.search-icon{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 
 .hoverAnimation{
   @apply  hover:bg-black hover:bg-opacity-5 xl:p-3 cursor-pointer
@@ -231,6 +250,9 @@ width: 177px;
 .hover-books{
   @apply  hover:bg-black hover:bg-opacity-5 xl:p-4 cursor-pointer
 }
+
+
+/*end of for you page*/
 
 body {
   max-width: 100%;

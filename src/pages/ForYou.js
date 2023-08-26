@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { PiMagnifyingGlass } from "react-icons/pi"
+import Link from "next/link";
 
 
 
@@ -50,14 +51,19 @@ export default function ForYou() {
       <div className="row">
         <div className="whole-container ml-[90px]">
            <div className="search__wrapper">
-          <input
+            <form>
+                 <input
             className="search__input"
             type="text"
             placeholder="Search for books"
           />
-          <div className="search-icon">
+          <button type="submit" className="search-icon">
             <PiMagnifyingGlass/>
-          </div>
+          </button>
+            </form>
+       
+
+
 
         </div>
        
@@ -115,14 +121,16 @@ export default function ForYou() {
            
               <>
                 
-                  <div className="for-you__recommended--books-link ">
-                    <div className="user-card hover-books">
+                  <div className="for-you__recommended--books-link hover-books ">
+                    <div className="user-card">
                       <div className="user-card__container flex justify-center flex-col ">
-                        <img
+                      <Link href="/bookDetails">
+                      <img
                           className="w-[100%] mb-2 mt-6"
                           src={recommended.imageLink}
                           alt="Book Cover"
                         />
+                      </Link>  
                         {/* <div className="book-details-container"> */}
                           <div>
                             {" "}
@@ -161,10 +169,10 @@ export default function ForYou() {
         <div className="books-container flex gap-4">
           {suggested.map((suggested) => {
             return (
-              <div className="">
-                <div className="user-list">
-                  <div className="user">
-                    <div className="user-card hover-books">
+              // <div className="">
+              //   <div className="user-list">
+                  <div className="for-you__recommended--books-link hover-books">
+                    <div className="user-card">
                       <div className="user-card__container flex justify-center flex-col items-center">
                         <img
                           className="w-[100%] mb-2 mt-6"
@@ -194,8 +202,8 @@ export default function ForYou() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+              //   </div>
+              // </div>
             );
           })}
         </div>
