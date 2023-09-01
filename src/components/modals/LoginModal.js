@@ -2,14 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import ResetModal from "./ResetModal";
 import SignUpModal from "./SignUpModal";
 import { Modal } from "@mui/material";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 import { toggleLoginModal } from "@component/redux/ModalSlice";
+import { useEffect, useState } from "react";
+import { setUser } from "@component/redux/userSlice";
 
 
 
 
 
 export default function LoginModal() {
-
+  const auth = getAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
 
   const isLoginUpModal = useSelector((state) => state.modals.loginModalOpen);
@@ -21,6 +26,37 @@ function hideLoginModal() {
   dispatch(toggleLoginModal());
   dispatch(toggleSignUpModal());
 }
+
+
+
+async function handleLogin() {
+  const userCredientials = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  dispatch(toggleLoginModal())
+}
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+if(!currentUser) return;
+dispatch(
+setUser(
+  {
+    username: currentUser.email.split("@")[0],
+    name: null,
+    email: currentUser.email,
+    uid: currentUser.uid,
+    photoURL: null,
+  }
+)
+)
+  })
+  return unsubscribe
+})
+
 
     return (
       <div>
@@ -59,7 +95,7 @@ function hideLoginModal() {
               className="h-10 rounded-md p-4 mt-7 w-[80%] m-auto border border-black"
               type={"password"}
             />
-            <button className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
+            <button onClick={handleLogin} className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
               Login
             </button>
       <ResetModal/>

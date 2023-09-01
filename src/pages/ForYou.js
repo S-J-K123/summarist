@@ -122,15 +122,16 @@ export default function ForYou() {
               <>
                 
                   <div className="for-you__recommended--books-link hover-books ">
+                    <Link href={`/book/${recommended.id}`}>
                     <div className="user-card">
                       <div className="user-card__container flex justify-center flex-col ">
-                      <Link href="/bookDetails">
+                      
                       <img
                           className="w-[100%] mb-2 mt-6"
                           src={recommended.imageLink}
                           alt="Book Cover"
                         />
-                      </Link>  
+                      
                         {/* <div className="book-details-container"> */}
                           <div>
                             {" "}
@@ -151,7 +152,10 @@ export default function ForYou() {
                             <p>{recommended.averageRating}</p>
                           </div>
                         </div>
+                      
+
                       </div>
+                        </Link> 
                     </div>
                   {/* </div> */}
     
@@ -172,6 +176,9 @@ export default function ForYou() {
               // <div className="">
               //   <div className="user-list">
                   <div className="for-you__recommended--books-link hover-books">
+                      <Link href={`/book/${suggested.id}`}>
+
+                      
                     <div className="user-card">
                       <div className="user-card__container flex justify-center flex-col items-center">
                         <img
@@ -201,6 +208,7 @@ export default function ForYou() {
                         </div>
                       </div>
                     </div>
+                    </Link>
                   </div>
               //   </div>
               // </div>

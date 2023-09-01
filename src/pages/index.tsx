@@ -9,12 +9,8 @@ import { useSelector } from "react-redux"
 export default function Home() {
   return (
 <div>
-{/* <HomePage/> */}
-{/* <LoginModal/> */}
-{/* <SideBar/> */}
-<ForYou/>
-{/* <SignUpModal/> */}
-{/* <ResetModal/> */}
+<HomePage/>
+
     </div>
   )
 }

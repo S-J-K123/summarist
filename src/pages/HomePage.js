@@ -39,9 +39,8 @@ export default function HomePage() {
     dispatch(toggleLoginModal()); // Open the loginModal
   };
 
-
-  const username = useSelector(state => state.user.username)
-console.log(username)
+  const username = useSelector((state) => state.user.username);
+  console.log(username);
 
   return (
     <div>
@@ -79,11 +78,11 @@ console.log(username)
                   <br className="remove--tablet" />
                   and even people who don’t like to read.
                 </div>
-               <div className="display-none">
-            <LoginModal/>
-                <SignUpModal/>
-                <ResetModal/>
-               </div>
+                <div className="display-none">
+                 {!username && <LoginModal />}
+                  <SignUpModal />
+                  <ResetModal />
+                </div>
                 {/* <Modal
                   className="flex justify-center items-center"
                   open={isSignUpOpen}
