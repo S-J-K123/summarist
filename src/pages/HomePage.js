@@ -79,7 +79,7 @@ export default function HomePage() {
                   and even people who don’t like to read.
                 </div>
                 <div className="display-none">
-                 {!username && <LoginModal />}
+                  <LoginModal />
                   <SignUpModal />
                   <ResetModal />
                 </div>

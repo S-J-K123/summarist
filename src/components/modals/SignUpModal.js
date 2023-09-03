@@ -1,27 +1,33 @@
-import { closeSignUpModal, openSignUpModal, toggleLoginModal, toggleSignUpModal } from "@component/redux/ModalSlice";
+import {
+  closeSignUpModal,
+  openSignUpModal,
+  toggleLoginModal,
+  toggleSignUpModal,
+} from "@component/redux/ModalSlice";
 import { setUser } from "@component/redux/userSlice";
 import { Modal } from "@mui/material";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-
+import Link from "next/link";
 
 export default function () {
   const isSignUpModal = useSelector((state) => state.modals.signUpModalOpen);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const auth = getAuth()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = getAuth();
 
-function hideLoginModal() {
-  setEmail("");
-  setPassword("");
-  dispatch(toggleLoginModal());
-  dispatch(toggleSignUpModal());
-}
-
-
+  function hideLoginModal() {
+    setEmail("");
+    setPassword("");
+    dispatch(toggleLoginModal());
+    dispatch(toggleSignUpModal());
+  }
 
   async function handleSignUp() {
     const userCredientials = await createUserWithEmailAndPassword(
@@ -30,32 +36,48 @@ function hideLoginModal() {
       password
     );
 
-    dispatch(toggleSignUpModal())
+    dispatch(toggleSignUpModal());
   }
+
+  //   const emailSignUp = async (e: any) => {
+  //   try {
+  //     e.preventDefault();
+  //     await createUserWithEmailAndPassword(auth, email, password);
+  //     const user = auth.currentUser;
+  //     if (user) {
+  //       await setDoc(doc(db, "users", user.uid), {
+  //         email: user.email,
+  //         uid: user.uid,
+  //       });
+  //     }
+  //     openModal();
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-if(!currentUser) return;
-dispatch(
-  setUser(
-    {
-      username: currentUser.email.split("@")[0],
-      name: null,
-      email: currentUser.email,
-      uid: currentUser.uid,
-      photoURL: null,
-    }
-  )
-)
-    })
-    return unsubscribe
-  })
-
-
+      if (!currentUser) return;
+      dispatch(
+        setUser({
+          username: currentUser.email.split("@")[0],
+          name: null,
+          email: currentUser.email,
+          uid: currentUser.uid,
+          photoURL: null,
+        })
+      );
+    });
+    return unsubscribe;
+  });
 
   return (
     <div>
-        <div onClick={hideLoginModal} className="text-[#116BE9] cursor-pointer flex justify-center mb-1 bg-[#F1F6F4] pb-2 mt-6 pt-2">
+      <div
+        onClick={hideLoginModal}
+        className="text-[#116BE9] cursor-pointer flex justify-center mb-1 bg-[#F1F6F4] pb-2 mt-6 pt-2"
+      >
         Don't have an account?
       </div>
       <Modal
@@ -77,23 +99,29 @@ dispatch(
             </button>
             <h1 className="text-center mt-2 text-black text-lg mb-2">or</h1>
 
-            <input onChange={e => setEmail(e.target.value)}
+            <input
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address"
               className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"
               type={"email"}
             />
-            <input onChange={e => setPassword(e.target.value)}
+            <input
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="h-10 rounded-md p-4 mt-5 w-[80%] m-auto border border-black"
               type={"password"}
             />
-            <button onClick={handleSignUp} className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto">
+
+            <button
+              onClick={handleSignUp}
+              className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto"
+            >
               Sign up
             </button>
 
             <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
-              <div onClick={hideLoginModal}
-                
+              <div
+                onClick={hideLoginModal}
                 className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2 cursor-pointer"
               >
                 Already have an account?

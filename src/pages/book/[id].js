@@ -1,31 +1,38 @@
 import SideBar from "@component/components/SideBar";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
-// export async function getServerSideProps(context) {
-//   const { id } = context.query;
+export default function BookDetails() {
+  const { id } = useParams();
+  const [posts, setPosts] = useState([]);
 
-//   const res = await fetch(
-//     `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-//   );
-//   const data = await res.json();
+  useEffect(() => {
+    async function bookId() {
+      try {
+        const { data } = await axios.get(
+          `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+        );
+        setPosts(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    bookId();
+  }, [id]); 
 
-//   return {
-//     props: {
-//       posts: data,
-//     },
-//   };
-// }
-
-export default function bookDetails() {
-  const {id} = useParams()
   return (
     <div>
       <SideBar />
       <div className="flex justify-center">
-        {posts?.map((post) => {
-          return <div key={post.id}>{post.title}</div>;
-        })}
+        {Array.isArray(posts) && posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id}>{post.title}</div>
+          ))
+        ) : (
+          <div>No posts available</div>
+        )}
       </div>
     </div>
   );
