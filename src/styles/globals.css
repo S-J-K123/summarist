@@ -788,3 +788,62 @@ button:disabled {
     display: none;
   }
 }
+
+
+/*Book Details*/
+.inner-wrapper{
+  display: flex;
+  gap: 16px;
+}
+
+.inner-book{
+  width: 100%;
+}
+
+.inner-book-title{
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #032b41;
+}
+
+.inner-book-author{
+  color: #032b41;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.inner-book-subtitle{
+  font-size: 20px;
+  color: #032b41;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.inner-book-wrapper{
+  border-top: 1px solid #e1e7ea;
+  border-bottom: 1px solid #e1e7ea;
+  padding: 16px 0;
+  margin-bottom: 24px;
+}
+.inner-book-description-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+  row-gap: 12px;
+}
+
+.inner-book-description{
+  display: flex;
+  align-items: center;
+  width: 50%;
+  color: #032b41;
+  font-weight: 500;
+  font-size: 14px;
+}
+.inner-book-icon{
+  display: flex;
+  height: 24px;
+  width: 24px;
+  margin-right: 4px;
+}

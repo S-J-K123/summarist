@@ -74,17 +74,25 @@ export default function ForYou() {
         <div className="selected-book-container">
           {selected.map((selected) => (
             <>
+            
+         
               <div className="w-[37%] color-[#032b41]">
                 <p>{selected.subTitle}</p>
               </div>
+
               <div className="selected-book-line"></div>
+
               <div className="book-details flex flex-row">
+              <Link href={`/book/${selected.id}`}>
                 <img
                   className="w-[140px] mr-[53px] "
                   src={selected.imageLink}
                   alt="Book Cover"
                 />
-            
+ </Link>
+             <Link href={`/book/${selected.id}`}>
+
+  
                   <div className="book-obj-wrapper">
                     <div>
                       <p className="font-bold color-[#032b41] mb-[8px]">
@@ -104,9 +112,10 @@ export default function ForYou() {
                   </audio> */}
                   </div>
            
-
+ </Link>
                
               </div>
+
             </>
           ))}
         </div>
