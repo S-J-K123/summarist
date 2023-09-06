@@ -124,7 +124,7 @@ export default function ForYou() {
           <h1 className="for-you-title">Recommended For You</h1>
           <p>We think you'll like this</p>
         </div>
-        <div className="books-container flex overflow-x-auto gap-4 mb-[32px] ">
+        <div className="books-container flex overflow-x-auto gap-[32px] mb-[32px]">
           {recommended.map((recommended) => {
             return (
            
@@ -179,7 +179,7 @@ export default function ForYou() {
           <h1 className="for-you-title">Suggested Books</h1>
           <p>Browse those books</p>
         </div>
-        <div className="books-container flex gap-4">
+        <div className="books-container flex overflow-x-auto gap-[32px] mb-[32px]">
           {suggested.map((suggested) => {
             return (
               // <div className="">

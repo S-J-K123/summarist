@@ -4,6 +4,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useRouter } from "next/router";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MicIcon from "@mui/icons-material/Mic";
+import LightbulbIcon from "@mui/icons-material/Lightbulb";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 
 export default function BookDetails() {
   const [posts, setPosts] = useState([]);
@@ -30,7 +35,7 @@ export default function BookDetails() {
   return (
     <div>
       <SideBar />
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-col w-[50%] ml-[350px] pt-[110px]">
         {/* {Array.isArray(posts) && posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id}>{post.title}</div>
@@ -53,14 +58,77 @@ export default function BookDetails() {
                 <StarOutlineIcon className="star" />
               </div>
               <div className="inner-book-overall-rating">
-{posts.averageRating}&nbsp; 
+                {posts.averageRating}&nbsp;
               </div>
               <div className="inner-book-total-rating">
-({posts.totalRating}&nbsp;ratings)
+                ({posts.totalRating}&nbsp;ratings)
               </div>
             </div>
-            
+            <div className="inner-book-description">
+              <div className="inner-book-icon">
+                <AccessTimeIcon className="clock" />
+              </div>
+              <div className="inner-book-overall-rating">
+                {posts.totalDuration}&nbsp;
+              </div>
+            </div>
+            <div className="inner-book-description">
+              <div className="inner-book-icon">
+                <MicIcon className="clock" />
+              </div>
+              <div className="inner-book-overall-rating">
+                {posts.type}&nbsp;
+              </div>
+            </div>
+            <div className="inner-book-description">
+              <div className="inner-book-icon">
+                <LightbulbIcon className="clock" />
+              </div>
+              <div className="inner-book-overall-rating">
+                {posts.keyIdeas}&nbsp; Key ideas
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div className="inner-book__read--btn-wrapper">
+          <button className="inner-book__read--btn">
+            <div className="inner-book__read--icon ">
+              <ImportContactsIcon className=".inner-book__read--icon svg" />
+            </div>
+            <div className="inner-book__read--text">Read</div>
+          </button>
+          <button className="inner-book__read--btn">
+            <div className="inner-book__read--icon ">
+              <MicIcon className=".inner-book__read--icon svg" />
+            </div>
+            <div className="inner-book__read--text">Listen</div>
+          </button>
+        </div>
+
+        <div className="inner-book__bookmark">
+          <div className="inner-book__bookmark--icon">
+            <TurnedInNotIcon />
+          </div>
+          <div className="inner-book__bookmark--text">Add title to My Library</div>
+        </div>
+        <div className="inner-book__secondary--title">What's it about?</div>
+        <div className="inner-book__tags--wrapper">
+          <div className="inner-book__tag">Communication Skills</div>
+          <div className="inner-book__tag">Technology & the Future</div>
+        </div>
+        <div className="inner-book__book--description">
+          {posts.bookDescription}
+        </div>
+        <h2 className="inner-book__secondary--title">About the author</h2>
+        <div className="inner-book__author--description">
+          {posts.authorDescription}
+        </div>
+        <div className="inner-book--img-wrapper">
+      <figure className="book__image--wrapper">
+      <img src={posts.imageLink} className="book__image"/>
+  
+      </figure>
         </div>
       </div>
     </div>
