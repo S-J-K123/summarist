@@ -1,18 +1,9 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import SideBar from "@component/components/SideBar";
 
-const Settings = () => {
+const Input = () => {
   return (
     <div>
-         <SideBar/>
-         <div className="wrapper">
-       
-      {/* <div className='search__background'>
-            <div className='search__wrapper'>
-            <figure className=''></figure>
-            </div>
-            </div> */}
       <div className="search__content">
         <div className="search">
           <div className="search__input--wrapper">
@@ -27,10 +18,8 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </div>  
     </div>
- 
   );
 };
 
-export default Settings;
+export default Input;

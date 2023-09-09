@@ -13,7 +13,8 @@ import {
 } from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
+import { useRouter } from "next/router";
+
 
 export default function () {
   const isSignUpModal = useSelector((state) => state.modals.signUpModalOpen);
@@ -21,6 +22,8 @@ export default function () {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
+  const router = useRouter();
+
 
   function hideLoginModal() {
     setEmail("");
@@ -35,6 +38,7 @@ export default function () {
       email,
       password
     );
+    router.push("/ForYou");
 
     dispatch(toggleSignUpModal());
   }
@@ -44,17 +48,7 @@ export default function () {
   //     e.preventDefault();
   //     await createUserWithEmailAndPassword(auth, email, password);
   //     const user = auth.currentUser;
-  //     if (user) {
-  //       await setDoc(doc(db, "users", user.uid), {
-  //         email: user.email,
-  //         uid: user.uid,
-  //       });
-  //     }
-  //     openModal();
-  //   } catch (error) {
-  //     alert(error);
-  //   }
-  // };
+  //
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
