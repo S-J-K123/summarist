@@ -6,6 +6,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import Link from "next/link";
+
 
 export default function SideBar() {
   return (
@@ -17,12 +19,18 @@ export default function SideBar() {
         />
       </div>
       <nav className="space-y-5">
-        <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
+        <Link href="/ForYou">
+         <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
+        </Link>
+       
         <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
         <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
         <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
         <div className="pt-[84px] space-y-5">
+          <Link href="/Settings">
           <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
+          </Link>
+          
 
           <SideBarLink disabled text={"Help & Support"} Icon={HelpOutlineOutlinedIcon} />
 
