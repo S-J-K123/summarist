@@ -1,14 +1,27 @@
-import { closeResetModal, openResetModal, toggleLoginModal, toggleResetModal, toggleSignUpModal } from "@component/redux/ModalSlice";
+import {
+  closeResetModal,
+  openResetModal,
+  toggleLoginModal,
+  toggleResetModal,
+  toggleSignUpModal,
+} from "@component/redux/ModalSlice";
 import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function ResetModal() {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const isResetModal = useSelector((state) => state.modals.resetModalOpen);
   const dispatch = useDispatch();
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
-
+  const handleCloseSignUpModal = () => {
+    setIsSignUpOpen(false);
+    // Open the loginModal
+    // dispatch(toggleSignUpModal())
+    dispatch(toggleResetModal());
+  };
 
   function hideLoginModal() {
     setEmail("");
@@ -20,7 +33,6 @@ export default function ResetModal() {
     dispatch(toggleLoginModal());
     dispatch(toggleResetModal());
   }
-
 
   return (
     <div>
@@ -40,6 +52,9 @@ export default function ResetModal() {
             flex justify-center ml-10 "
         >
           <div className="w-full mt-8 flex flex-col">
+            <div onClick={handleCloseSignUpModal} className="cursor-pointer">
+              <CloseIcon className="w-[32px] ml-[340px] mt-[-32px]" />
+            </div>
             <h1 className="text-black flex justify-center mb-5 font-bold text-lg">
               Reset your password
             </h1>
@@ -54,7 +69,10 @@ export default function ResetModal() {
             </button>
 
             <div className="bg-[#F1F6F4] flex justify-center mt-5 p-1.5">
-              <div onClick={hideResetModal} className="text-[#116BE9] flex justify-center bg-[#F1F6F4] pb-1 cursor-pointer">
+              <div
+                onClick={hideResetModal}
+                className="text-[#116BE9] flex justify-center bg-[#F1F6F4] pb-1 cursor-pointer"
+              >
                 Go to login
               </div>
             </div>

@@ -11,6 +11,7 @@ import {
   openLoginModal,
   openSignUpModal,
   toggleLoginModal,
+  toggleResetModal,
 } from "@component/redux/ModalSlice";
 import { useState } from "react";
 import { auth } from "../../firebase";
@@ -37,6 +38,8 @@ export default function HomePage() {
   const handleCloseSignUpModal = () => {
     setIsSignUpOpen(false);
     dispatch(toggleLoginModal()); // Open the loginModal
+    // dispatch(toggleSignUpModal())
+    dispatch(toggleResetModal())
   };
 
   const username = useSelector((state) => state.user.username);

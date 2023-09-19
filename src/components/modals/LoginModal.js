@@ -7,6 +7,8 @@ import { toggleLoginModal } from "@component/redux/ModalSlice";
 import { useEffect, useState } from "react";
 import { setUser } from "@component/redux/userSlice";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -18,7 +20,7 @@ export default function LoginModal() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter();
-
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   const isLoginUpModal = useSelector((state) => state.modals.loginModalOpen);
   const dispatch = useDispatch()
@@ -31,6 +33,7 @@ function hideLoginModal() {
 }
 
 
+
 async function handleSignIn() {
   await signInWithEmailAndPassword(auth, email, password);
   router.push("/ForYou");
@@ -38,6 +41,10 @@ async function handleSignIn() {
 }
 
 
+const handleOpenSignUpModal = () => {
+  setIsSignUpOpen(true);
+  dispatch(toggleLoginModal()); // Close the loginModal
+};
 
 
 
@@ -56,12 +63,19 @@ async function handleSignIn() {
               flex justify-center ml-10 "
         >
           <div className="w-full mt-8 flex flex-col">
+          <div onClick={handleOpenSignUpModal} className="cursor-pointer">
+
+<CloseIcon className="w-[32px] ml-[340px] mt-[-32px]"/>
+</div>
             <h1 className="text-black flex justify-center mb-6 font-bold text-lg">
               Login to Summarist
             </h1>
-            <button className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto">
+            <Link href="./ForYou">
+             <button className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto ml-[38px]">
               Login as a Guest
             </button>
+            </Link>
+           
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
             <button className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto">
               Login with Google

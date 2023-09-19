@@ -14,6 +14,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function () {
@@ -23,6 +24,7 @@ export default function () {
   const [password, setPassword] = useState("");
   const auth = getAuth();
   const router = useRouter();
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
 
   function hideLoginModal() {
@@ -43,13 +45,23 @@ export default function () {
     dispatch(toggleSignUpModal());
   }
 
+  const handleHideSignUpModal = () => {
+    setIsSignUpOpen(false);
+    // Open the loginModal
+    dispatch(toggleSignUpModal())
+    
+  };
+
   //   const emailSignUp = async (e: any) => {
   //   try {
   //     e.preventDefault();
   //     await createUserWithEmailAndPassword(auth, email, password);
   //     const user = auth.currentUser;
   //
-
+  const handleCloseSignUpModal = () => {
+    setIsSignUpOpen(false);
+    dispatch(toggleLoginModal()); // Open the loginModal
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return;
@@ -84,6 +96,10 @@ export default function () {
             flex justify-center ml-10 "
         >
           <div className="w-full mt-8 flex flex-col">
+          <div onClick={handleHideSignUpModal}className="cursor-pointer">
+
+<CloseIcon className="w-[32px] ml-[340px] mt-[-32px]"/>
+</div>
             <h1 className="text-black flex justify-center mb-3 font-bold text-lg">
               Sign up to Summarist
             </h1>

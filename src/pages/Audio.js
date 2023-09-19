@@ -33,7 +33,7 @@ const Audio = () => {
      <div className="audio__wrapper" >
 <div className="audio_track--wrapper">
 <figure className="audio__track--image-mask">
-    <figure className="book__image-wrapper">
+    <figure className="book_image-wrapper">
         {/* <img/> */}
     </figure>
 </figure>
