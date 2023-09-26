@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import Link from "next/link";
+// import { clearSearchResults, setSearchResults } from "@component/redux/searchSlice";
+import { clearSearchResults, setSearchResults } from "../redux/searchSlice";
 
-const Input = () => {
+const Input = ( {clearSearchResults, setSearchResults}) => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
+
+  // const isClearSearchResults = useSelector((state) => state.search.clearSearchResults);
+  // const dispatch = useDispatch()
 
   async function getBooksBySearch(search) {
     try {
@@ -24,14 +30,18 @@ const Input = () => {
     if (search.trim() !== "") {
       getBooksBySearch(search);
     } else {
-      setBooks([]);
+      clearSearchResults(); 
     }
-  }, [search]);
+  }, [search, clearSearchResults]);
 
   function onSearchChange(event) {
     const inputValue = event.target.value;
     setSearch(inputValue);
     getBooksBySearch(search);
+  }
+
+  function handleBookClick() {
+    clearSearchResults(); 
   }
 
   return (
@@ -58,7 +68,8 @@ const Input = () => {
         <div className="search__input--details">
           {books.map((book) => (
             <div key={book.id}>
-              <Link className="flexing" href={`/book/${book.id}`}>
+              <Link className="flexing" href={`/book/${book.id}`}
+              onClick={handleBookClick}>
                 <div className="book__image--search-input">
                   {" "}
                   <img src={book.imageLink} />{" "}
