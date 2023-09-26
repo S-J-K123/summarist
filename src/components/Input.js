@@ -54,26 +54,24 @@ const Input = () => {
           </div>
         </div>
       </div>
-      <div className="search__input--details">
-     
-               {books.map((book) => (
-          <div key={book.id}>
-             <Link href={`/book/${book.id}`}>
-            <div className="book__image--search-input"> <img src={book.imageLink} /> </div>
-              <div className="search__book--links">
-            <h3 className="book__title--search-input">{book.title}</h3>
-            <p className="book__author--search-input">{book.author}</p>
-            
-          </div>
-          </Link>
-      
-  </div>
-        ))}
-     
-      
-      
-   
-      </div>
+      {books.length > 0 && (
+        <div className="search__input--details">
+          {books.map((book) => (
+            <div key={book.id}>
+              <Link className="flexing" href={`/book/${book.id}`}>
+                <div className="book__image--search-input">
+                  {" "}
+                  <img src={book.imageLink} />{" "}
+                </div>
+                <div className="search__book--links">
+                  <h3 className="book__title--search-input">{book.title}</h3>
+                  <p className="book__author--search-input">{book.author}</p>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

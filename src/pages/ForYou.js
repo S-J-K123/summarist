@@ -4,8 +4,7 @@ import axios from "axios";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import Link from "next/link";
-import SearchIcon from "@mui/icons-material/Search";
-// import Input from "../../components/Input";
+import Input from "@component/components/Input";
 
 export default function ForYou() {
   const [selected, setSelected] = useState([]);
@@ -45,8 +44,12 @@ export default function ForYou() {
   return (
     <div>
       <SideBar />
+      <div className="input-wrapper">
+       
+       <Input />
+     </div>
       <div className="row">
-        <div className="search__content">
+        {/* <div className="search__content">
           <div className="search">
             <div className="search__input--wrapper">
               <input
@@ -59,9 +62,9 @@ export default function ForYou() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="whole-container ml-[90px]">
-          <hr className="mt-5 mb-9"></hr>
+      
           <div>
             <h1 className="for-you-title">Selected just for you</h1>
           </div>
