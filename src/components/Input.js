@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import Link from "next/link";
-// import { clearSearchResults, setSearchResults } from "@component/redux/searchSlice";
-import { clearSearchResults, setSearchResults } from "../redux/searchSlice";
+import { setSearchResults, clearSearchResults } from "../redux/searchSlice";
 
-const Input = ( {clearSearchResults, setSearchResults}) => {
+const Input = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
-
-  // const isClearSearchResults = useSelector((state) => state.search.clearSearchResults);
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const searchResults = useSelector((state) => state.searchResults);
 
   async function getBooksBySearch(search) {
     try {
@@ -19,8 +17,7 @@ const Input = ( {clearSearchResults, setSearchResults}) => {
         `https://us-central1-summaristt.cloudfunctions.net/getBooksByAuthorOrTitle?search=${search}`
       );
       setBooks(data);
-      console.log(data);
-      console.log(books);
+      dispatch(setSearchResults(data));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -30,19 +27,20 @@ const Input = ( {clearSearchResults, setSearchResults}) => {
     if (search.trim() !== "") {
       getBooksBySearch(search);
     } else {
-      clearSearchResults(); 
+      clearSearchResults();
     }
   }, [search, clearSearchResults]);
 
-  function onSearchChange(event) {
+  const onSearchChange = (event) => {
     const inputValue = event.target.value;
     setSearch(inputValue);
-    getBooksBySearch(search);
-  }
+    getBooksBySearch(inputValue);
+  };
 
-  function handleBookClick() {
-    clearSearchResults(); 
-  }
+  const handleBookClick = () => {
+    dispatch(clearSearchResults());
+    setSearch("");
+  };
 
   return (
     <div>
@@ -64,12 +62,11 @@ const Input = ( {clearSearchResults, setSearchResults}) => {
           </div>
         </div>
       </div>
-      {books.length > 0 && (
+      {searchResults.length > 0 && search !== "" && (
         <div className="search__input--details">
-          {books.map((book) => (
-            <div key={book.id}>
-              <Link className="flexing" href={`/book/${book.id}`}
-              onClick={handleBookClick}>
+          {searchResults.map((book) => (
+            <div key={book.id} onClick={handleBookClick}>
+              <Link href={`/book/${book.id}`}>
                 <div className="book__image--search-input">
                   {" "}
                   <img src={book.imageLink} />{" "}
