@@ -23,7 +23,7 @@ fetchAudio()
   return (
     <div>
       {audio.audioLink}
-      <audio src= "https://firebasestorage.googleapis.com/v0/b/summaristt.appspot.com/o/books%2Faudios%2Fthe-lean-startup.mp3?alt=media&token=c2f2b1d4-eaf2-4d47-8c8a-7a8fd062a47e" controls />
+      <audio className="audio" src= "https://firebasestorage.googleapis.com/v0/b/summaristt.appspot.com/o/books%2Faudios%2Fthe-lean-startup.mp3?alt=media&token=c2f2b1d4-eaf2-4d47-8c8a-7a8fd062a47e" controls />
     </div>
   );
 };

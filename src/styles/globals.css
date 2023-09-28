@@ -1236,3 +1236,7 @@ button:disabled {
   outline: none;
   appearance: none;
 }
+
+.audio{
+  display: none;
+}

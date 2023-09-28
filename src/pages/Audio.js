@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import DisplayTrack from "../components/DisplayTrack";
+import AudioPlayer from "../components/AudioPlayer"
 
 const Audio = () => {
   //   const [audio, setAudio] = useState();
@@ -28,6 +29,7 @@ const Audio = () => {
     <div>
       <SideBar />
       <DisplayTrack />
+      <AudioPlayer/>
       <div className="input-wrapper">
         <Input />
       </div>

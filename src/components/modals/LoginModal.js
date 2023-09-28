@@ -60,7 +60,7 @@ const handleOpenSignUpModal = () => {
         className="flex justify-center items-center">
                <div
           className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
-              flex justify-center ml-10 "
+              flex justify-center ml-10"
         >
           <div className="w-full mt-8 flex flex-col">
           <div onClick={handleOpenSignUpModal} className="cursor-pointer">
