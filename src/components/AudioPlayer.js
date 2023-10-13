@@ -25,9 +25,7 @@ const AudioPlayer = () => {
   return (
     <div className="audio-player">
       <div className="inner">
-        {audio?.map((audio) => {
-          return <div>{audio.title} </div>;
-        })}
+      {audio.title}
         <DisplayTrack />
         {/* <Controls />
         <ProgressBar /> */}
