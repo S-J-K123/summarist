@@ -27,7 +27,7 @@ export default function SideBar() {
         <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
         <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
         <div className="pt-[84px] space-y-5">
-          <Link href="/Settings">
+          <Link href="/Settings-login">
           <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
           </Link>
           
