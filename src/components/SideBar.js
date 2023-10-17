@@ -9,12 +9,11 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Link from "next/link";
 import { auth } from "../../firebase";
 
-
 export default function SideBar() {
-
-  const logUserOut = () => {
+  const logUserOut = (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
     auth.signOut();
-    window.location.reload();
+    // window.location.reload(); // Commenting this out since it's not necessary
   };
 
   return (
@@ -27,33 +26,41 @@ export default function SideBar() {
       </div>
       <nav className="space-y-5">
         <Link href="/ForYou">
-         <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
+          <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
         </Link>
-       
+
         <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
         <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
         <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
         <div className="pt-[84px] space-y-5">
           <Link href="/Settings">
-          <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
+            <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
           </Link>
-          
 
-          <SideBarLink disabled text={"Help & Support"} Icon={HelpOutlineOutlinedIcon} />
-<button onClick={logUserOut}>
-  <SideBarLink text={"Logout"} Icon={LogoutOutlinedIcon} />
-</button>
-          
+          <SideBarLink
+            disabled
+            text={"Help & Support"}
+            Icon={HelpOutlineOutlinedIcon}
+          />
+          <SideBarLink
+            text={"Logout"}
+            Icon={LogoutOutlinedIcon}
+            onClick={(e) => logUserOut(e)}
+            className="logout-btn"
+          />
         </div>
       </nav>
     </div>
   );
 }
 
-function SideBarLink({ text, Icon, disabled }) {
+function SideBarLink({ text, Icon, disabled, onClick, className }) {
   const linkClass = disabled ? "disabled-link" : "";
   return (
-    <li className={`hoverAnimation mb-2.5 flex items-center text-[16px] list-none mt-14 ml-2 ${linkClass}`}>
+    <li
+      onClick={onClick} // Handle click event here
+      className={`hoverAnimation mb-2.5 flex items-center text-[16px] list-none mt-14 ml-2 ${linkClass} ${className}`}
+    >
       <Icon className="mr-4" />
       {text}
     </li>
