@@ -98,7 +98,7 @@ export default function () {
           <div className="w-full mt-8 flex flex-col">
           <div onClick={handleHideSignUpModal}className="cursor-pointer">
 
-<CloseIcon className="w-[32px] ml-[340px] mt-[-32px]"/>
+<CloseIcon className="w-[32px] ml-[320px] mt-[-32px]"/>
 </div>
             <h1 className="text-black flex justify-center mb-3 font-bold text-lg">
               Sign up to Summarist
