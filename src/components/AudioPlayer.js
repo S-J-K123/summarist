@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DisplayTrack from "./DisplayTrack";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-// import Controls from './Controls';
-// import ProgressBar from './ProgressBar';
+import Controls from './Controls';
+import ProgressBar from './ProgressBar';
 
 const AudioPlayer = ({audio}) => {
 console.log(audio)
@@ -13,8 +13,8 @@ console.log(audio)
       <div className="inner">
 {/*I was getting double audio players due to DisplayTrack*/}
         <DisplayTrack audio={audio} />
-        {/* <Controls />
-        <ProgressBar /> */}
+        <Controls />
+        <ProgressBar />
       </div>
     </div>
   );
