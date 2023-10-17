@@ -1,35 +1,35 @@
 import React from "react";
 import SideBar from "@component/components/SideBar";
-import Input from "../components/Input";
+import Input from "../../components/Input";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import DisplayTrack from "../components/DisplayTrack";
-import AudioPlayer from "../components/AudioPlayer"
+import DisplayTrack from "../../components/DisplayTrack";
+import AudioPlayer from "../../components/AudioPlayer"
 
 const Audio = () => {
-  //   const [audio, setAudio] = useState();
-  //   const router = useRouter();
-  //  const { id } = router.query;
-  //  console.log(id);
+    const [audio, setAudio] = useState();
+    const router = useRouter();
+   const { id } = router.query;
+   console.log(id);
 
-  //   useEffect(() => {
-  //     async function getAudio() {
-  //       const { data } = await axios.get(
-  //        `https://summarist.vercel.app/player/${id}`
-  //       );
-  //       setAudio(data);
-  //     }
-  //     getAudio();
-  //   }, [id]);
+   async function getAudio() {
+     const { data } = await axios.get(
+       `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+       );
+       setAudio(data);
+      }
+      useEffect(() => {
+      getAudio();
+    }, [id]);
 
   return (
     <div>
       <SideBar />
-      <DisplayTrack />
-      <AudioPlayer/>
+      <DisplayTrack audio={audio} />
+      <AudioPlayer audio={audio}/>
       <div className="input-wrapper">
         <Input />
       </div>

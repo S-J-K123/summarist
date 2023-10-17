@@ -109,7 +109,7 @@ export default function BookDetails() {
               <div className="inner-book__read--icon ">
                 <MicIcon className=".inner-book__read--icon svg" />
               </div>
-              <Link href={"/Audio"} >
+              <Link href={`/player/${id}`} >
                 <div className="inner-book__read--text">Listen</div>
               </Link>
             

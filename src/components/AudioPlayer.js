@@ -5,28 +5,14 @@ import { useParams } from "react-router-dom";
 // import Controls from './Controls';
 // import ProgressBar from './ProgressBar';
 
-const AudioPlayer = () => {
-  const [audio, seAudio] = useState([]);
-  const id = useParams();
-  console.log(id);
-
-  async function fetchAudio() {
-    const { data } = await axios.get(
-      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-    );
-    seAudio(data);
-    console.log(data);
-  }
-
-  useEffect(() => {
-    fetchAudio();
-  }, []);
+const AudioPlayer = ({audio}) => {
+console.log(audio)
 
   return (
     <div className="audio-player">
       <div className="inner">
-      {audio.title}
-        <DisplayTrack />
+
+        <DisplayTrack audio={audio} />
         {/* <Controls />
         <ProgressBar /> */}
       </div>

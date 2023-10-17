@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import ResetModal from "./ResetModal";
 import SignUpModal from "./SignUpModal";
 import { Modal } from "@mui/material";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { browserLocalPersistence, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { toggleLoginModal } from "@component/redux/ModalSlice";
 import { useEffect, useState } from "react";
 import { setUser } from "@component/redux/userSlice";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import CloseIcon from '@mui/icons-material/Close';
+import { auth } from "../../../firebase";
+
 
 
 
@@ -16,7 +18,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function LoginModal() {
-  const auth = getAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter();
@@ -35,11 +36,23 @@ function hideLoginModal() {
 
 
 async function handleSignIn() {
+  await setPersistence(auth, browserLocalPersistence);
   await signInWithEmailAndPassword(auth, email, password);
   router.push("/ForYou");
   dispatch(toggleLoginModal());
 }
 
+async function guestLogIn() {
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    const email = "j@gmail.com";
+    const password = "password";
+    await signInWithEmailAndPassword(auth, email, password);
+    // router.push("/Settings");
+  } catch (error) {
+    alert(error);
+  }
+};
 
 const handleOpenSignUpModal = () => {
   setIsSignUpOpen(true);
@@ -71,7 +84,7 @@ const handleOpenSignUpModal = () => {
               Login to Summarist
             </h1>
             <Link href="./ForYou">
-             <button className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto ml-[38px]">
+             <button onClick={guestLogIn} className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto ml-[38px]">
               Login as a Guest
             </button>
             </Link>

@@ -7,9 +7,16 @@ import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutl
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Link from "next/link";
+import { auth } from "../../firebase";
 
 
 export default function SideBar() {
+
+  const logUserOut = () => {
+    auth.signOut();
+    window.location.reload();
+  };
+
   return (
     <div className=" hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 h-full">
       <div>
@@ -27,14 +34,16 @@ export default function SideBar() {
         <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
         <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
         <div className="pt-[84px] space-y-5">
-          <Link href="/Settings-login">
+          <Link href="/Settings">
           <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
           </Link>
           
 
           <SideBarLink disabled text={"Help & Support"} Icon={HelpOutlineOutlinedIcon} />
-
-          <SideBarLink text={"Logout"} Icon={LogoutOutlinedIcon} />
+<button onClick={logUserOut}>
+  <SideBarLink text={"Logout"} Icon={LogoutOutlinedIcon} />
+</button>
+          
         </div>
       </nav>
     </div>
