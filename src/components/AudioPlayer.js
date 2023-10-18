@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DisplayTrack from "./DisplayTrack";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Controls from './Controls';
 import ProgressBar from './ProgressBar';
 
+
 const AudioPlayer = ({audio}) => {
 console.log(audio)
+
+  // reference
+  const audioRef = useRef();
+
+console.log(audioRef);
 
   return (
     <div className="audio-player">

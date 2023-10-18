@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-
-// icons
+import React, { useEffect, useState, useRef } from "react";
 import {
   IoPlayBackSharp,
   IoPlayForwardSharp,
@@ -10,13 +8,23 @@ import {
   IoPauseSharp,
 } from 'react-icons/io5';
 
-const Controls = () => {
+const Controls = ({audio}) => {
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const audioRef = useRef(null);
 
   const togglePlayPause = () => {
     setIsPlaying((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, audioRef]);
 
   return (
     <div className="controls-wrapper">
@@ -27,10 +35,9 @@ const Controls = () => {
         <button>
           <IoPlayBackSharp />
         </button>
-
         <button onClick={togglePlayPause}>
-  {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
-</button>
+          {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
+        </button>
         <button>
           <IoPlayForwardSharp />
         </button>
@@ -38,6 +45,7 @@ const Controls = () => {
           <IoPlaySkipForwardSharp />
         </button>
       </div>
+      {/* Add the audio element with the ref */}
     </div>
   );
 };
