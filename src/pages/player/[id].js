@@ -6,9 +6,8 @@ import SideBar from "@component/components/SideBar";
 import DisplayTrack from "../../components/DisplayTrack";
 import AudioPlayer from "../../components/AudioPlayer";
 import Input from "../../components/Input";
-// css
-// import './styles/index.css';
-import './styles/customize-progress-bar.css';
+
+
 
 const Audio = () => {
   const [audio, setAudio] = useState();

@@ -3,9 +3,14 @@ import React, { useEffect, useState, useRef } from "react";
 
 
 const DisplayTrack = ({ currentTrack, audioRef, audio }) => {
+  const onLoadedMetadata = () => {
+    const seconds = audioRef.current.duration;
+    setDuration(seconds);
+    progressBarRef.current.max = seconds;
+  };
   return (
     <div>
-      <audio src={audio?.audioLink} ref={audioRef} />
+      <audio src={audio?.audioLink} ref={audioRef}  onLoadedMetadata={onLoadedMetadata} />
       <div className="audio-info">
         <div className="audio-image">
           {currentTrack && currentTrack.thumbnail ? (

@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 
-const ProgressBar = () => {
-    return (
-      <div className="progress">
-        <span className="time current">00:00</span>
-        <input type="range" />
-        <span className="time">03:34</span>
-      </div>
-    );
+const ProgressBar = ({ progressBarRef, audioRef, timeProgress, duration }) => {
+  const handleProgressChange = () => {
+    audioRef.current.currentTime = progressBarRef.current.value;
   };
-  
-  export default ProgressBar;
+
+  return (
+    <div className="progress">
+    <span className="time current">{timeProgress}</span>
+      <input
+        type="range"
+        ref={progressBarRef}
+        defaultValue="0"
+        onChange={handleProgressChange}
+      />
+     <span className="time">{duration}</span>
+    </div>
+  );
+};
+
+export default ProgressBar;
