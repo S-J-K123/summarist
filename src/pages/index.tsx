@@ -8,8 +8,8 @@ import Reset from "@component/components/modals/ResetModal"
 import { useSelector } from "react-redux"
 import AudioPlayer from '../components/AudioPlayer';
 //css
-import './styles/customize-progress-bar.css';
-import './styles/index.css';
+// import './styles/customize-progress-bar.css';
+// import './styles/index.css';
 
 export default function Home() {
   return (

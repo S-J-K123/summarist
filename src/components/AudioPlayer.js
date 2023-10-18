@@ -8,8 +8,7 @@ import ProgressBar from "./ProgressBar";
 const AudioPlayer = ({ audio }) => {
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [trackIndex, setTrackIndex] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState(tracks[trackIndex]);
+
   console.log(audio);
   // reference
   const audioRef = useRef();
@@ -30,10 +29,6 @@ const AudioPlayer = ({ audio }) => {
             progressBarRef,
             duration,
             setTimeProgress,
-            tracks,
-            trackIndex,
-            setTrackIndex,
-            setCurrentTrack,
           }}
         />
         <ProgressBar

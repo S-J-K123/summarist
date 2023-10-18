@@ -59,9 +59,13 @@ const Controls = ({
 
 
 
-  const skipForward = () => {};
-
-const skipBackward = () => {};
+  const skipForward = () => {
+    audioRef.current.currentTime += 10;
+  };
+  
+  const skipBackward = () => {
+    audioRef.current.currentTime -= 10;
+  };
 
 const handlePrevious = () => {};
 
