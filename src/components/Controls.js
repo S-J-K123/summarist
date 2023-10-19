@@ -7,8 +7,8 @@ import {
   IoPlaySharp,
   IoPauseSharp,
 } from "react-icons/io5";
-import Forward10Icon from '@mui/icons-material/Forward10';
-import Replay10Icon from '@mui/icons-material/Replay10';
+import Forward10Icon from "@mui/icons-material/Forward10";
+import Replay10Icon from "@mui/icons-material/Replay10";
 
 const Controls = ({
   audio,
@@ -35,12 +35,12 @@ const Controls = ({
 
   const playAnimationRef = useRef();
 
- const repeat = useCallback(() => {
+  const repeat = useCallback(() => {
     const currentTime = audioRef.current.currentTime;
     setTimeProgress(currentTime);
     progressBarRef.current.value = currentTime;
     progressBarRef.current.style.setProperty(
-      '--range-progress',
+      "--range-progress",
       `${(progressBarRef.current.value / duration) * 100}%`
     );
 
@@ -59,42 +59,31 @@ const Controls = ({
     }
   }, [isPlaying, audioRef, repeat]);
 
-
-
   const skipForward = () => {
     audioRef.current.currentTime += 10;
   };
-  
+
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
   };
 
-const handlePrevious = () => {};
 
-const handleNext = () => {};
 
   return (
     <div className="controls-wrapper">
-    <div className="controls">
-      {/* <button onClick={handlePrevious}>
-        <IoPlaySkipBackSharp />
-      </button> */}
-      <button onClick={skipBackward}>
-        <Replay10Icon className="skip__back--btn"/>
-      </button>
+      <div className="controls">
+        <button className="skip__back--btn" onClick={skipBackward}>
+          <Replay10Icon className="skip__back--btn" />
+        </button>
 
-      <button className="play-btn" onClick={togglePlayPause}>
-        {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
-      </button>
-      <button onClick={skipForward}>
-       <Forward10Icon className="skip__forward--btn"/>
-        
-      </button>
-      {/* <button onClick={handleNext}>
-        <IoPlaySkipForwardSharp />
-      </button> */}
+        <button className="play-btn" onClick={togglePlayPause}>
+          {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
+        </button>
+        <button className="skip__forward--btn" onClick={skipForward}>
+          <Forward10Icon className="skip__forward--btn" />
+        </button>
+      </div>
     </div>
-  </div>
   );
 };
 
