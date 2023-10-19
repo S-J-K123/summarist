@@ -7,6 +7,8 @@ import {
   IoPlaySharp,
   IoPauseSharp,
 } from "react-icons/io5";
+import Forward10Icon from '@mui/icons-material/Forward10';
+import Replay10Icon from '@mui/icons-material/Replay10';
 
 const Controls = ({
   audio,
@@ -74,22 +76,23 @@ const handleNext = () => {};
   return (
     <div className="controls-wrapper">
     <div className="controls">
-      <button onClick={handlePrevious}>
+      {/* <button onClick={handlePrevious}>
         <IoPlaySkipBackSharp />
-      </button>
+      </button> */}
       <button onClick={skipBackward}>
-        <IoPlayBackSharp />
+        <Replay10Icon className="skip__back--btn"/>
       </button>
 
-      <button onClick={togglePlayPause}>
+      <button className="play-btn" onClick={togglePlayPause}>
         {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
       </button>
       <button onClick={skipForward}>
-        <IoPlayForwardSharp />
+       <Forward10Icon className="skip__forward--btn"/>
+        
       </button>
-      <button onClick={handleNext}>
+      {/* <button onClick={handleNext}>
         <IoPlaySkipForwardSharp />
-      </button>
+      </button> */}
     </div>
   </div>
   );

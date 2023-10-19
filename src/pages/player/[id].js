@@ -47,7 +47,7 @@ const Audio = () => {
           <div className="audio__wrapper">
             <div className="audio_track--wrapper">
               <figure className="audio__track--image-mask">
-                <figure className="book_image-wrapper">{/* <img/> */}</figure>
+                <figure className="book_image-wrapper"><img className="book__image" src={audio.imageLink}/></figure>
               </figure>
               <div className="audio__track--details-wrapper">
                 <div className="audio__track--title">{audio.title}</div>
@@ -57,13 +57,13 @@ const Audio = () => {
             <div className="audio__controls--wrapper">
               <div className="audio__controls">
                 <button className="audio__controls--btn"></button>
-                <button className="audio__controls--btn audio__controls--btn-play">
+                {/* <button className="audio__controls--btn audio__controls--btn-play">
                   <PlayArrowIcon />
-                </button>
+                </button> */}
                 <button className="audio__controls--btn"></button>
               </div>
             </div>
-            <div className="audio__progress--wrapper">
+            {/* <div className="audio__progress--wrapper">
               <div className="audio__time"></div>
               <input
                 type="range"
@@ -72,7 +72,7 @@ const Audio = () => {
                 className="audio__progress--bar"
               />
               <div className="audio__time">time</div>
-            </div>
+            </div> */}
           </div>
         </>
       ) : (
