@@ -45,9 +45,9 @@ const Audio = () => {
             {audio.summary}
           </div> */}
           <div className="audio__wrapper">
-            <div className="audio_track--wrapper">
+            <div className="audio__track--wrapper">
               <figure className="audio__track--image-mask">
-                <figure className="book_image-wrapper"><img className="book__image" src={audio.imageLink}/></figure>
+                <figure className="audio__book--image-wrapper"><img className="book__image" src={audio.imageLink}/></figure>
               </figure>
               <div className="audio__track--details-wrapper">
                 <div className="audio__track--title">{audio.title}</div>

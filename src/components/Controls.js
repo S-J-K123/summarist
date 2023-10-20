@@ -73,14 +73,14 @@ const Controls = ({
     <div className="controls-wrapper">
       <div className="controls">
         <button className="skip__back--btn" onClick={skipBackward}>
-          <Replay10Icon className="skip__back--btn" />
+          <Replay10Icon style={{ fontSize: '40px' }} className="skip__back--btn" />
         </button>
 
         <button className="play-btn" onClick={togglePlayPause}>
           {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
         </button>
         <button className="skip__forward--btn" onClick={skipForward}>
-          <Forward10Icon className="skip__forward--btn" />
+          <Forward10Icon style={{ fontSize: '40px' }} className="skip__forward--btn" />
         </button>
       </div>
     </div>
