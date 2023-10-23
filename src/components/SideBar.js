@@ -17,7 +17,7 @@ export default function SideBar() {
   };
 
   return (
-    <div className=" hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 h-full">
+    <div className=" hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 h-full z-[1]">
       <div>
         <img
           className="w-[100] h-[40px] ml-5 mt-5"

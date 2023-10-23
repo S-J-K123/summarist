@@ -7,6 +7,7 @@ import SignUpModal from "@component/components/modals/SignUpModal"
 import Reset from "@component/components/modals/ResetModal"
 import { useSelector } from "react-redux"
 import AudioPlayer from '../components/AudioPlayer';
+import Plan from '../pages/Plan';
 //css
 // import './styles/customize-progress-bar.css';
 // import './styles/index.css';
@@ -18,6 +19,7 @@ export default function Home() {
 {/* <AudioPlayer/> */}
 {/* <ForYou/> */}
 {/* <Settings/> */}
+{/* <Plan/> */}
 
     </div>
   )

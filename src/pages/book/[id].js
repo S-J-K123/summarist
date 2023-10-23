@@ -103,7 +103,9 @@ export default function BookDetails() {
               <div className="inner-book__read--icon ">
                 <ImportContactsIcon className=".inner-book__read--icon svg" />
               </div>
+              <Link href={`/player/${id}`} >
               <div className="inner-book__read--text">Read</div>
+              </Link>
             </button>
             <button className="inner-book__read--btn">
               <div className="inner-book__read--icon ">
