@@ -17,7 +17,7 @@ export default function SideBar() {
   };
 
   return (
-    <div className=" hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 h-full z-[1]">
+    <div className=" sidebar hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]">
       <div>
         <img
           className="w-[100] h-[40px] ml-5 mt-5"
@@ -25,15 +25,22 @@ export default function SideBar() {
         />
       </div>
       <nav className="space-y-5">
-        <Link href="/ForYou">
+        <div className="group__wrapper">
+              <div className="top__4">
+                 <Link href="/ForYou">
           <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
         </Link>
 
         <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
         <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
         <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
+        </div>
+ 
+
+
         <div className="pt-[84px] space-y-5">
-          <Link href="/Settings">
+          <div className="bottom__3">
+                   <Link href="/Settings">
             <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />
           </Link>
 
@@ -48,6 +55,10 @@ export default function SideBar() {
             onClick={(e) => logUserOut(e)}
             className="logout-btn"
           />
+          </div>
+        </div>
+    
+   
         </div>
       </nav>
     </div>

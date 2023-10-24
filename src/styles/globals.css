@@ -1717,6 +1717,29 @@ button:disabled {
 
 
 
-.sidebar__bump-up{
+/* .sidebar__bump-up{
   height: calc(-140px - 100vh);
+} */
+
+.sidebar{
+ height: calc(100vh - 80px);
+
+}
+
+/* .top__4{
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+}
+
+.bottom__3{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+} */
+
+.group__wrapper{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
