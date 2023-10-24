@@ -1714,3 +1714,9 @@ button:disabled {
   color: #032b41;
   font-weight: 500;
 }
+
+
+
+.sidebar__bump-up{
+  height: calc(-140px - 100vh);
+}
