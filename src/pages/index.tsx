@@ -15,11 +15,11 @@ import Plan from '../pages/Plan';
 export default function Home() {
   return (
 <div>
-<HomePage/>
+{/* <HomePage/> */}
 {/* <AudioPlayer/> */}
 {/* <ForYou/> */}
 {/* <Settings/> */}
-{/* <Plan/> */}
+<Plan/>
 
     </div>
   )

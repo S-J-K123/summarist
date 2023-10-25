@@ -10,21 +10,29 @@ import Link from "next/link";
 import { auth } from "../../firebase";
 
 export default function SideBar() {
+  // const router = useRouter();
+  // const { id, pathname } = router.query;
   const logUserOut = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
     auth.signOut();
     // window.location.reload(); // Commenting this out since it's not necessary
   };
 
+  // className={`sidebar__wrapper ${
+  //   pathname && pathname.startsWith("/player")
+  //     ? "sidebar__bump-up"
+  //     : ""
+  // }`}
+
   return (
-    <div className=" sidebar hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]">
+    <div className="sidebar hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]">
       <div>
         <img
           className="w-[100] h-[40px] ml-5 mt-5"
           src="../assets/summarist.webp"
         />
       </div>
-      <nav className="space-y-5">
+      <nav className="space-y-5 pl-5">
         <div className="group__wrapper">
               <div className="top__4">
                  <Link href="/ForYou">
@@ -38,7 +46,7 @@ export default function SideBar() {
  
 
 
-        <div className="pt-[84px] space-y-5">
+        <div className="space-y-5">
           <div className="bottom__3">
                    <Link href="/Settings">
             <SideBarLink text={"Settings"} Icon={SettingsSuggestOutlinedIcon} />

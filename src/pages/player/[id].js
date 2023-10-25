@@ -7,12 +7,10 @@ import DisplayTrack from "../../components/DisplayTrack";
 import AudioPlayer from "../../components/AudioPlayer";
 import Input from "../../components/Input";
 
-
-
 const Audio = () => {
   const [audio, setAudio] = useState();
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); 
+  const router = useRouter();
   const { id, pathname } = router.query;
 
   console.log(id);
@@ -36,13 +34,7 @@ const Audio = () => {
 
   return (
     <div>
-      <SideBar
-        className={`sidebar__wrapper ${
-          pathname && pathname.startsWith("/player")
-            ? "sidebar__bump-up"
-            : ""
-        }`}
-      />
+      <SideBar />
       {!loading && audio ? (
         <>
           <DisplayTrack audio={audio} />
@@ -57,7 +49,9 @@ const Audio = () => {
           <div className="audio__wrapper">
             <div className="audio__track--wrapper">
               <figure className="audio__track--image-mask">
-                <figure className="audio__book--image-wrapper"><img className="book__image" src={audio.imageLink}/></figure>
+                <figure className="audio__book--image-wrapper">
+                  <img className="book__image" src={audio.imageLink} />
+                </figure>
               </figure>
               <div className="audio__track--details-wrapper">
                 <div className="audio__track--title">{audio.title}</div>

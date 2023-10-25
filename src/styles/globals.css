@@ -229,7 +229,7 @@
 }
 
 .hoverAnimation {
-  @apply hover:bg-black hover:bg-opacity-5 xl:p-3 cursor-pointer;
+  @apply hover:bg-black hover:bg-opacity-5 cursor-pointer;
 }
 
 .hover-books {
@@ -1722,8 +1722,7 @@ button:disabled {
 } */
 
 .sidebar{
- height: calc(100vh - 80px);
-
+ height: calc(100vh - 90px);
 }
 
 /* .top__4{
@@ -1738,8 +1737,36 @@ flex-direction: column;
   flex-direction: column;
 } */
 
-.group__wrapper{
+.group__wrapper {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  height: calc(100vh - 90px);
 }
+
+
+
+/*FAQ*/
+
+
+
+
+ .faqs .faq .faq-answer {
+	opacity: 0;
+	max-height: 0;
+	overflow-y: hidden;
+	transition: all 0.4s ease-out;
+}
+
+.faqs .faq.open .faq-question {
+	margin-bottom: 15px;
+}
+
+.faqs .faq.open .faq-question::after {
+	transform: translateY(-50%) rotate(180deg);
+}
+
+.faqs .faq.open .faq-answer {
+	max-height: 1000px;
+	opacity: 1;
+} 
