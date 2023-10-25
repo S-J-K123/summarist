@@ -8,10 +8,11 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Link from "next/link";
 import { auth } from "../../firebase";
+import { useRouter } from "next/router";
 
 export default function SideBar() {
-  // const router = useRouter();
-  // const { id, pathname } = router.query;
+  const router = useRouter();
+  const { id, pathname } = router.query;
   const logUserOut = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
     auth.signOut();
@@ -25,7 +26,12 @@ export default function SideBar() {
   // }`}
 
   return (
-    <div className="sidebar hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]">
+    // <div className="sidebar hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]">
+    <div   className={`sidebar__wrapper ${
+      pathname && pathname.startsWith("/player")
+        ? "sidebar__bump-up"
+        : ""
+    }`}>
       <div>
         <img
           className="w-[100] h-[40px] ml-5 mt-5"
