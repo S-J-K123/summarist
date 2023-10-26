@@ -1719,11 +1719,15 @@ button:disabled {
 
 .sidebar__bump-up{
   height: calc(-140px - 100vh);
+  background-color: #f7faf9;
 }
-/* 
-.sidebar{
+
+
+ 
+/* .sidebar{
  height: calc(100vh - 90px);
-} */
+ background-color: #f7faf9;
+}  */
 
 /* .top__4{
 display: flex;

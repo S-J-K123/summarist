@@ -12,19 +12,18 @@ import { useRouter } from "next/router";
 
 export default function SideBar() {
   const router = useRouter();
-  const { pathname } = router.query || {};
-  const isPlayerPage = pathname && pathname.startsWith("/player/");
+  const { pathname } = router;
+
   const logUserOut = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     auth.signOut();
-    // window.location.reload(); // Commenting this out since it's not necessary
   };
 
   return (
     <div
       className={`${
-        pathname.startsWith("/player/") ? "sidebar__bump-up" : "sidebar"
-      } hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1]`}
+        pathname.startsWith("/player/") ? " sidebar__bump-up" : "sidebar"
+      } hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1] h-full`}
     >
       <div>
         <img
