@@ -1717,13 +1717,13 @@ button:disabled {
 
 
 
-/* .sidebar__bump-up{
+.sidebar__bump-up{
   height: calc(-140px - 100vh);
-} */
-
+}
+/* 
 .sidebar{
  height: calc(100vh - 90px);
-}
+} */
 
 /* .top__4{
 display: flex;
@@ -1741,9 +1741,8 @@ flex-direction: column;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  height: calc(100vh - 90px);
+  height: 100%;
 }
-
 
 
 /*FAQ*/
