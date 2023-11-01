@@ -23,11 +23,10 @@ import CloseIcon from "@mui/icons-material/Close";
 const Settings = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true)
-  // const modal__dimRef = useRef<HTMLDivElement>(null);
 
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const dispatch = useDispatch();
-  const isUserAuth = useSelector((state) => state.auth.isUserAuth)
+  // const isUserAuth = useSelector((state) => state.auth.isUserAuth)
   const isModalOpen = useSelector
   const router = useRouter();
   const user = useSelector((state) => state.auth.user)
