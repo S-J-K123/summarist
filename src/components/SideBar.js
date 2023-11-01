@@ -38,13 +38,16 @@ export default function SideBar() {
               <SideBarLink Icon={HomeOutlinedIcon} text={"For you"} />
             </Link>
 
-            <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
+            <Link href={"/Library"}>
+             <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
+            </Link>
+           
             <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
             <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
           </div>
 
           <div className="space-y-5">
-            <div className="bottom__3">
+            <div className="bottom__3 pb-12">
               <Link href="/Settings">
                 <SideBarLink
                   text={"Settings"}
@@ -76,10 +79,12 @@ function SideBarLink({ text, Icon, disabled, onClick, className }) {
   return (
     <li
       onClick={onClick} // Handle click event here
-      className={`hoverAnimation mb-14 flex items-center text-[16px] list-none mt-14 ml-2 ${linkClass} ${className}`}
+      className={`hoverAnimation mb-10 flex items-center text-[16px] list-none mt-14 ml-2 ${linkClass} ${className}`}
     >
       <Icon className="mr-4" />
       {text}
     </li>
   );
 }
+
+

@@ -1715,19 +1715,14 @@ button:disabled {
   font-weight: 500;
 }
 
-
-
-.sidebar__bump-up{
-  height: calc(-140px - 100vh);
+.sidebar__bump-up {
+  height: calc(100% - 81px);
   background-color: #f7faf9;
 }
-
-
- 
-/* .sidebar{
- height: calc(100vh - 90px);
+.sidebar{
+ height: 100%;
  background-color: #f7faf9;
-}  */
+} 
 
 /* .top__4{
 display: flex;
