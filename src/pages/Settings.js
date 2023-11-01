@@ -22,9 +22,16 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const Settings = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(true)
+  // const modal__dimRef = useRef<HTMLDivElement>(null);
+
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const dispatch = useDispatch();
+  const isUserAuth = useSelector((state) => state.auth.isUserAuth)
+  const isModalOpen = useSelector
   const router = useRouter();
+  const user = useSelector((state) => state.auth.user)
+  const subscriptionPlan = user?.subscriptionPlan
 
   useEffect(() => {
     const auth = getAuth();
@@ -82,7 +89,10 @@ const Settings = () => {
             <div className="settings-title">Settings</div>
             <div className="setting__content">
               <div className="settings__sub--title">Your Subscription plan</div>
-              <div className="setting__text">premium</div>
+              <div className="setting__text">
+              {subscriptionPlan ? "Premium" : "Basic"}
+              
+              </div>
             </div>
             <div className="settings__content">
               <div className="settings__sub--title">Email</div>
