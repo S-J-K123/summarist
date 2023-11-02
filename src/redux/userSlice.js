@@ -69,13 +69,12 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.uid = action.payload.uid;
     },
-
     signOutUser: (state, action) => {
       state.email = action.payload;
       state.uid = action.payload;
     },
     setIsUserAuth: (state, action) => {
-      state.user = action.payload;
+      state.isUserAuth = action.payload;
     },
   },
 });

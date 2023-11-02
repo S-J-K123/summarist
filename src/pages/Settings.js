@@ -25,7 +25,7 @@ const Settings = () => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  const isUserAuth = useSelector((state) => state.auth.isUserAuth)
+  // const isUserAuth = useSelector((state) => state.auth.isUserAuth)
   const user = useSelector((state) => state.auth.user)
   const subscriptionPlan = user?.subscriptionPlan
 
