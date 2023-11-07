@@ -1,10 +1,16 @@
 import React from "react";
+import { getFirestore } from "firebase/firestore";
+// import { useAuthState } from "react-firebase-hooks/auth"
 import DescriptionIcon from "@mui/icons-material/Description";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Accordion from "../components/Accordion";
+import createMonthlyCheckoutSession from "@component/stripe/createMonthlyCheckoutSession";
+import createYearlyCheckoutSession from "@component/stripe/createYearlyCheckoutSession";
+import userPremiumStatus from "@component/stripe/usePremiumStatus";
 const Plan = () => {
+  const userIsPremium = userPremiumStatus(user)
   const accordionData = [
     {
       title: "How does the free 7-day trial work?",
@@ -112,7 +118,7 @@ const Plan = () => {
               </div>
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
-                  <button style={{ width: "300px" }} className="plan__btn">
+                  <button onClick={() => createYearlyCheckoutSession(user.uid)} style={{ width: "300px" }} className="plan__btn">
                     Start your free 7-day trial
                   </button>
                 </span>

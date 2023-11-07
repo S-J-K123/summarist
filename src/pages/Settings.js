@@ -19,6 +19,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
+import Plan from "../pages/Plan";
+import Link from "next/link";
 
 const Settings = () => {
   const [email, setEmail] = useState("");
@@ -84,10 +86,24 @@ const Settings = () => {
         <div className="settings__container">
           <div className="settings-row">
             <div className="settings-title">Settings</div>
-            <div className="setting__content">
+            {subscriptionPlan ? (
+                  <div className="setting__content">
               <div className="settings__sub--title">Your Subscription plan</div>
-              <div className="setting__text">   {subscriptionPlan ? "Premium" : "Basic"} </div>
+              <div className="setting__text">Premium</div>
             </div>
+            ) : (
+                  <div className="setting__content">
+              <div className="settings__sub--title">Your Subscription plan</div>
+              <div className="setting__text">Basic</div>
+              <Link href="/Plan"
+             style={{ width: 'fit-content' }}
+              className=" upgrade__btn">
+              Upgrade to Premium
+              </Link>
+            </div> 
+            )}
+        
+       
             <div className="settings__content">
               <div className="settings__sub--title">Email</div>
               <div className="setting__text">{email}</div>
