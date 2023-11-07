@@ -1,5 +1,5 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import React from "react";
+import React, { useState } from "react";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -13,10 +13,18 @@ import { useRouter } from "next/router";
 export default function SideBar() {
   const router = useRouter();
   const { pathname } = router;
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set initial authentication status
 
-  const logUserOut = (event) => {
+  const logUserInOut = (event) => {
     event.preventDefault();
-    auth.signOut();
+    if (isAuthenticated) {
+      auth.signOut();
+    } else {
+      // Perform login logic here
+      // For example, redirect to the login page
+      router.push("/ForYou");
+    }
+    setIsAuthenticated(!isAuthenticated); // Toggle authentication status
   };
 
   return (
@@ -39,9 +47,9 @@ export default function SideBar() {
             </Link>
 
             <Link href={"/Library"}>
-             <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
+              <SideBarLink text={"My Library"} Icon={TurnedInNotOutlinedIcon} />
             </Link>
-           
+
             <SideBarLink disabled text={"Highlights"} Icon={EditOutlinedIcon} />
             <SideBarLink disabled text={"Search"} Icon={SearchOutlinedIcon} />
           </div>
@@ -61,9 +69,9 @@ export default function SideBar() {
                 Icon={HelpOutlineOutlinedIcon}
               />
               <SideBarLink
-                text={"Logout"}
+                text={isAuthenticated ? "Logout" : "Login"} // Change text based on authentication status
                 Icon={LogoutOutlinedIcon}
-                onClick={(e) => logUserOut(e)}
+                onClick={(e) => logUserInOut(e)}
                 className="logout-btn"
               />
             </div>
@@ -86,5 +94,3 @@ function SideBarLink({ text, Icon, disabled, onClick, className }) {
     </li>
   );
 }
-
-
