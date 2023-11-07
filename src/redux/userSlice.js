@@ -21,10 +21,9 @@ import { useEffect } from "react";
 //   user: null,
 //   isUserAuth: false,
 // }
-
 export const initializeAuth = createAsyncThunk(
   "auth/initializeAuth",
-  async(_, {dispatch}) => {
+  async (_, { dispatch }) => {
     const auth = getAuth();
     return new Promise((resolve) => {
       onAuthStateChanged(auth, async (user) => {
@@ -38,16 +37,17 @@ export const initializeAuth = createAsyncThunk(
             subscriptionPlan: decodedToken.claims.stripeRole,
           };
           dispatch(setUser(userObj));
-          dispatch(setIsUserAuth(true))
+          dispatch(setIsUserAuth(true));
         } else {
           dispatch(setUser(null));
-          dispatch(setIsUserAuth(false))
+          dispatch(setIsUserAuth(false));
         }
         resolve();
-      })
-    })
+      });
+    });
   }
-)
+);
+
 
 
 

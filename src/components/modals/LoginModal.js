@@ -5,7 +5,7 @@ import { Modal } from "@mui/material";
 import { browserLocalPersistence, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { toggleLoginModal } from "@component/redux/ModalSlice";
 import { useEffect, useState } from "react";
-import { setUser } from "@component/redux/userSlice";
+import { setIsUserAuth, setUser } from "@component/redux/userSlice";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import CloseIcon from '@mui/icons-material/Close';
@@ -40,6 +40,7 @@ async function handleSignIn() {
   await signInWithEmailAndPassword(auth, email, password);
   router.push("/ForYou");
   dispatch(toggleLoginModal());
+  dispatch(setIsUserAuth(true));
 }
 
 async function guestLogIn() {
@@ -52,7 +53,10 @@ async function guestLogIn() {
   } catch (error) {
     alert(error);
   }
-};
+  dispatch(setIsUserAuth(true));
+  dispatch(toggleLoginModal());
+  console.log(auth.currentUser)
+}
 
 const handleOpenSignUpModal = () => {
   setIsSignUpOpen(true);

@@ -9,22 +9,29 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Link from "next/link";
 import { auth } from "../../firebase";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsUserAuth } from "@component/redux/userSlice";
+import { toggleLoginModal } from "@component/redux/ModalSlice";
+import LoginModal from "./modals/LoginModal";
+import SignUpModal from "./modals/SignUpModal";
+import ResetModal from "./modals/ResetModal";
 
 export default function SideBar() {
   const router = useRouter();
   const { pathname } = router;
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set initial authentication status
+  const dispatch = useDispatch();
+  const isUserAuth = useSelector((state) => state.user.isUserAuth);
 
   const logUserInOut = (event) => {
     event.preventDefault();
-    if (isAuthenticated) {
+    if (isUserAuth) {
       auth.signOut();
+      dispatch(setIsUserAuth(false));
     } else {
-      // Perform login logic here
-      // For example, redirect to the login page
+      dispatch(toggleLoginModal());
       router.push("/ForYou");
     }
-    setIsAuthenticated(!isAuthenticated); // Toggle authentication status
+    console.log(auth.currentUser);
   };
 
   return (
@@ -33,6 +40,11 @@ export default function SideBar() {
         pathname.startsWith("/player/") ? " sidebar__bump-up" : "sidebar"
       } hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1] h-full`}
     >
+      <div className="hidden">
+        <LoginModal />
+        <SignUpModal />
+        <ResetModal />
+      </div>
       <div>
         <img
           className="w-[100] h-[40px] ml-5 mt-5"
@@ -69,7 +81,7 @@ export default function SideBar() {
                 Icon={HelpOutlineOutlinedIcon}
               />
               <SideBarLink
-                text={isAuthenticated ? "Logout" : "Login"} // Change text based on authentication status
+                text={isUserAuth ? "Logout" : "Login"} // Change text based on authentication status
                 Icon={LogoutOutlinedIcon}
                 onClick={(e) => logUserInOut(e)}
                 className="logout-btn"
