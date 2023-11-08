@@ -35,6 +35,7 @@ const Plan = () => {
 
     return () => unsubscribe();
   }, [user]);
+
   const accordionData = [
     {
       title: "How does the free 7-day trial work?",
@@ -132,10 +133,8 @@ const Plan = () => {
               <div className="plan__card--separator">
                 <div className="plan__separator">or</div>
               </div>
-              <div className="plan__card">
-                <div className="plan__card--circle">
-                {/* <div className="plan__card--dot"></div> */}
-                </div>
+              <div className="plan__card ">
+                <div className="plan__card--circle"></div>
                 <div className="plan__card--content">
                   <div className="plan__card--title">Premium Monthly</div>
                   <div className="plan__card--price">$9.99/month</div>
@@ -144,7 +143,11 @@ const Plan = () => {
               </div>
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
-                  <button onClick={() => createYearlyCheckoutSession(user.uid)} style={{ width: "300px" }} className="plan__btn">
+                  <button
+                    onClick={() => createYearlyCheckoutSession(user.uid)}
+                    style={{ width: "300px" }}
+                    className="plan__btn"
+                  >
                     Start your free 7-day trial
                   </button>
                 </span>

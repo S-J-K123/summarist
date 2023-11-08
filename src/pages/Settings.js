@@ -28,23 +28,29 @@ const Settings = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   // const isUserAuth = useSelector((state) => state.auth.isUserAuth)
-  const user = useSelector((state) => state.user.user)
-
+  const user = auth.currentUser;
   const subscriptionPlan = user?.subscriptionPlan
-
+  
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const userEmail = user.email;
         setEmail(userEmail);
+        const userObj = {
+          uid: user.uid,
+          email: user.email,
+        };
+        console.log(userObj);
+        dispatch(setUser(userObj));
       } else {
         setEmail(null);
       }
     });
-
+    
     return () => unsubscribe();
   }, [email]);
+
 
   const handleHideSignUpModal = () => {
     setIsSignUpOpen(false);
