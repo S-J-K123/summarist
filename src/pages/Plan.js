@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getFirestore } from "firebase/firestore";
 // import { useAuthState } from "react-firebase-hooks/auth"
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -8,9 +8,33 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Accordion from "../components/Accordion";
 import createMonthlyCheckoutSession from "@component/stripe/createMonthlyCheckoutSession";
 import createYearlyCheckoutSession from "@component/stripe/createYearlyCheckoutSession";
-import userPremiumStatus from "@component/stripe/usePremiumStatus";
+import isUserPremium from "@component/stripe/isUserPremium";
+import { auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { initializeAuth, setUser } from "../redux/userSlice";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 const Plan = () => {
-  const userIsPremium = userPremiumStatus(user)
+  const dispatch = useDispatch();
+  const userIsPremium = isUserPremium();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userEmail = user.email;
+        const userObj = {
+          uid: user.uid,
+          email: user.email,
+        };
+        console.log(userObj);
+        dispatch(setUser(userObj));
+      } else {
+      }
+    });
+
+    return () => unsubscribe();
+  }, [user]);
   const accordionData = [
     {
       title: "How does the free 7-day trial work?",
@@ -108,8 +132,10 @@ const Plan = () => {
               <div className="plan__card--separator">
                 <div className="plan__separator">or</div>
               </div>
-              <div className="plan__card ">
-                <div className="plan__card--circle"></div>
+              <div className="plan__card">
+                <div className="plan__card--circle">
+                {/* <div className="plan__card--dot"></div> */}
+                </div>
                 <div className="plan__card--content">
                   <div className="plan__card--title">Premium Monthly</div>
                   <div className="plan__card--price">$9.99/month</div>

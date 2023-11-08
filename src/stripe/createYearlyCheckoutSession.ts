@@ -10,7 +10,7 @@ export default async function createMonthlyCheckoutSession(uid: string) {
     {
       price: "price_1O7lWVIF9ewxL6S04FCbuZGz",
       success_url: window.location.origin + "/success",
-      cancel_url: window.location.origin + "/settings"
+      cancel_url: window.location.origin + "/Settings"
     }
   );
    
