@@ -15,8 +15,15 @@ import { auth, db } from "../../../firebase";
 import LoginModal from "../../components/modals/LoginModal";
 import SignUpModal from "../../components/modals/SignUpModal";
 import ResetModal from "../../components/modals/ResetModal";
-import { toggleLoginModal } from "@component/redux/ModalSlice";
+import {
+  closeSignUpModal,
+  openSignUpModal,
+  toggleLoginModal,
+  toggleSignUpModal,
+} from "@component/redux/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { getAuth } from "firebase/auth";
 
 export default function BookDetails() {
   const router = useRouter();
@@ -25,6 +32,8 @@ export default function BookDetails() {
   const [isBookMarked, setIsBookMarked] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const dispatch = useDispatch();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -51,6 +60,55 @@ export default function BookDetails() {
       );
     }
   }
+
+  // const handleOpenSignUpModal = () => {
+  //   setIsSignUpOpen(true);
+  //   dispatch(toggleLoginModal()); // Close the loginModal
+  // };
+
+  const handleSaveToLibrary = async () => {
+    try {
+      const user = getAuth().currentUser;
+      if (user) {
+        await setDoc(doc(db, "users", user.uid, "library", id), {
+          bookId: id,
+        });
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error("Error saving book to library:", error);
+    }
+  };
+
+  const handleRemoveFromLibrary = async () => {
+    try {
+      const user = getAuth().currentUser;
+      if (user) {
+        const docRef = doc(db, "users", user.uid, "library", id);
+        await deleteDoc(docRef);
+        setIsBookmarked(false);
+      }
+    } catch (error) {
+      console.error("Error removing book from library:", error);
+    }
+  };
+  const checkIfBookIsBookmarked = async () => {
+    try {
+      const user = getAuth().currentUser;
+      const bookId = params.id;
+      if (user) {
+        const docRef = doc(db, "users", user.uid, "library", bookId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setIsBookmarked(true);
+        } else {
+          setIsBookmarked(false);
+        }
+      }
+    } catch (error) {
+      console.error("Error checking if book is bookmarked:", error);
+    }
+  };
 
   async function bookId() {
     try {
@@ -149,22 +207,33 @@ export default function BookDetails() {
             </button>
           </div>
 
-          <div className="inner-book__bookmark">
-            <div className="inner-book__bookmark--icon">
-              <TurnedInNotIcon />
+          {isUserLoggedIn ? (
+            <div
+              className="inner-book__bookmark"
+              onClick={
+                isBookmarked ? handleRemoveFromLibrary : handleSaveToLibrary
+              }
+            >
+              <div className="inner-book__bookmark--icon">
+                {isBookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+              </div>
+              <div className="inner-book__bookmark--text">
+                {isBookmarked ? "Book saved!" : "Add title to My Library"}
+              </div>
             </div>
-            <div className="inner-book__bookmark--text" onClick={() => dispatch(toggleLoginModal())}>
-        {isUserLoggedIn ? (
-          isBookMarked ? (
-            "Book saved!"
           ) : (
-            "Add title to My Library"
-          )
-        ) : (
-          <SignUpModal />
-        )}
-      </div>
-          </div>
+            <div
+              className="inner-book__bookmark"
+              onClick={toggleSignUpModal}
+            >
+              <div className="inner-book__bookmark--icon">
+                {isBookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+              </div>
+              <div className="inner-book__bookmark--text">
+                {isBookmarked ? "Book saved!" : "Add title to My Library"}
+              </div>
+            </div>
+          )}
 
           <div className="inner-book__secondary--title">What's it about?</div>
           <div className="inner-book__tags--wrapper">
