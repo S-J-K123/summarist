@@ -1,20 +1,25 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { doc, getDoc, deleteDoc, setDoc } from 'firebase/firestore';
+import {  getAuth } from 'firebase/auth';
+import axios from 'axios';
+import Input from '../../components/Input';
+import Link from 'next/link';
+import Skeleton from '../../components/Skeleton';
+import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5';
 import SideBar from "@component/components/SideBar";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MicIcon from "@mui/icons-material/Mic";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
-import Input from "../../components/Input";
-import Link from "next/link";
-import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 import LoginModal from "../../components/modals/LoginModal";
 import SignUpModal from "../../components/modals/SignUpModal";
 import ResetModal from "../../components/modals/ResetModal";
+import { initializeAuth } from "../../redux/userSlice";
+
 import {
   closeSignUpModal,
   openSignUpModal,
@@ -22,109 +27,129 @@ import {
   toggleSignUpModal,
 } from "@component/redux/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
-import { getAuth } from "firebase/auth";
+
+
+
 
 export default function BookDetails() {
   const router = useRouter();
-  const { id } = router.query;
   const [posts, setPosts] = useState([]);
   const [isBookMarked, setIsBookMarked] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const dispatch = useDispatch();
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch()
+
+  const user = auth.currentUser;
 
   useEffect(() => {
-    const user = auth.currentUser;
     if (user) {
       setIsUserLoggedIn(true);
     } else {
       setIsUserLoggedIn(false);
     }
-  }, []);
+  }, [user]);
 
   async function getBookById() {
     const user = auth.currentUser;
     const bookId = router.query.id;
 
     if (user) {
-      await setDoc(doc(db, "users", user.uid, "library", bookId), {
+      await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
         bookId: bookId,
       });
       setIsBookMarked(true);
-      console.log("Bookmarked");
+      console.log('Bookmarked');
     } else {
       console.log(
-        "User not logged in. Open modal or handle non-logged-in user case."
+        'User not logged in. Open modal or handle non-logged-in user case.'
       );
     }
   }
 
-  // const handleOpenSignUpModal = () => {
-  //   setIsSignUpOpen(true);
-  //   dispatch(toggleLoginModal()); // Close the loginModal
-  // };
+  const handleOpenSignUpModal = () => {
+    setIsSignUpOpen(true);
+    dispatch(toggleLoginModal()); // Close the loginModal
+  };
 
   const handleSaveToLibrary = async () => {
     try {
       const user = getAuth().currentUser;
+      const bookId = router.query.id; // Use router.query.id here
+
       if (user) {
-        await setDoc(doc(db, "users", user.uid, "library", id), {
-          bookId: id,
+        await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
+          bookId: bookId,
         });
         setIsBookmarked(true);
       }
     } catch (error) {
-      console.error("Error saving book to library:", error);
+      console.error('Error saving book to library:', error);
     }
   };
 
   const handleRemoveFromLibrary = async () => {
     try {
       const user = getAuth().currentUser;
+      const bookId = router.query.id; // Use router.query.id here
+
       if (user) {
-        const docRef = doc(db, "users", user.uid, "library", id);
+        const docRef = doc(db, 'users', user.uid, 'library', bookId);
         await deleteDoc(docRef);
-        setIsBookmarked(false);
+        setIsBookMarked(false);
       }
     } catch (error) {
-      console.error("Error removing book from library:", error);
+      console.error('Error removing book from library:', error);
     }
   };
+
   const checkIfBookIsBookmarked = async () => {
     try {
       const user = getAuth().currentUser;
-      const bookId = params.id;
+      const bookId = router.query.id; // Use router.query.id here
+
       if (user) {
-        const docRef = doc(db, "users", user.uid, "library", bookId);
+        const docRef = doc(db, 'users', user.uid, 'library', bookId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setIsBookmarked(true);
+          setIsBookMarked(true);
         } else {
-          setIsBookmarked(false);
+          setIsBookMarked(false);
         }
       }
     } catch (error) {
-      console.error("Error checking if book is bookmarked:", error);
+      console.error('Error checking if book is bookmarked:', error);
     }
   };
 
   async function bookId() {
     try {
+      setLoading(true);
       const { data } = await axios.get(
-        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${router.query.id}`
       );
       setPosts(data);
       console.log(data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    bookId();
-  }, [id]);
+    if (router.query.id) {
+      checkIfBookIsBookmarked();
+      bookId();
+    }
+    
+  }, [router.query.id]);
+
+  useEffect(() => {
+    dispatch(initializeAuth()).then(() => {
+    });
+  }, [dispatch]);
+
 
   return (
     <div>
@@ -142,9 +167,15 @@ export default function BookDetails() {
         <div className="text-wrapper">
           <div className="inner-wrapper">
             <div className="inner-book">
-              <div className="inner-book-title">{posts.title}</div>
-              <div className="inner-book-author">{posts.author}</div>
-              <div className="inner-book-subtitle">{posts.subTitle}</div>
+              {loading ? (
+                <Skeleton width={300} height={300} />
+              ) : (
+                <>
+                  <div className="inner-book-title">{posts.title}</div>
+                  <div className="inner-book-author">{posts.author}</div>
+                  <div className="inner-book-subtitle">{posts.subTitle}</div>
+                </>
+              )}
             </div>
           </div>
 
@@ -193,7 +224,7 @@ export default function BookDetails() {
               <div className="inner-book__read--icon ">
                 <ImportContactsIcon className=".inner-book__read--icon svg" />
               </div>
-              <Link href={`/player/${id}`}>
+              <Link href={`/player/${router.query.id}`}>
                 <div className="inner-book__read--text">Read</div>
               </Link>
             </button>
@@ -201,7 +232,7 @@ export default function BookDetails() {
               <div className="inner-book__read--icon ">
                 <MicIcon className=".inner-book__read--icon svg" />
               </div>
-              <Link href={`/player/${id}`}>
+              <Link href={`/player/${router.query.id}`}>
                 <div className="inner-book__read--text">Listen</div>
               </Link>
             </button>
@@ -211,26 +242,26 @@ export default function BookDetails() {
             <div
               className="inner-book__bookmark"
               onClick={
-                isBookmarked ? handleRemoveFromLibrary : handleSaveToLibrary
+                isBookMarked ? handleRemoveFromLibrary : handleSaveToLibrary
               }
             >
               <div className="inner-book__bookmark--icon">
-                {isBookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+                {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
               </div>
               <div className="inner-book__bookmark--text">
-                {isBookmarked ? "Book saved!" : "Add title to My Library"}
+                {isBookMarked ? "Book saved!" : "Add title to My Library"}
               </div>
             </div>
           ) : (
             <div
               className="inner-book__bookmark"
-              onClick={toggleSignUpModal}
+              onClick={handleOpenSignUpModal}
             >
               <div className="inner-book__bookmark--icon">
-                {isBookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+                {isBookMarked? <IoBookmark /> : <IoBookmarkOutline />}
               </div>
               <div className="inner-book__bookmark--text">
-                {isBookmarked ? "Book saved!" : "Add title to My Library"}
+                {isBookMarked ? "Book saved!" : "Add title to My Library"}
               </div>
             </div>
           )}
@@ -249,9 +280,13 @@ export default function BookDetails() {
           </div>
         </div>
         <div className="inner-book--img-wrapper">
-          <figure className="book__image--wrapper">
-            <img src={posts.imageLink} className="book__image" />
-          </figure>
+          {loading ? (
+            <Skeleton width={300} height={300} />
+          ) : (
+            <figure className="book__image--wrapper">
+              <img src={posts.imageLink} className="book__image" />
+            </figure>
+          )}
         </div>
       </div>
     </div>

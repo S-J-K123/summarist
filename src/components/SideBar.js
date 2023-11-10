@@ -21,15 +21,17 @@ export default function SideBar() {
   const { pathname } = router;
   const dispatch = useDispatch();
   const isUserAuth = useSelector((state) => state.user.isUserAuth);
-
+const user = auth.currentUser
+const email = user
+console.log(user)
   const logUserInOut = (event) => {
     event.preventDefault();
-    if (isUserAuth) {
+    if (user) {
       auth.signOut();
       dispatch(setIsUserAuth(false));
     } else {
       dispatch(toggleLoginModal());
-      router.push("/ForYou");
+   
     }
     console.log(auth.currentUser);
   };
@@ -81,7 +83,7 @@ export default function SideBar() {
                 Icon={HelpOutlineOutlinedIcon}
               />
               <SideBarLink
-                text={isUserAuth ? "Logout" : "Login"} // Change text based on authentication status
+                text={user ? "Logout" : "Login"} // Change text based on authentication status
                 Icon={LogoutOutlinedIcon}
                 onClick={(e) => logUserInOut(e)}
                 className="logout-btn"

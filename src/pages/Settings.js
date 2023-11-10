@@ -63,11 +63,11 @@ const Settings = () => {
     dispatch(toggleLoginModal()); // Open the loginModal
   };
 
-  const redirectToHome = () => {
-    if (router.pathname !== "/settings") {
-      router.push("/"); // Navigate to the home page if not on the settings page
-    }
-  };
+  // const redirectToHome = () => {
+  //   if (router.pathname !== "/settings") {
+  //     router.push("/"); // Navigate to the home page if not on the settings page
+  //   }
+  // };
 
   return (
     <div>
@@ -132,7 +132,7 @@ const Settings = () => {
               <button
                 onClick={() => {
                   handleCloseSignUpModal();
-                  redirectToHome(); // Navigate to home page when logging in
+                
                 }}
                 className="btn"
               >

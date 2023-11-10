@@ -13,20 +13,40 @@ import {
   toggleLoginModal,
   toggleResetModal,
 } from "@component/redux/ModalSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import SignUpModal from "@component/components/modals/SignUpModal";
 import ResetModal from "@component/components/modals/ResetModal";
 import LoginModal from "@component/components/modals/LoginModal";
+import { initializeAuth, setIsUserAuth } from "@component/redux/userSlice";
+import { useRouter } from "next/router";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-
+  const isUserAuth = useSelector((state) => state.user.isUserAuth);
+const router = useRouter()
   const isOpen = useSelector((state) => state.modals.loginModalOpen);
   const dispatch = useDispatch();
-  console.log(isOpen);
+  const user = auth.currentUser;
+
+
+
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
+  function routePersistentLogIn() {
+    if (isUserAuth === true) {
+      router.push("ForYou");
+    }
+  }
+
+  useEffect(() => {
+    routePersistentLogIn();
+  }, [isUserAuth]);
+
 
   // Function to handle the opening of SignUpModal
   const handleOpenSignUpModal = () => {
@@ -39,7 +59,7 @@ export default function HomePage() {
     setIsSignUpOpen(false);
     dispatch(toggleLoginModal()); // Open the loginModal
     // dispatch(toggleSignUpModal())
-    dispatch(toggleResetModal())
+    dispatch(toggleResetModal());
   };
 
   const username = useSelector((state) => state.user.username);
