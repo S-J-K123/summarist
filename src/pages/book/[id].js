@@ -1,8 +1,7 @@
 import SideBar from "@component/components/SideBar";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useRouter } from "next/router";
+import axios from "axios";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MicIcon from "@mui/icons-material/Mic";
@@ -11,32 +10,36 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import Input from "../../components/Input";
 import Link from "next/link";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 
-// import { title } from "process";
-
 export default function BookDetails() {
-
-  const [posts, setPosts] = useState([]);
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
+  const [posts, setPosts] = useState([]);
   const [isBookMarked, setIsBookMarked] = useState(false);
-  const { booksId } = useParams(id);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const user = auth.currentUser;
+    setIsUserLoggedIn(!!user);
+  }, []);
 
- 
   async function getBookById() {
+    const user = auth.currentUser;
+    const bookId = router.query.id;
+
     if (user) {
-      await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
-        bookId: bookId
+      await setDoc(doc(db, "users", user.uid, "library", bookId), {
+        bookId: bookId,
       });
       setIsBookMarked(true);
+      console.log("Bookmarked");
+    } else {
+
+      console.log("User not logged in. Open modal or handle non-logged-in user case.");
     }
   }
-  
- 
 
   async function bookId() {
     try {
@@ -49,26 +52,19 @@ export default function BookDetails() {
       console.error("Error fetching data:", error);
     }
   }
+
   useEffect(() => {
     bookId();
   }, [id]);
 
   return (
     <div>
-       <SideBar />
+      <SideBar />
       <div className="input-wrapper">
-       
         <Input />
       </div>
 
-      <div className="flex justify-center  w-[50%] ml-[320px] pt-[130px]">
-        {/* {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id}>{post.title}</div>
-          ))
-        ) : (
-          <div>No posts available</div>
-        )} */}
+      <div className="flex justify-center w-[50%] ml-[320px]">
         <div className="text-wrapper">
           <div className="inner-wrapper">
             <div className="inner-book">
@@ -123,18 +119,17 @@ export default function BookDetails() {
               <div className="inner-book__read--icon ">
                 <ImportContactsIcon className=".inner-book__read--icon svg" />
               </div>
-              <Link href={`/player/${id}`} >
-              <div className="inner-book__read--text">Read</div>
+              <Link href={`/player/${id}`}>
+                <div className="inner-book__read--text">Read</div>
               </Link>
             </button>
             <button className="inner-book__read--btn">
               <div className="inner-book__read--icon ">
                 <MicIcon className=".inner-book__read--icon svg" />
               </div>
-              <Link href={`/player/${id}`} >
+              <Link href={`/player/${id}`}>
                 <div className="inner-book__read--text">Listen</div>
               </Link>
-            
             </button>
           </div>
 
@@ -142,10 +137,23 @@ export default function BookDetails() {
             <div className="inner-book__bookmark--icon">
               <TurnedInNotIcon />
             </div>
-            <div className="inner-book__bookmark--text">
-              Add title to My Library
-            </div>
+            {/* Conditional rendering for bookmark text */}
+            {isUserLoggedIn ? (
+              isBookMarked ? (
+                <div className="inner-book__bookmark--text">Book saved!</div>
+              ) : (
+                <div onClick={getBookById} className="inner-book__bookmark--text">
+                  Add title to My Library
+                </div>
+              )
+            ) : (
+             
+              <div onClick={() => console.log("Open modal for login")}>
+                Log in to save this book
+              </div>
+            )}
           </div>
+
           <div className="inner-book__secondary--title">What's it about?</div>
           <div className="inner-book__tags--wrapper">
             <div className="inner-book__tag">Communication Skills</div>
