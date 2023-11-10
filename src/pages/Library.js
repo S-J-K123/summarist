@@ -1,13 +1,40 @@
-import React from 'react';
-import SideBar from "../components/SideBar"
+import React, { useEffect, useState } from "react";
+import SideBar from "../components/SideBar";
+import Input from "../components/Input";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../../firebase";
 
 const Library = () => {
-    return (
-        <div>
-           <SideBar/>
-           
-        </div>
-    );
-}
+  const [savedBooks, setSavedBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchSavedBooks = async () => {
+   
+      const librarySnapshot = await getDocs(collection(db, "users", user.uid, "library"));
+      const books = librarySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setSavedBooks(books);
+    };
+
+    fetchSavedBooks();
+  }, []); 
+
+  return (
+    <div>
+      <SideBar />
+      <Input />
+      <div className="library-container">
+        <div className="for-you__title">Saved Books</div>
+       
+        {savedBooks.map((book) => (
+          <div key={book.id}>
+     
+            <div>{book.bookId}</div>
+
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Library;

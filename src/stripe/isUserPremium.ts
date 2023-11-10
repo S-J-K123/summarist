@@ -1,5 +1,6 @@
 import { User } from "firebase/auth";
 
+
 export default async function isUserPremium(
     user: User | null
 ) : Promise<boolean> {

@@ -11,12 +11,32 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import Input from "../../components/Input";
 import Link from "next/link";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../../firebase";
+
+// import { title } from "process";
 
 export default function BookDetails() {
+
   const [posts, setPosts] = useState([]);
   const router = useRouter();
   const { id } = router.query;
   console.log(id);
+  const [isBookMarked, setIsBookMarked] = useState(false);
+  const { booksId } = useParams(id);
+
+
+ 
+  async function getBookById() {
+    if (user) {
+      await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
+        bookId: bookId
+      });
+      setIsBookMarked(true);
+    }
+  }
+  
+ 
 
   async function bookId() {
     try {

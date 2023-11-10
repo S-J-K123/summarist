@@ -130,6 +130,21 @@ const Plan = () => {
                   </div>
                 </div>
               </div>
+              <div className="plan__card--cta">
+                <span className="btn--wrapper">
+                  <button
+                    onClick={() => createYearlyCheckoutSession(user.uid)}
+                    style={{ width: "300px" }}
+                    className="plan__btn"
+                  >
+                    Start your free 7-day trial
+                  </button>
+                </span>
+                <div className="plan__disclaimer">
+                  Cancel your trial at any time before it ends, and you won’t be
+                  charged.
+                </div>
+              </div>
               <div className="plan__card--separator">
                 <div className="plan__separator">or</div>
               </div>
@@ -144,11 +159,11 @@ const Plan = () => {
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
                   <button
-                    onClick={() => createYearlyCheckoutSession(user.uid)}
+                    onClick={() => createMonthlyCheckoutSession(user.uid)}
                     style={{ width: "300px" }}
                     className="plan__btn"
                   >
-                    Start your free 7-day trial
+                    Start your first month
                   </button>
                 </span>
                 <div className="plan__disclaimer">
