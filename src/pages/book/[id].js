@@ -12,6 +12,11 @@ import Input from "../../components/Input";
 import Link from "next/link";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
+import LoginModal from "../../components/modals/LoginModal";
+import SignUpModal from "../../components/modals/SignUpModal";
+import ResetModal from "../../components/modals/ResetModal";
+import { toggleLoginModal } from "@component/redux/ModalSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function BookDetails() {
   const router = useRouter();
@@ -19,10 +24,15 @@ export default function BookDetails() {
   const [posts, setPosts] = useState([]);
   const [isBookMarked, setIsBookMarked] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const user = auth.currentUser;
-    setIsUserLoggedIn(!!user);
+    if (user) {
+      setIsUserLoggedIn(true);
+    } else {
+      setIsUserLoggedIn(false);
+    }
   }, []);
 
   async function getBookById() {
@@ -36,8 +46,9 @@ export default function BookDetails() {
       setIsBookMarked(true);
       console.log("Bookmarked");
     } else {
-
-      console.log("User not logged in. Open modal or handle non-logged-in user case.");
+      console.log(
+        "User not logged in. Open modal or handle non-logged-in user case."
+      );
     }
   }
 
@@ -60,6 +71,11 @@ export default function BookDetails() {
   return (
     <div>
       <SideBar />
+      <div className="hidden">
+        <LoginModal />
+        <SignUpModal />
+        <ResetModal />
+      </div>
       <div className="input-wrapper">
         <Input />
       </div>
@@ -137,21 +153,17 @@ export default function BookDetails() {
             <div className="inner-book__bookmark--icon">
               <TurnedInNotIcon />
             </div>
-            {/* Conditional rendering for bookmark text */}
-            {isUserLoggedIn ? (
-              isBookMarked ? (
-                <div className="inner-book__bookmark--text">Book saved!</div>
-              ) : (
-                <div onClick={getBookById} className="inner-book__bookmark--text">
-                  Add title to My Library
-                </div>
-              )
-            ) : (
-             
-              <div onClick={() => console.log("Open modal for login")}>
-                Log in to save this book
-              </div>
-            )}
+            <div className="inner-book__bookmark--text" onClick={() => dispatch(toggleLoginModal())}>
+        {isUserLoggedIn ? (
+          isBookMarked ? (
+            "Book saved!"
+          ) : (
+            "Add title to My Library"
+          )
+        ) : (
+          <SignUpModal />
+        )}
+      </div>
           </div>
 
           <div className="inner-book__secondary--title">What's it about?</div>
