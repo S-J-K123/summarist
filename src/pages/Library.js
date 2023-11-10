@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import Input from "../components/Input";
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../../../firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { auth, db } from "../../firebase"; 
 
 const Library = () => {
   const [savedBooks, setSavedBooks] = useState([]);
 
   useEffect(() => {
+    const user = auth.currentUser;
     const fetchSavedBooks = async () => {
    
       const librarySnapshot = await getDocs(collection(db, "users", user.uid, "library"));
