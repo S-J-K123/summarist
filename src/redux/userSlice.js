@@ -66,9 +66,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.email = action.payload.email;
-      state.uid = action.payload.uid;
+      if (action.payload && action.payload.email) {
+        state.email = action.payload.email;
+        state.uid = action.payload.uid;
+      }
     },
+    
     signOutUser: (state, action) => {
       state.email = action.payload;
       state.uid = action.payload;

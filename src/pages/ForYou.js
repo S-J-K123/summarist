@@ -38,6 +38,7 @@ const ForYou = () => {
 
     async function getSuggestedBooks() {
       try {
+        setLoading(true);
         const { data } = await axios.get(
           "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
         );
@@ -47,7 +48,7 @@ const ForYou = () => {
       } finally {
         // Set loading to false after all data has been processed
         setTimeout(() => {
-          setLoading(false)
+          setLoading(false);
         }, 1500);
       }
     }
@@ -69,7 +70,7 @@ const ForYou = () => {
             <h1 className="for-you-title">Selected just for you</h1>
           </div>
           {loading ? (
-            <Skeleton width={"300px"} height={"300px"} />
+            <Skeleton width={"550px"} height={"200px"} background="blue" />
           ) : (
             <div className="selected-book-container">
               {selected.map((selected) => (
@@ -115,6 +116,7 @@ const ForYou = () => {
             <h1 className="for-you-title">Recommended For You</h1>
             <p>We think you'll like this</p>
           </div>
+
           <div className="books-container flex overflow-x-auto gap-[32px] mb-[32px]">
             {recommended.map((recommended) => {
               return (
@@ -123,33 +125,37 @@ const ForYou = () => {
                   key={recommended.id}
                 >
                   <Link href={`/book/${recommended.id}`}>
-                    <div className="user-card">
-                      <div className="user-card__container flex justify-center flex-col ">
-                        <img
-                          className="w-[100%] mb-2 mt-6"
-                          src={recommended.imageLink}
-                          alt="Book Cover"
-                        />
-                        <div>
-                          {" "}
-                          <p className="book-title">{recommended.title}</p>
-                        </div>
-                        <div>
-                          {" "}
-                          <p className="book-author">{recommended.author}</p>
-                        </div>
-                        <div>
-                          {" "}
-                          <p className="book-subtitle">
-                            {recommended.subTitle}
-                          </p>
-                        </div>
-                        <div>
-                          {" "}
-                          <p>{recommended.averageRating}</p>
+                    {loading ? (
+                      <Skeleton width={"170px"} height={"200px"} />
+                    ) : (
+                      <div className="user-card">
+                        <div className="user-card__container flex justify-center flex-col ">
+                          <img
+                            className="w-[100%] mb-2 mt-6"
+                            src={recommended.imageLink}
+                            alt="Book Cover"
+                          />
+                          <div>
+                            <p className="book-title">{recommended.title}</p>
+                          </div>
+                          <div>
+                            <p className="book-author">{recommended.author}</p>
+                          </div>
+                          <div>
+                            <p className="book-subtitle">
+                              {recommended.subTitle}
+                            </p>
+                          </div>
+                          <div>
+                            <p>{recommended.averageRating}</p>
+                          </div>
+                          {/* Conditionally render the book pill */}
+                          {recommended.subscriptionRequired && (
+                            <div className="book-pill">Premium</div>
+                          )}
                         </div>
                       </div>
-                    </div>
+                    )}
                   </Link>
                 </div>
               );
@@ -159,8 +165,9 @@ const ForYou = () => {
           <div className="suggested-container mb-[70px]">
             <div>
               <h1 className="for-you-title">Suggested Books</h1>
-              <p>Browse those books</p>
+              <p className="mb-[10px]">Browse those books</p>
             </div>
+
             <div className="books-container flex overflow-x-auto gap-[32px] mb-[32px]">
               {suggested.map((suggested) => {
                 return (
@@ -169,35 +176,41 @@ const ForYou = () => {
                     key={suggested.id}
                   >
                     <Link href={`/book/${suggested.id}`}>
-                      <div className="user-card">
-                        <div className="user-card__container flex justify-center flex-col items-center">
-                          <img
-                            className="w-[100%] mb-2 mt-6"
-                            src={suggested.imageLink}
-                            alt="Book Cover"
-                          />
-                          <div className="book-details-container">
-                            <div>
-                              {" "}
-                              <p className="book-title">{suggested.title}</p>
-                            </div>
-                            <div>
-                              {" "}
-                              <p className="book-author">{suggested.author}</p>
-                            </div>
-                            <div>
-                              {" "}
-                              <p className="book-subtitle">
-                                {suggested.subTitle}
-                              </p>
-                            </div>
-                            <div>
-                              {" "}
-                              <p>{suggested.averageRating}</p>
+                      {loading ? (
+                        <Skeleton width={"170px"} height={"200px"} />
+                      ) : (
+                        <div className="user-card">
+                          <div className="user-card__container flex justify-center flex-col items-center">
+                            <img
+                              className="w-[100%] mb-2 mt-6"
+                              src={suggested.imageLink}
+                              alt="Book Cover"
+                            />
+                            <div className="book-details-container">
+                              <div>
+                                <p className="book-title">{suggested.title}</p>
+                              </div>
+                              <div>
+                                <p className="book-author">
+                                  {suggested.author}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="book-subtitle">
+                                  {suggested.subTitle}
+                                </p>
+                              </div>
+                              <div>
+                                <p>{suggested.averageRating}</p>
+                              </div>
+                              {/* Conditionally render the book pill */}
+                              {suggested.subscriptionRequired && (
+                                <div className="book-pill">Premium</div>
+                              )}
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </Link>
                   </div>
                 );

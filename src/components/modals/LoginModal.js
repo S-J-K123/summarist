@@ -2,18 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import ResetModal from "./ResetModal";
 import SignUpModal from "./SignUpModal";
 import { Modal } from "@mui/material";
+import { SpinnerCircularFixed } from 'spinners-react';
 import {
   browserLocalPersistence,
-  createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
-  setPersistence,
   signInWithEmailAndPassword,
+  setPersistence,
 } from "firebase/auth";
 import { toggleLoginModal } from "@component/redux/ModalSlice";
-import { useEffect, useState } from "react";
-import { setIsUserAuth, setUser } from "@component/redux/userSlice";
-import { useRouter } from "next/router";
+import { setIsUserAuth } from "@component/redux/userSlice";
+import { useState } from "react";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import { auth } from "../../../firebase";
@@ -21,8 +18,9 @@ import { auth } from "../../../firebase";
 export default function LoginModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const isLoginUpModal = useSelector((state) => state.modals.loginModalOpen);
   const dispatch = useDispatch();
@@ -35,31 +33,44 @@ export default function LoginModal() {
   }
 
   async function handleSignIn() {
-    await setPersistence(auth, browserLocalPersistence);
-    await signInWithEmailAndPassword(auth, email, password);
-
-    dispatch(toggleLoginModal());
-    dispatch(setIsUserAuth(true));
+    setButtonClicked(true);
+    setLoading(true);
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      await signInWithEmailAndPassword(auth, email, password);
+      dispatch(toggleLoginModal());
+      dispatch(setIsUserAuth(true));
+    } catch (error) {
+      alert(error);
+    } finally {
+setLoading(false)
+      
+    }
   }
 
+  
+
   async function guestLogIn() {
+    setButtonClicked(true);
+    setLoading(true);
     try {
       await setPersistence(auth, browserLocalPersistence);
       const email = "j@gmail.com";
       const password = "password";
       await signInWithEmailAndPassword(auth, email, password);
-      // router.push("/Settings");
     } catch (error) {
       alert(error);
+    } finally {
+      setLoading(false);
+      dispatch(setIsUserAuth(true));
+      dispatch(toggleLoginModal());
+      console.log(auth.currentUser);
     }
-    dispatch(setIsUserAuth(true));
-    dispatch(toggleLoginModal());
-    console.log(auth.currentUser);
   }
 
   const handleOpenSignUpModal = () => {
     setIsSignUpOpen(true);
-    dispatch(toggleLoginModal()); // Close the loginModal
+    dispatch(toggleLoginModal());
   };
 
   return (
@@ -84,6 +95,9 @@ export default function LoginModal() {
             <h1 className="text-black flex justify-center mb-6 font-bold text-lg">
               Login to Summarist
             </h1>
+
+            {buttonClicked && loading &&  <div className="spinner"> <SpinnerCircularFixed size={40} /></div> } {/* Show spinner only after button click */}
+
             <Link href="./ForYou">
               <button
                 onClick={guestLogIn}
@@ -94,7 +108,10 @@ export default function LoginModal() {
             </Link>
 
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
-            <button className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto">
+            <button
+              className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto"
+              onClick={() => alert("Login with Google clicked")} // Placeholder function, replace with actual Google login logic
+            >
               Login with Google
             </button>
             <h1 className="text-center mt-2 text-black text-lg mb-2">or</h1>

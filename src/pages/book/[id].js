@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { doc, getDoc, deleteDoc, setDoc } from 'firebase/firestore';
-import {  getAuth } from 'firebase/auth';
-import axios from 'axios';
-import Input from '../../components/Input';
-import Link from 'next/link';
-import Skeleton from '../../components/Skeleton';
-import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { doc, getDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import axios from "axios";
+import Input from "../../components/Input";
+import Link from "next/link";
+import Skeleton from "../../components/Skeleton";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import SideBar from "@component/components/SideBar";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -28,9 +28,6 @@ import {
 } from "@component/redux/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
-
 export default function BookDetails() {
   const router = useRouter();
   const [posts, setPosts] = useState([]);
@@ -38,7 +35,7 @@ export default function BookDetails() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const user = auth.currentUser;
 
@@ -55,14 +52,14 @@ export default function BookDetails() {
     const bookId = router.query.id;
 
     if (user) {
-      await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
+      await setDoc(doc(db, "users", user.uid, "library", bookId), {
         bookId: bookId,
       });
       setIsBookMarked(true);
-      console.log('Bookmarked');
+      console.log("Bookmarked");
     } else {
       console.log(
-        'User not logged in. Open modal or handle non-logged-in user case.'
+        "User not logged in. Open modal or handle non-logged-in user case."
       );
     }
   }
@@ -78,13 +75,13 @@ export default function BookDetails() {
       const bookId = router.query.id; // Use router.query.id here
 
       if (user) {
-        await setDoc(doc(db, 'users', user.uid, 'library', bookId), {
+        await setDoc(doc(db, "users", user.uid, "library", bookId), {
           bookId: bookId,
         });
         setIsBookmarked(true);
       }
     } catch (error) {
-      console.error('Error saving book to library:', error);
+      console.error("Error saving book to library:", error);
     }
   };
 
@@ -94,12 +91,12 @@ export default function BookDetails() {
       const bookId = router.query.id; // Use router.query.id here
 
       if (user) {
-        const docRef = doc(db, 'users', user.uid, 'library', bookId);
+        const docRef = doc(db, "users", user.uid, "library", bookId);
         await deleteDoc(docRef);
         setIsBookMarked(false);
       }
     } catch (error) {
-      console.error('Error removing book from library:', error);
+      console.error("Error removing book from library:", error);
     }
   };
 
@@ -109,7 +106,7 @@ export default function BookDetails() {
       const bookId = router.query.id; // Use router.query.id here
 
       if (user) {
-        const docRef = doc(db, 'users', user.uid, 'library', bookId);
+        const docRef = doc(db, "users", user.uid, "library", bookId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setIsBookMarked(true);
@@ -118,7 +115,7 @@ export default function BookDetails() {
         }
       }
     } catch (error) {
-      console.error('Error checking if book is bookmarked:', error);
+      console.error("Error checking if book is bookmarked:", error);
     }
   };
 
@@ -131,7 +128,7 @@ export default function BookDetails() {
       setPosts(data);
       console.log(data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
@@ -142,14 +139,11 @@ export default function BookDetails() {
       checkIfBookIsBookmarked();
       bookId();
     }
-    
   }, [router.query.id]);
 
   useEffect(() => {
-    dispatch(initializeAuth()).then(() => {
-    });
+    dispatch(initializeAuth()).then(() => {});
   }, [dispatch]);
-
 
   return (
     <div>
@@ -168,56 +162,61 @@ export default function BookDetails() {
           <div className="inner-wrapper">
             <div className="inner-book">
               {loading ? (
-                <Skeleton width={300} height={300} />
+                <Skeleton width={400} height={50} />
               ) : (
                 <>
                   <div className="inner-book-title">{posts.title}</div>
+
                   <div className="inner-book-author">{posts.author}</div>
                   <div className="inner-book-subtitle">{posts.subTitle}</div>
                 </>
               )}
             </div>
           </div>
+          {loading ? (
+            <Skeleton width={400} height={20} />
+          ) : (
+            <div className="inner-book-wrapper">
+              <div className="inner-book-description-wrapper">
+                <div className="inner-book-description">
+                  <div className="inner-book-icon">
+                    <StarOutlineIcon className="star" />
+                  </div>
+                  <div className="inner-book-overall-rating">
+                    {posts.averageRating}&nbsp;
+                  </div>
+                  <div className="inner-book-total-rating">
+                    ({posts.totalRating}&nbsp;ratings)
+                  </div>
+                </div>
 
-          <div className="inner-book-wrapper">
-            <div className="inner-book-description-wrapper">
-              <div className="inner-book-description">
-                <div className="inner-book-icon">
-                  <StarOutlineIcon className="star" />
+                <div className="inner-book-description">
+                  <div className="inner-book-icon">
+                    <AccessTimeIcon className="clock" />
+                  </div>
+                  <div className="inner-book-overall-rating">
+                    {posts.totalDuration}&nbsp;
+                  </div>
                 </div>
-                <div className="inner-book-overall-rating">
-                  {posts.averageRating}&nbsp;
+                <div className="inner-book-description">
+                  <div className="inner-book-icon">
+                    <MicIcon className="clock" />
+                  </div>
+                  <div className="inner-book-overall-rating">
+                    {posts.type}&nbsp;
+                  </div>
                 </div>
-                <div className="inner-book-total-rating">
-                  ({posts.totalRating}&nbsp;ratings)
-                </div>
-              </div>
-              <div className="inner-book-description">
-                <div className="inner-book-icon">
-                  <AccessTimeIcon className="clock" />
-                </div>
-                <div className="inner-book-overall-rating">
-                  {posts.totalDuration}&nbsp;
-                </div>
-              </div>
-              <div className="inner-book-description">
-                <div className="inner-book-icon">
-                  <MicIcon className="clock" />
-                </div>
-                <div className="inner-book-overall-rating">
-                  {posts.type}&nbsp;
-                </div>
-              </div>
-              <div className="inner-book-description">
-                <div className="inner-book-icon">
-                  <LightbulbIcon className="clock" />
-                </div>
-                <div className="inner-book-overall-rating">
-                  {posts.keyIdeas}&nbsp; Key ideas
+                <div className="inner-book-description">
+                  <div className="inner-book-icon">
+                    <LightbulbIcon className="clock" />
+                  </div>
+                  <div className="inner-book-overall-rating">
+                    {posts.keyIdeas}&nbsp; Key ideas
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className="inner-book__read--btn-wrapper">
             <button className="inner-book__read--btn">
@@ -258,7 +257,7 @@ export default function BookDetails() {
               onClick={handleOpenSignUpModal}
             >
               <div className="inner-book__bookmark--icon">
-                {isBookMarked? <IoBookmark /> : <IoBookmarkOutline />}
+                {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
               </div>
               <div className="inner-book__bookmark--text">
                 {isBookMarked ? "Book saved!" : "Add title to My Library"}
@@ -266,18 +265,35 @@ export default function BookDetails() {
             </div>
           )}
 
-          <div className="inner-book__secondary--title">What's it about?</div>
-          <div className="inner-book__tags--wrapper">
-            <div className="inner-book__tag">Communication Skills</div>
-            <div className="inner-book__tag">Technology & the Future</div>
-          </div>
-          <div className="inner-book__book--description">
-            {posts.bookDescription}
-          </div>
+          {loading ? (
+            <Skeleton width={200} height={20} />
+          ) : (
+            <div className="inner-book__secondary--title">What's it about?</div>
+          )}
+          {loading ? (
+            <Skeleton width={0} height={5} />
+          ) : (
+            <div className="inner-book__tags--wrapper">
+              <div className="inner-book__tag">Communication Skills</div>
+              <div className="inner-book__tag">Technology & the Future</div>
+            </div>
+          )}
+          {loading ? (
+            <Skeleton width={500} height={300} />
+          ) : (
+            <div className="inner-book__book--description">
+              {posts.bookDescription}
+            </div>
+          )}
+
           <h2 className="inner-book__secondary--title">About the author</h2>
-          <div className="inner-book__author--description">
-            {posts.authorDescription}
-          </div>
+          {loading ? (
+            <Skeleton width={500} height={300} />
+          ) : (
+            <div className="inner-book__author--description">
+              {posts.authorDescription}
+            </div>
+          )}
         </div>
         <div className="inner-book--img-wrapper">
           {loading ? (

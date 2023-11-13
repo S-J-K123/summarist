@@ -8,6 +8,7 @@ const Skeleton = ({ width, height, borderRadius }) => {
         width,
         height,
         borderRadius,
+        background: "#2833302e", 
       }}
     ></div>
   );

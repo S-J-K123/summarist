@@ -1782,3 +1782,33 @@ flex-direction: column;
   justify-content: center;
   min-width: 180px;
 }
+
+/* .spinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+} */
+
+.spinner{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.book-pill{
+  background-color: #032b41;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 18px;
+  padding: 0 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+}
