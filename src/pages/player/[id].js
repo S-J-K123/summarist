@@ -42,6 +42,16 @@ const Audio = () => {
           <div className="input-wrapper">
             <Input />
           </div>
+          <div className="summary">
+<div className="audio__book--summary">
+<div className="audio__book--summary-title">
+<b>{audio.title}</b>
+</div>
+<div className="audio__book--summary-text">
+{audio.summary}
+</div>
+</div>
+          </div>
           {/* <div>
             {audio.title}
             {audio.summary}

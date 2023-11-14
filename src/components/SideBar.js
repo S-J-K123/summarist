@@ -24,17 +24,18 @@ export default function SideBar() {
 const user = auth.currentUser
 const email = user
 console.log(user)
-  const logUserInOut = (event) => {
-    event.preventDefault();
-    if (user) {
-      auth.signOut();
-      dispatch(setIsUserAuth(false));
-    } else {
-      dispatch(toggleLoginModal());
-   
-    }
-    console.log(auth.currentUser);
-  };
+const logUserInOut = async (event) => {
+  event.preventDefault();
+  if (user) {
+    await auth.signOut();
+    auth.onAuthStateChanged((updatedUser) => {
+      dispatch(setIsUserAuth(updatedUser ? true : false));
+      router.replace(router.asPath);
+    });
+  } else {
+    dispatch(toggleLoginModal());
+  }
+};
 
   return (
     <div

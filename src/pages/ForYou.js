@@ -84,7 +84,7 @@ const ForYou = () => {
                   <div className="book-details flex flex-row">
                     <Link href={`/book/${selected.id}`}>
                       <img
-                        className="w-[140px] mr-[53px] "
+                        className="w-[140px] mr-[20px] "
                         src={selected.imageLink}
                         alt="Book Cover"
                       />
@@ -92,17 +92,20 @@ const ForYou = () => {
                     <Link href={`/book/${selected.id}`}>
                       <div className="book-obj-wrapper">
                         <div>
-                          <p className="font-bold color-[#032b41] mb-[8px]">
+                          <p className="selected__book--title font-bold color-[#032b41] mb-[8px]">
                             {selected.title}
                           </p>
                         </div>
 
-                        <div>
+                        <div className="selected__book--author">
                           <p>{selected.author}</p>
                         </div>
-                        <div className="p-4 ml-[-33px] flex items-center">
-                          <BsFillPlayCircleFill className="w-[100%] h-[33px]" />
-                          <p className="text-sm">3 mins 23 secs</p>
+                        <div className="selected__book--duration-wrapper p-4 ml-[-33px] flex items-center">
+                          <BsFillPlayCircleFill className="selected__book--icon w-[100%] h-[33px]" />
+                          <p className=" text-sm">3 mins 23 secs</p>
+                          {/* <audio controls>
+                    <source src={selected.audioLink} type="audio/mpeg" />
+                  </audio>  */}
                         </div>
                       </div>
                     </Link>

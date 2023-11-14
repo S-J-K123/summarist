@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ResetModal from "./ResetModal";
 import SignUpModal from "./SignUpModal";
 import { Modal } from "@mui/material";
-import { SpinnerCircularFixed } from 'spinners-react';
+import { SpinnerCircularFixed } from "spinners-react";
 import {
   browserLocalPersistence,
   signInWithEmailAndPassword,
@@ -43,12 +43,9 @@ export default function LoginModal() {
     } catch (error) {
       alert(error);
     } finally {
-setLoading(false)
-      
+      setLoading(false);
     }
   }
-
-  
 
   async function guestLogIn() {
     setButtonClicked(true);
@@ -95,9 +92,13 @@ setLoading(false)
             <h1 className="text-black flex justify-center mb-6 font-bold text-lg">
               Login to Summarist
             </h1>
-
-            {buttonClicked && loading &&  <div className="spinner"> <SpinnerCircularFixed size={40} /></div> } {/* Show spinner only after button click */}
-
+            {buttonClicked && loading && (
+              <div className="spinner">
+                {" "}
+                <SpinnerCircularFixed size={30} />
+              </div>
+            )}{" "}
+            {/* Show spinner only after button click */}
             <Link href="./ForYou">
               <button
                 onClick={guestLogIn}
@@ -106,7 +107,6 @@ setLoading(false)
                 Login as a Guest
               </button>
             </Link>
-
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
             <button
               className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto"
@@ -115,7 +115,6 @@ setLoading(false)
               Login with Google
             </button>
             <h1 className="text-center mt-2 text-black text-lg mb-2">or</h1>
-
             <input
               placeholder="Email Address"
               className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"

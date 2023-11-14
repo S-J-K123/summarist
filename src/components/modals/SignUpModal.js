@@ -40,7 +40,7 @@ export default function () {
       email,
       password
     );
-    router.push("/ForYou");
+    // router.push("/ForYou");
 
     dispatch(toggleSignUpModal());
   }

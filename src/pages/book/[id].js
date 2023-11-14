@@ -78,7 +78,7 @@ export default function BookDetails() {
         await setDoc(doc(db, "users", user.uid, "library", bookId), {
           bookId: bookId,
         });
-        setIsBookmarked(true);
+        setIsBookMarked(true);
       }
     } catch (error) {
       console.error("Error saving book to library:", error);
@@ -88,7 +88,7 @@ export default function BookDetails() {
   const handleRemoveFromLibrary = async () => {
     try {
       const user = getAuth().currentUser;
-      const bookId = router.query.id; // Use router.query.id here
+      const bookId = router.query.id;
 
       if (user) {
         const docRef = doc(db, "users", user.uid, "library", bookId);
