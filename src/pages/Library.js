@@ -17,18 +17,8 @@ const Library = () => {
   const [isUserAuth, setIsUserAuth] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(setUser(user)); // Dispatch user details to Redux store
-        dispatch(initializeAuth());
-        setIsUserAuth(true);
-      } else {
-        setIsUserAuth(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [dispatch]);
+    dispatch(initializeAuth());
+  }, []);
 
   useEffect(() => {
     const fetchSavedBooks = async () => {
@@ -41,8 +31,10 @@ const Library = () => {
           ...doc.data(),
         }));
 
+        // Extract book IDs
         const bookIds = books.map((book) => book.bookId);
 
+        // Use the book IDs to make API calls for each book
         const apiCalls = bookIds.map(async (bookId) => {
           const { data } = await axios.get(
             `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${bookId}`
@@ -50,21 +42,23 @@ const Library = () => {
           return data;
         });
 
+        // Wait for all API calls to complete
         const bookDetails = await Promise.all(apiCalls);
+
         setSavedBooks(bookDetails);
       } catch (error) {
         console.error("Error fetching saved books:", error);
       }
     };
 
-    if (isUserAuth && user) {
+    if (isUserAuth) {
       fetchSavedBooks();
     }
-  }, [isUserAuth, user]);
+  }, [user, isUserAuth]);
 
-  if (!isUserAuth) {
-    return <div>Loading...</div>;
-  }
+  // if (!isUserAuth) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div>
@@ -77,7 +71,11 @@ const Library = () => {
             <div className="library__saved-books">
               <div className="library__books-link">
                 <div className="library__book_image--wrapper">
-                  <img className="library__book-img" src={book.imageLink} alt={book.title} />
+                  <img
+                    className="library__book-img"
+                    src={book.imageLink}
+                    alt={book.title}
+                  />
                 </div>
                 <div className="saved__book--title">{book.title}</div>
                 <div className="saved__book--author">{book.author}</div>
@@ -85,13 +83,17 @@ const Library = () => {
                 <div className="library__details--wrapper">
                   <div className="library__book--details">
                     <div className="library__book--details-icon">
-                      <AccessTimeIcon style={{ height: '100%', width: '100%' }} />
+                      <AccessTimeIcon
+                        style={{ height: "100%", width: "100%" }}
+                      />
                     </div>
                     <div className="library__book--details-text"></div>
                   </div>
                   <div className="library__book--details">
                     <div className="library__book--details-icon">
-                      <StarBorderIcon style={{ height: '100%', width: '100%' }} />
+                      <StarBorderIcon
+                        style={{ height: "100%", width: "100%" }}
+                      />
                     </div>
                     <div className="library__book--details-text">
                       {book.averageRating}
