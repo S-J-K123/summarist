@@ -1885,20 +1885,16 @@ align-items: center;
 .library-container{
   margin-left: 300px;
   display: flex;
-  overflow-x: auto;
   gap: 16px;
-  scroll-snap-type: mandatory;
-  scroll-snap-type: x;
   margin-bottom: 32px;
+ flex-wrap: wrap;
 }
 
 .library__saved-books {
   display: flex;
-  /* overflow-x: auto; */
-  gap: 16px;
-  scroll-snap-type: mandatory;
-  scroll-snap-type: x;
-  margin-bottom: 32px;
+width: 100%;
+gap: 16px;
+margin-bottom: 32px;
 }
 
 
@@ -1963,5 +1959,13 @@ align-items: center;
   display: flex;
   width: 16px;
   height: 16px;
+}
+.Saved__books--title{
+font-size: 22px;
+font-weight: 700;
+color: #032b41;
+margin-bottom: 16px;
+padding-left: 300px;
+padding-top: 44px;
 }
 
