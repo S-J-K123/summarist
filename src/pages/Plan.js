@@ -25,21 +25,8 @@ const Plan = () => {
   );
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userEmail = user.email;
-        const userObj = {
-          uid: user.uid,
-          email: user.email,
-        };
-        console.log(userObj);
-        dispatch(setUser(userObj));
-      } else {
-      }
-    });
-
-    return () => unsubscribe();
-  }, [user]);
+    dispatch(initializeAuth());
+  }, []);
 
   const accordionData = [
     {

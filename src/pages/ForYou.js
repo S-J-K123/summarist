@@ -76,7 +76,7 @@ const ForYou = () => {
               {selected.map((selected) => (
                 <>
                   <div className="w-[37%] color-[#032b41]" key={selected.id}>
-                    <p>{selected.subTitle}</p>
+                    <p className="selected__subtitle">{selected.subTitle}</p>
                   </div>
 
                   <div className="selected-book-line"></div>
