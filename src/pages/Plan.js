@@ -15,6 +15,7 @@ import Accordion from "../components/Accordion";
 const Plan = () => {
   const dispatch = useDispatch();
   const userIsPremium = isUserPremium();
+
   const user = auth.currentUser;
   const [selectedPlan, setSelectedPlan] = useState("yearly");
   const [yearlyDisclaimer, setYearlyDisclaimer] = useState(
@@ -23,11 +24,26 @@ const Plan = () => {
   const [monthlyDisclaimer, setMonthlyDisclaimer] = useState(
     "30-day money back guarantee, no questions asked."
   );
-
+  console.log(user)
   useEffect(() => {
     dispatch(initializeAuth());
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userEmail = user.email;
+        const userObj = {
+          uid: user.uid,
+          email: user.email,
+        };
+        console.log(userObj);
+        dispatch(setUser(userObj));
+      } else {
+      }
+    });
+    return () => unsubscribe();
+  }, [user]);
   const accordionData = [
     {
       title: "How does the free 7-day trial work?",

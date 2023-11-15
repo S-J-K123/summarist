@@ -15,20 +15,22 @@ const Audio = () => {
 
   console.log(id);
 
-  async function getAudio() {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-      );
-      setAudio(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  }
-
   useEffect(() => {
+    const getAudio = async () => {
+      try {
+        if (id) {
+          setLoading(true);
+          const { data } = await axios.get(
+            `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+          );
+          setAudio(data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching audio:", error);
+      }
+    };
+
     getAudio();
   }, [id]);
 
