@@ -4,8 +4,8 @@ import Input from "../components/Input";
 import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import axios from "axios";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const Library = () => {
   const [savedBooks, setSavedBooks] = useState([]);
@@ -15,8 +15,13 @@ const Library = () => {
 
     const fetchSavedBooks = async () => {
       try {
-        const librarySnapshot = await getDocs(collection(db, "users", user.uid, "library"));
-        const books = librarySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const librarySnapshot = await getDocs(
+          collection(db, "users", user.uid, "library")
+        );
+        const books = librarySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
         // Extract book IDs
         const bookIds = books.map((book) => book.bookId);
@@ -52,39 +57,34 @@ const Library = () => {
 
         {savedBooks.map((book) => (
           <div key={book.id}>
-            {/* <div>{book.title}</div>
-            <div> <img src={book.imageLink} className="library__img"/></div> */}
-
             <div className="library__saved-books">
-       <div className="library__books-link ">
-<div className="library__book_image--wrapper ">
-<img className="library__book-img" src={book.imageLink}/>
+              <div className="library__books-link ">
+                <div className="library__book_image--wrapper ">
+                  <img className="library__book-img" src={book.imageLink} />
+                  </div>
 
-<div className="saved__book--title">{book.title}</div>
-<div className="saved__book--author">{book.author}</div>
-<div className="saved__book--sub-title">{book.subTitle}</div>
-<div className="library__details--wrapper">
-<div className="library__book--details ">
-  <div className="library__book--details-icon">
-<AccessTimeIcon/>
-  </div>
-  <div className="library__book--details-text">
-
-  </div>
-</div>
-<div className="library__book--details ">
-  <div className="library__book--details-icon">
-<StarBorderIcon/>
-  </div>
-  <div className="library__book--details-text">
-    {book.averageRating}
-  </div>
-</div>
-</div>
-</div>
-       </div>
-       </div>
-
+                  <div className="saved__book--title">{book.title}</div>
+                  <div className="saved__book--author">{book.author}</div>
+                  <div className="saved__book--sub-title">{book.subTitle}</div>
+                  <div className="library__details--wrapper">
+                    <div className="library__book--details ">
+                      <div className="library__book--details-icon">
+                        <AccessTimeIcon />
+                      </div>
+                      <div className="library__book--details-text"></div>
+                    </div>
+                    <div className="library__book--details ">
+                      <div className="library__book--details-icon">
+                        <StarBorderIcon />
+                      </div>
+                      <div className="library__book--details-text">
+                        {book.averageRating}
+                      </div>
+                    </div>
+                  </div>
+            
+              </div>
+            </div>
           </div>
         ))}
       </div>
