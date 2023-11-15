@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getFirestore } from "firebase/firestore";
-// import { useAuthState } from "react-firebase-hooks/auth"
 import DescriptionIcon from "@mui/icons-material/Description";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import HandshakeIcon from "@mui/icons-material/Handshake";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Accordion from "../components/Accordion";
 import createMonthlyCheckoutSession from "@component/stripe/createMonthlyCheckoutSession";
 import createYearlyCheckoutSession from "@component/stripe/createYearlyCheckoutSession";
 import isUserPremium from "@component/stripe/isUserPremium";
@@ -13,11 +10,19 @@ import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeAuth, setUser } from "../redux/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Accordion from "../components/Accordion";
 
 const Plan = () => {
   const dispatch = useDispatch();
   const userIsPremium = isUserPremium();
   const user = auth.currentUser;
+  const [selectedPlan, setSelectedPlan] = useState("yearly");
+  const [yearlyDisclaimer, setYearlyDisclaimer] = useState(
+    "Cancel your trial at any time before it ends, and you won’t be charged for the yearly plan."
+  );
+  const [monthlyDisclaimer, setMonthlyDisclaimer] = useState(
+    "30-day money back guarantee, no questions asked."
+  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -59,6 +64,7 @@ const Plan = () => {
         "You will not be charged if you cancel your trial before its conclusion. While you will not have complete access to the entire Summarist library, you can still expand your knowledge with one curated book per day.",
     },
   ];
+
   return (
     <div>
       <div className="wrapper wrapper__full">
@@ -118,9 +124,18 @@ const Plan = () => {
               <div className="section__title">
                 Choose the plan that fits you
               </div>
-              <div className="plan__card plan__card--active">
+              <div
+                className={`plan__card ${
+                  selectedPlan === "yearly" ? "plan__card--active" : ""
+                }`}
+                onClick={() => {
+                  setSelectedPlan("yearly");
+                }}
+              >
                 <div className="plan__card--circle">
-                  <div className="plan__card--dot"></div>
+                  {selectedPlan === "yearly" && (
+                    <div className="plan__card--dot"></div>
+                  )}
                 </div>
                 <div className="plan__card--content">
                   <div className="plan__card--title">Premium Plus Yearly</div>
@@ -130,26 +145,22 @@ const Plan = () => {
                   </div>
                 </div>
               </div>
-              <div className="plan__card--cta">
-                <span className="btn--wrapper">
-                  <button
-                    onClick={() => createYearlyCheckoutSession(user.uid)}
-                    style={{ width: "300px" }}
-                    className="plan__btn"
-                  >
-                    Start your free 7-day trial
-                  </button>
-                </span>
-                <div className="plan__disclaimer">
-                  Cancel your trial at any time before it ends, and you won’t be
-                  charged.
-                </div>
-              </div>
               <div className="plan__card--separator">
                 <div className="plan__separator">or</div>
               </div>
-              <div className="plan__card ">
-                <div className="plan__card--circle"></div>
+              <div
+                className={`plan__card ${
+                  selectedPlan === "monthly" ? "plan__card--active" : ""
+                }`}
+                onClick={() => {
+                  setSelectedPlan("monthly");
+                }}
+              >
+                <div className="plan__card--circle">
+                  {selectedPlan === "monthly" && (
+                    <div className="plan__card--dot"></div>
+                  )}
+                </div>
                 <div className="plan__card--content">
                   <div className="plan__card--title">Premium Monthly</div>
                   <div className="plan__card--price">$9.99/month</div>
@@ -158,19 +169,30 @@ const Plan = () => {
               </div>
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
-                  <button
-                    onClick={() => createMonthlyCheckoutSession(user.uid)}
-                    style={{ width: "300px" }}
-                    className="plan__btn"
-                  >
-                    Start your first month
-                  </button>
+                  {selectedPlan === "yearly" ? (
+                    <button
+                      onClick={() => createYearlyCheckoutSession(user.uid)}
+                      style={{ width: "300px" }}
+                      className="plan__btn"
+                    >
+                      Start your free 7-day trial
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => createMonthlyCheckoutSession(user.uid)}
+                      style={{ width: "300px" }}
+                      className="plan__btn"
+                    >
+                      Start your first month
+                    </button>
+                  )}
                 </span>
                 <div className="plan__disclaimer">
                   Cancel your trial at any time before it ends, and you won’t be
                   charged.
                 </div>
               </div>
+
               <div className="accordion__container">
                 {accordionData.map(({ title, content }, index) => (
                   <Accordion key={index} title={title} content={content} />

@@ -1,4 +1,3 @@
-// Import necessary libraries and components
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import Input from "../components/Input";
@@ -7,14 +6,17 @@ import { auth, db } from "../../firebase";
 import axios from "axios";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
 import { initializeAuth, setUser } from "../redux/userSlice";
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const Library = () => {
+  const user = auth.currentUser;
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user); // Assuming you have a user slice in your Redux store
   const [savedBooks, setSavedBooks] = useState([]);
-  const [isUserAuth, setIsUserAuth] = useState(false);
+  const isUserAuth = useSelector((state) => state.user.isUserAuth);
 
   useEffect(() => {
     dispatch(initializeAuth());
@@ -65,12 +67,13 @@ const Library = () => {
       <SideBar />
       <Input />
       <div className="Saved__books--title">Saved Books</div>
-      <div className="library-container">
+      <div className="library-container ">
         {savedBooks.map((book) => (
           <div key={book.id}>
-            <div className="library__saved-books">
-              <div className="library__books-link">
-                <div className="library__book_image--wrapper">
+            <div className="library__saved-books ">
+              <div className="library__books-link hover-books">
+                <Link href={`/book/${book.id}`}>
+                <div className="library__book_image--wrapper ">
                   <img
                     className="library__book-img"
                     src={book.imageLink}
@@ -100,6 +103,7 @@ const Library = () => {
                     </div>
                   </div>
                 </div>
+                </Link>
               </div>
             </div>
           </div>
