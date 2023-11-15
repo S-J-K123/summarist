@@ -1894,7 +1894,7 @@ align-items: center;
 
 .library__saved-books {
   display: flex;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   gap: 16px;
   scroll-snap-type: mandatory;
   scroll-snap-type: x;
