@@ -1,5 +1,5 @@
 import SideBar from "@component/components/SideBar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { PiMagnifyingGlass } from "react-icons/pi";
@@ -12,6 +12,35 @@ const ForYou = () => {
   const [recommended, setRecommended] = useState([]);
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
+  const audioRef = useRef(null);
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+
+  useEffect(() => {
+    const fetchAudioDuration = async () => {
+      try {
+        const audio = new Audio(selected.audioLink);
+        audio.addEventListener("loadedmetadata", () => {
+          setAudioDuration(audio.duration);
+        });
+      } catch (error) {
+        console.error("Error fetching audio duration:", error);
+      }
+    };
+
+    fetchAudioDuration();
+  }, [selected.audioLink]);
+
+  const formatTime = (time) => {
+    if (time && !isNaN(time)) {
+      const minutes = Math.floor(time / 60);
+      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(time % 60);
+      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${formatMinutes}:${formatSeconds}`;
+    }
+    return "00:00";
+  };
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -102,7 +131,11 @@ const ForYou = () => {
                         </div>
                         <div className="selected__book--duration-wrapper p-4 ml-[-33px] flex items-center">
                           <BsFillPlayCircleFill className="selected__book--icon w-[100%] h-[33px]" />
-                          <p className=" text-sm">3 mins 23 secs</p>
+                          {/* <p className=" text-sm">3 mins 23 secs</p> */}
+                          <p className="display-none">{selected.audioLink}</p>
+                          <p className="selected__book--duration">
+                            {formatTime(audioDuration)}
+                          </p>
                           {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
                   </audio>  */}
