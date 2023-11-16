@@ -15,6 +15,7 @@ const ForYou = () => {
   const audioRef = useRef(null);
   const [timeProgress, setTimeProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     const fetchAudioDuration = async () => {
@@ -35,6 +36,13 @@ const ForYou = () => {
       fetchAudioDuration();
     }
   }, [selected.audioLink]);
+
+  const onLoadedMetadata = () => {
+    if (audioRef && audioRef.current) {
+      const seconds = audioRef.current.duration;
+      setDuration(seconds);
+    }
+  };
 
   const formatTime = (time) => {
     if (time && !isNaN(time)) {
@@ -138,9 +146,16 @@ const ForYou = () => {
                           <BsFillPlayCircleFill className="selected__book--icon w-[100%] h-[33px]" />
                           {/* <p className=" text-sm">3 mins 23 secs</p> */}
                           <p className="display-none">{selected.audioLink}</p>
-                          <p className="selected__book--duration">
+                          {/* <p className="selected__book--duration">
                             {formatTime(audioDuration)}
-                          </p>
+                          </p> */}
+                          {audioRef && (
+                            <audio
+                              src={selected?.audioLink}
+                              ref={audioRef}
+                              onLoadedMetadata={onLoadedMetadata}
+                            />
+                          )}
                           {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
                   </audio>  */}
