@@ -20,15 +20,20 @@ const ForYou = () => {
     const fetchAudioDuration = async () => {
       try {
         const audio = new Audio(selected.audioLink);
+
         audio.addEventListener("loadedmetadata", () => {
           setAudioDuration(audio.duration);
         });
+
+        audio.load();
       } catch (error) {
         console.error("Error fetching audio duration:", error);
       }
     };
 
-    fetchAudioDuration();
+    if (selected.audioLink) {
+      fetchAudioDuration();
+    }
   }, [selected.audioLink]);
 
   const formatTime = (time) => {
