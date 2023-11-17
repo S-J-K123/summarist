@@ -47,13 +47,16 @@ export default function ResetModal() {
         open={isResetModal}
         onClose={() => dispatch(toggleResetModal())}
       >
-        <div
-          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[35%]
-            flex justify-center ml-10 "
-        >
-          <div className="w-full mt-8 flex flex-col">
+    <div className="w-[70%] h-[400px] bg-white md:w-[560px] md:h-[600px] md:min-h-[270px] rounded-lg lg:w-[25%] lg:h-[35%] flex justify-center ml-10 relative">
+  <div
+    className="absolute top-4 right-4 cursor-pointer"
+    onClick={handleCloseSignUpModal}
+  >
+    <CloseIcon className="w-6" />
+  </div>
+  <div className="w-full mt-8 flex flex-col">
             <div onClick={handleCloseSignUpModal} className="cursor-pointer">
-              <CloseIcon className="w-[32px] ml-[340px] mt-[-32px]" />
+             
             </div>
             <h1 className="text-black flex justify-center mb-5 font-bold text-lg">
               Reset your password

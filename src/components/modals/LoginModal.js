@@ -81,15 +81,21 @@ export default function LoginModal() {
         is
         className="flex justify-center items-center"
       >
-        <div
-          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] md:min-h-[540px] rounded-lg lg:w-[25%] lg:h-[75%]
-              flex justify-center ml-10"
-        >
+        <div className=" relative w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] md:min-h-[540px] rounded-lg lg:w-[25%] lg:h-[75%] flex justify-center ml-10">
           <div className="w-full mt-8 flex flex-col">
-            <div onClick={handleOpenSignUpModal} className="cursor-pointer">
-              <CloseIcon className="w-[32px] fixed ml-[340px] mt-[-32px]" />
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                zIndex: "999",
+              }}
+            >
+              <div onClick={handleOpenSignUpModal} className="absolute top-4 right-4 cursor-pointer">
+                <CloseIcon className="w-6" />
+              </div>
             </div>
-            <h1 className="text-black flex justify-center mb-6 font-bold text-lg">
+            <h1 className="text-black flex justify-center mb-6 font-bold text-lg relative">
               Login to Summarist
             </h1>
             {buttonClicked && loading && (
@@ -99,14 +105,12 @@ export default function LoginModal() {
               </div>
             )}{" "}
             {/* Show spinner only after button click */}
-            <Link href="./ForYou">
-              <button
-                onClick={guestLogIn}
-                className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto ml-[38px]"
-              >
-                Login as a Guest
-              </button>
-            </Link>
+            <button
+              onClick={guestLogIn}
+              className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto"
+            >
+              Login as a Guest
+            </button>
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
             <button
               className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto"

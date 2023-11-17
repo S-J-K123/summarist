@@ -91,14 +91,17 @@ export default function () {
         open={isSignUpModal}
         onClose={() => dispatch(toggleSignUpModal())}
       >
-        <div
-          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[54%]
-            flex justify-center ml-10 "
-        >
-          <div className="w-full mt-8 flex flex-col">
-          <div onClick={handleHideSignUpModal}className="cursor-pointer">
+   <div className="w-[70%] h-fit bg-white md:w-[560px] md:min-h-[450px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[54%] flex justify-center ml-10 relative">
+  <div
+    className="absolute top-4 right-4 cursor-pointer"
+    onClick={handleHideSignUpModal}
+  >
+    <CloseIcon className="w-6" />
+  </div>
+  <div className="w-full mt-8 flex flex-col">
+          <div onClick={handleHideSignUpModal}className="absolute top-4 right-4 cursor-pointer">
 
-<CloseIcon className="w-[32px] ml-[320px] mt-[-32px]"/>
+
 </div>
             <h1 className="text-black flex justify-center mb-3 font-bold text-lg">
               Sign up to Summarist

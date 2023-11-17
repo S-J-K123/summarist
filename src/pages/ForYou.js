@@ -106,7 +106,7 @@ const ForYou = () => {
       </div>
       <div className="row">
         <div className="whole-container ml-[90px]">
-          <div>
+          <div className="selected__title">
             <h1 className="for-you-title">Selected just for you</h1>
           </div>
           {loading ? (
@@ -169,7 +169,7 @@ const ForYou = () => {
             </div>
           )}
 
-          <div>
+          <div className="recommended__title">
             <h1 className="for-you-title">Recommended For You</h1>
             <p>We think you'll like this</p>
           </div>
@@ -255,7 +255,7 @@ const ForYou = () => {
           </div>
 
           <div className="suggested-container mb-[70px]">
-            <div>
+            <div className="suggested__title">
               <h1 className="for-you-title">Suggested Books</h1>
               <p className="mb-[10px]">Browse those books</p>
             </div>
