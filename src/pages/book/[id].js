@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { doc, getDoc, deleteDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
@@ -36,8 +36,26 @@ export default function BookDetails() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const audioRefs = useRef({});
+  const [audioDurations, setAudioDurations] = useState({});
 
   const user = auth.currentUser;
+
+  const formatTime = (duration) => {
+    if (duration && !isNaN(duration)) {
+      const minutes = Math.floor(duration / 60);
+      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(duration % 60);
+      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${formatMinutes}:${formatSeconds}`;
+    }
+    return "00:00";
+  };
+
+  const onLoadedMetadata = (id) => {
+    const seconds = audioRefs.current[id]?.duration || 0;
+    setAudioDurations((prevDurations) => ({ ...prevDurations, [id]: seconds }));
+  };
 
   useEffect(() => {
     if (user) {
@@ -135,6 +153,30 @@ export default function BookDetails() {
   }
 
   useEffect(() => {
+    const fetchAudioDuration = async () => {
+      try {
+        const audio = new Audio(posts.audioLink);
+
+        audio.addEventListener("loadedmetadata", () => {
+          const seconds = audio.duration || 0;
+          setAudioDurations((prevDurations) => ({
+            ...prevDurations,
+            [posts.id]: seconds,
+          }));
+        });
+
+        audio.load();
+      } catch (error) {
+        console.error("Error fetching audio duration:", error);
+      }
+    };
+
+    if (posts.audioLink) {
+      fetchAudioDuration();
+    }
+  }, [posts.audioLink, posts.id]);
+
+  useEffect(() => {
     if (router.query.id) {
       checkIfBookIsBookmarked();
       bookId();
@@ -193,6 +235,19 @@ export default function BookDetails() {
                 <div className="inner-book-description">
                   <div className="inner-book-icon">
                     <AccessTimeIcon className="clock" />
+                  </div>
+                  {audioRefs && (
+                    <audio
+                      className="display-none"
+                      src={posts?.audioLink}
+                      ref={(audioRef) =>
+                        (audioRefs.current[posts.id] = audioRef)
+                      }
+                      onLoadedMetadata={() => onLoadedMetadata(posts.id)}
+                    />
+                  )}
+                  <div className="selected__book--duration">
+                    {formatTime(audioDurations[posts.id] || 0)}
                   </div>
                   <div className="inner-book-overall-rating">
                     {posts.totalDuration}&nbsp;

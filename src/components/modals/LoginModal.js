@@ -82,12 +82,12 @@ export default function LoginModal() {
         className="flex justify-center items-center"
       >
         <div
-          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] rounded-lg lg:w-[25%] lg:h-[75%]
+          className="w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] md:min-h-[540px] rounded-lg lg:w-[25%] lg:h-[75%]
               flex justify-center ml-10"
         >
           <div className="w-full mt-8 flex flex-col">
             <div onClick={handleOpenSignUpModal} className="cursor-pointer">
-              <CloseIcon className="w-[32px] ml-[340px] mt-[-32px]" />
+              <CloseIcon className="w-[32px] fixed ml-[340px] mt-[-32px]" />
             </div>
             <h1 className="text-black flex justify-center mb-6 font-bold text-lg">
               Login to Summarist

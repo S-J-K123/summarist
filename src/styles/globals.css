@@ -1021,10 +1021,12 @@ button:disabled {
   padding: 16px;
   position: absolute;
   /* top: 104px; */
-  right: -112px;
+  right: 373px;
   background-color: #fff;
   border: 1px solid #e1e7ea;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
+  z-index: 1;
+  margin-top: 24px;
 }
 
 .flexing {
