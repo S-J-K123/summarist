@@ -6,51 +6,20 @@ import { PiMagnifyingGlass } from "react-icons/pi";
 import Link from "next/link";
 import Input from "@component/components/Input";
 import Skeleton from "../components/Skeleton";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TableRowsIcon from '@mui/icons-material/TableRows';
 
 const ForYou = () => {
   const [selected, setSelected] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
-  const audioRefs = useRef({});
-  const [audioDurations, setAudioDurations] = useState({});
+  const navRef = useRef(null)
 
-  useEffect(() => {
-    const fetchAudioDuration = async () => {
-      try {
-        const audio = new Audio(selected.audioLink);
 
-        audio.addEventListener("loadedmetadata", () => {
-          setAudioDuration(audio.duration);
-        });
-
-        audio.load();
-      } catch (error) {
-        console.error("Error fetching audio duration:", error);
-      }
-    };
-
-    if (selected.audioLink) {
-      fetchAudioDuration();
+  const showNavbar = () => {
+    if (navRef.current) {
+      navRef.current.classList.toggle("open");
     }
-  }, [selected.audioLink]);
-
-  const formatTime = (duration) => {
-    if (duration && !isNaN(duration)) {
-      const minutes = Math.floor(duration / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(duration % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return `${formatMinutes}:${formatSeconds}`;
-    }
-    return "00:00";
-  };
-
-  const onLoadedMetadata = (id) => {
-    const seconds = audioRefs.current[id]?.duration || 0;
-    setAudioDurations((prevDurations) => ({ ...prevDurations, [id]: seconds }));
   };
 
   useEffect(() => {
@@ -100,13 +69,14 @@ const ForYou = () => {
 
   return (
     <div>
-      <SideBar />
+      <SideBar ref={navRef} />
       <div className="input-wrapper">
         <Input />
+        <button className="nav-btn" onClick={showNavbar}><TableRowsIcon/></button>
       </div>
       <div className="row">
         <div className="whole-container ml-[90px]">
-          <div className="selected__title">
+          <div>
             <h1 className="for-you-title">Selected just for you</h1>
           </div>
           {loading ? (
@@ -142,24 +112,10 @@ const ForYou = () => {
                         </div>
                         <div className="selected__book--duration-wrapper p-4 ml-[-33px] flex items-center">
                           <BsFillPlayCircleFill className="selected__book--icon w-[100%] h-[33px]" />
-                          {/* <p className=" text-sm">3 mins 23 secs</p> */}
-                          <p className="display-none">{selected.audioLink}</p>
-                          {/* <p className="selected__book--duration">
-                            {formatTime(audioDuration)}
-                          </p> */}
-                          {audioRefs && (
-                            <audio
-                              className="display-none"
-                              src={selected?.audioLink}
-                              ref={(audioRef) =>
-                                (audioRefs.current[selected.id] = audioRef)
-                              }
-                              onLoadedMetadata={() => onLoadedMetadata(selected.id)}
-                            />
-                          )}
-                          <div className="selected__book--duration">
-                            {formatTime(audioDurations[selected.id] || 0)}
-                          </div>
+                          <p className=" text-sm">3 mins 23 secs</p>
+                          {/* <audio controls>
+                    <source src={selected.audioLink} type="audio/mpeg" />
+                  </audio>  */}
                         </div>
                       </div>
                     </Link>
@@ -169,7 +125,7 @@ const ForYou = () => {
             </div>
           )}
 
-          <div className="recommended__title">
+          <div>
             <h1 className="for-you-title">Recommended For You</h1>
             <p>We think you'll like this</p>
           </div>
@@ -203,44 +159,9 @@ const ForYou = () => {
                               {recommended.subTitle}
                             </p>
                           </div>
-                          <div className="library__details--wrapper">
-                  <div className="library__book--details">
-                    <div className="library__book--details-icon">
-                      <AccessTimeIcon
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                    <div className="library__book--details-text">
-                    {audioRefs && (
-                            <audio
-                              className="display-none"
-                              src={recommended?.audioLink}
-                              ref={(audioRef) =>
-                                (audioRefs.current[recommended.id] = audioRef)
-                              }
-                              onLoadedMetadata={() => onLoadedMetadata(recommended.id)}
-                            />
-                          )}
-                          <div className="selected__book--duration">
-                            {formatTime(audioDurations[recommended.id] || 0)}
-                          </div>
-                    </div>
-                  </div>
-                  <div className="library__book--details">
-                    <div className="library__book--details-icon">
-                      <StarBorderIcon
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                    <div className="library__book--details-text">
-                      {recommended.averageRating}
-                    </div>
-                  </div>
-                </div>
-                          {/* <div>
+                          <div>
                             <p>{recommended.averageRating}</p>
-                          </div> */}
-                          
+                          </div>
                           {/* Conditionally render the book pill */}
                           {recommended.subscriptionRequired && (
                             <div className="book-pill">Premium</div>
@@ -255,7 +176,7 @@ const ForYou = () => {
           </div>
 
           <div className="suggested-container mb-[70px]">
-            <div className="suggested__title">
+            <div>
               <h1 className="for-you-title">Suggested Books</h1>
               <p className="mb-[10px]">Browse those books</p>
             </div>
@@ -292,40 +213,9 @@ const ForYou = () => {
                                   {suggested.subTitle}
                                 </p>
                               </div>
-                              <div className="library__details--wrapper">
-                  <div className="library__book--details">
-                    <div className="library__book--details-icon">
-                      <AccessTimeIcon
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                    <div className="library__book--details-text">
-                    {audioRefs && (
-                            <audio
-                              className="display-none"
-                              src={suggested?.audioLink}
-                              ref={(audioRef) =>
-                                (audioRefs.current[suggested.id] = audioRef)
-                              }
-                              onLoadedMetadata={() => onLoadedMetadata(suggested.id)}
-                            />
-                          )}
-                          <div className="selected__book--duration">
-                            {formatTime(audioDurations[suggested.id] || 0)}
-                          </div>
-                    </div>
-                  </div>
-                  <div className="library__book--details">
-                    <div className="library__book--details-icon">
-                      <StarBorderIcon
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                    <div className="library__book--details-text">
-                      {suggested.averageRating}
-                    </div>
-                  </div>
-                </div>
+                              <div>
+                                <p>{suggested.averageRating}</p>
+                              </div>
                               {/* Conditionally render the book pill */}
                               {suggested.subscriptionRequired && (
                                 <div className="book-pill">Premium</div>

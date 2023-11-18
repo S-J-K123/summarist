@@ -16,7 +16,7 @@ import LoginModal from "./modals/LoginModal";
 import SignUpModal from "./modals/SignUpModal";
 import ResetModal from "./modals/ResetModal";
 
-export default function SideBar() {
+export default function SideBar({ ref }) {
   const router = useRouter();
   const { pathname } = router;
   const dispatch = useDispatch();
@@ -39,10 +39,13 @@ const logUserInOut = async (event) => {
 
   return (
     <div
-      className={`${
-        pathname.startsWith("/player/") ? " sidebar__bump-up" : "sidebar"
-      } hidden sm:flex flex-col fixed bg-[#f7faf9] pr-6 z-[1] h-full`}
-    >
+    className={`${
+      pathname.startsWith("/player/")
+        ? "sidebar__bump-up"
+        : `sidebar ${ref && ref.current && ref.current.classList.contains('open') ? 'open' : ''}`
+    } flex-col fixed bg-[#f7faf9] pr-6 z-[1] h-full`}
+    ref={ref}
+  >
       <div className="hidden">
         <LoginModal />
         <SignUpModal />
