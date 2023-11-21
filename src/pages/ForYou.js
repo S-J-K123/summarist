@@ -14,13 +14,30 @@ const ForYou = () => {
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
   const navRef = useRef(null)
+const [showSidebar, setShowSidebar] = useState(true);
 
 
-  const showNavbar = () => {
-    if (navRef.current) {
-      navRef.current.classList.toggle("open");
-    }
+  const toggleSidebar = () => {
+      setShowSidebar(!showSidebar);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setShowSidebar(true);
+      } else {
+        setShowSidebar(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -69,10 +86,10 @@ const ForYou = () => {
 
   return (
     <div>
-      <SideBar ref={navRef} />
+      <SideBar/>
       <div className="input-wrapper">
         <Input />
-        <button className="nav-btn" onClick={showNavbar}><TableRowsIcon/></button>
+        <button className="nav-btn" onClick={toggleSidebar}><TableRowsIcon/></button>
       </div>
       <div className="row">
         <div className="whole-container ml-[90px]">
