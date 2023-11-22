@@ -7,6 +7,8 @@ import Link from "next/link";
 import Input from "@component/components/Input";
 import Skeleton from "../components/Skeleton";
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import { useDispatch, useSelector } from "react-redux";
+import { setShowSidebar } from '../redux/sidebarSlice'
 
 const ForYou = () => {
   const [selected, setSelected] = useState([]);
@@ -14,19 +16,21 @@ const ForYou = () => {
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
   const navRef = useRef(null)
-const [showSidebar, setShowSidebar] = useState(true);
+// const [showSidebar, setShowSidebar] = useState(true);
+const dispatch = useDispatch();
+const showSidebar = useSelector((state) => state.sidebar.showSidebar);
 
 
   const toggleSidebar = () => {
-      setShowSidebar(!showSidebar);
+    dispatch(setShowSidebar(!showSidebar));
   };
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setShowSidebar(true);
+        dispatch(setShowSidebar(true));
       } else {
-        setShowSidebar(false);
+        dispatch(setShowSidebar(false));
       }
     };
 
@@ -37,7 +41,7 @@ const [showSidebar, setShowSidebar] = useState(true);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     async function getSelectedBooks() {
