@@ -47,7 +47,7 @@ const Input = () => {
       <div className="search__content">
         <div className="search">
           <div className="search__input--wrapper">
-            <form>
+            <form className="input-form">
               <input
                 value={search}
                 onChange={onSearchChange}

@@ -1960,6 +1960,17 @@ flex-direction: column;
 }
 
 
+/* .input-container{
+  display: flex;
+  align-items: center;
+} */
+
+/* .input-form{
+  display: flex;
+  align-items: center;
+} */
+
+
 .nav-btn{
   visibility: hidden;
 }

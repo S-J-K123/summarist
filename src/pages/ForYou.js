@@ -6,20 +6,19 @@ import { PiMagnifyingGlass } from "react-icons/pi";
 import Link from "next/link";
 import Input from "@component/components/Input";
 import Skeleton from "../components/Skeleton";
-import TableRowsIcon from '@mui/icons-material/TableRows';
+import TableRowsIcon from "@mui/icons-material/TableRows";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowSidebar } from '../redux/sidebarSlice'
+import { setShowSidebar } from "../redux/sidebarSlice";
 
 const ForYou = () => {
   const [selected, setSelected] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navRef = useRef(null)
-// const [showSidebar, setShowSidebar] = useState(true);
-const dispatch = useDispatch();
-const showSidebar = useSelector((state) => state.sidebar.showSidebar);
-
+  const navRef = useRef(null);
+  // const [showSidebar, setShowSidebar] = useState(true);
+  const dispatch = useDispatch();
+  const showSidebar = useSelector((state) => state.sidebar.showSidebar);
 
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));
@@ -90,10 +89,12 @@ const showSidebar = useSelector((state) => state.sidebar.showSidebar);
 
   return (
     <div>
-      <SideBar/>
+      {showSidebar && <SideBar />}
       <div className="input-wrapper">
         <Input />
-        <button className="nav-btn" onClick={toggleSidebar}><TableRowsIcon/></button>
+        <button className="nav-btn" onClick={toggleSidebar}>
+          <TableRowsIcon />
+        </button>
       </div>
       <div className="row">
         <div className="whole-container ml-[90px]">
