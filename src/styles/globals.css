@@ -977,7 +977,7 @@ button:disabled {
   gap: 24px;
   max-width: 340px;
   width: 100%;
-  margin-left: 300px;
+  /* margin-left: 300px; */
 }
 
 /* .search, .search__input--wrapper {
@@ -990,6 +990,7 @@ button:disabled {
   display: flex;
   align-items: center;
   width: 100%;
+  justify-content: end;
 }
 
 .search__input--wrapper {
@@ -997,7 +998,7 @@ button:disabled {
   gap: 8px;
 }
 
-.search__input {
+/* .search__input {
   height: 40px;
   width: 100%;
   padding: 0 16px;
@@ -1006,7 +1007,7 @@ button:disabled {
   color: #042330;
   border: 2px solid #e1e7ea;
   border-radius: 8px;
-}
+} */
 
 .search__input--details {
   display: flex;
@@ -1065,10 +1066,14 @@ button:disabled {
   align-items: center;
   position: absolute;
   height: 40px;
-  right: -291px;
+  right: -290px;
   justify-content: flex-end;
-  border-left: 2px solid #e1e7ea;
+  /* border-left: 2px solid #e1e7ea; */
+  border-radius: 9px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   padding-left: 8px;
+  padding-right: 8px;
   margin-top: -40px;
   width: 41px;
 }
@@ -1412,7 +1417,6 @@ button:disabled {
   transition: all 0.3s;
 }
 
-
 .plan {
   width: 100%;
 }
@@ -1737,8 +1741,6 @@ button:disabled {
   font-weight: 500;
 }
 
-
-
 /* .top__4{
 display: flex;
 justify-content: space-between;
@@ -1939,8 +1941,6 @@ flex-direction: column;
   padding-top: 44px;
 }
 
-
-
 .sidebar__overlay--hidden {
   opacity: 0;
   pointer-events: none;
@@ -1959,43 +1959,94 @@ flex-direction: column;
   background-color: #f7faf9;
 }
 
-
-/* .input-container{
-  display: flex;
-  align-items: center;
-} */
-
-/* .input-form{
-  display: flex;
-  align-items: center;
-} */
-
-
-.nav-btn{
+.nav-btn {
   visibility: hidden;
+  /* margin-left: 42px;
+  margin-top: 24px; */
+  padding-left: 24px;
 }
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
 /*Responsive*/
+
+@media (max-width: 906px) {
+  .selected__whole--container {
+    display: flex;
+  }
+}
+
+@media (max-width: 747px) {
+  .nav-btn {
+    visibility: visible;
+    margin-left: 299px;
+    padding-top: 24px;
+    padding-right: 42px;
+  }
+}
 
 @media (max-width: 1289px) {
   .selected-book-container {
-    margin-left: 300px;
+    margin-left: 200px;
   }
 }
 
 @media (max-width: 906px) {
   .selected-book-container {
     width: 100%;
-    margin-left: 161px ;
+    margin-left: 161px;
   }
 }
-@media (max-width: 768px){
-  .selected-book-container{
+
+
+/* @media (max-width: 768px) {
+  .selected-book-container {
     width: 100%;
-    flex-direction: column;
+    
     gap: 24px;
+    margin-left: 66px;
+  }
+} */
+
+
+@media (max-width: 870px) {
+  .selected-book-container {
+    width: 100%;
+    margin-left: 0; /* Adjust margin if needed */
+  }
 }
 
+
+@media (max-width: 748px) {
+  .input-wrapper{
+   border-bottom: none;
+  }
 }
+
+
+/* @media (max-width: 636px) {
+  .selected-book-container {
+    width: 100%;
+    flex-direction: column;
+
+    margin-left: 66px;
+
+    align-items: center;
+  }
+} */
+
+
+
+/* @media (max-width: 510px) {
+  .selected-book-container {
+    flex-direction: row;
+    margin: 0 auto;
+  }
+} */
+
 
 @media (max-width: 1289px) {
   .for-you-title {
@@ -2003,76 +2054,60 @@ flex-direction: column;
   }
 }
 
-@media (max-width: 981px) {
+@media (max-width: 1293px) {
   .for-you-title {
-   display: none;
+    margin-left: 0;
+    text-align: center;
   }
 }
 
 
-@media (max-width: 768px){
+
+
+@media (max-width: 768px) {
   .selected__subtitle {
-    width: 100%;
-    font-size: 14px;
+    margin-left: 0;
+    text-align: center;
+  }
 }
-
-}
-@media (max-width: 1070px){
+@media (max-width: 1070px) {
   .books-container {
-    display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-left: 289px; 
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
+@media (max-width: 575px) {
+  .books-container {
+   flex-wrap: wrap;
+   justify-content: center;
+  }
 }
 
-@media (max-width: 1287px){
-  .suggested__title
-  .recommended.book-title
-  .selected.title {
-display: none;
+@media (max-width: 1293px) {
+  .suggested__title .recommended.book-title .selected.title {
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
-}
-
-@media (max-width: 1287px){
+@media (max-width: 1293px) {
   .recommended__subtitle {
-display: none;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
-}
-
-@media (max-width: 1287px){
+@media (max-width: 1293px) {
   .suggested__subtitle {
-display: none;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
-}
-
-
-
-@media (max-width: 1008px){
+@media (max-width: 1008px) {
   .usercard {
-width: 250px;
-}
-
-}
-
-/* @media (max-width: 900px) {
-  .sidebar {
-    display: none;
-  }
-} */
-
-
-
-@media (max-width: 900px) {
-  .nav-btn{
-    visibility: visible;
+    width: 250px;
+  
   }
 }
-
-
-
-

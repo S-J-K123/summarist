@@ -26,10 +26,10 @@ const ForYou = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
-        dispatch(setShowSidebar(true));
-      } else {
+      if (window.innerWidth <= 883) {
         dispatch(setShowSidebar(false));
+      } else {
+        dispatch(setShowSidebar(true));
       }
     };
 
@@ -91,10 +91,13 @@ const ForYou = () => {
     <div>
       {showSidebar && <SideBar />}
       <div className="input-wrapper">
-        <Input />
+        <div className="input-container">
+                  <Input />
         <button className="nav-btn" onClick={toggleSidebar}>
           <TableRowsIcon />
         </button>
+        </div>
+
       </div>
       <div className="row">
         <div className="whole-container ml-[90px]">
@@ -104,6 +107,7 @@ const ForYou = () => {
           {loading ? (
             <Skeleton width={"550px"} height={"200px"} background="blue" />
           ) : (
+            <div className="selected__whole--container">
             <div className="selected-book-container">
               {selected.map((selected) => (
                 <>
@@ -145,6 +149,7 @@ const ForYou = () => {
                 </>
               ))}
             </div>
+          </div>
           )}
 
           <div>
