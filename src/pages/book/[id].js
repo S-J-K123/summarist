@@ -19,6 +19,12 @@ import LoginModal from "../../components/modals/LoginModal";
 import SignUpModal from "../../components/modals/SignUpModal";
 import ResetModal from "../../components/modals/ResetModal";
 import { initializeAuth } from "../../redux/userSlice";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import { setShowSidebar } from "../../redux/sidebarSlice";
+
+
+
+
 
 import {
   closeSignUpModal,
@@ -40,6 +46,29 @@ export default function BookDetails() {
   const [audioDurations, setAudioDurations] = useState({});
 
   const user = auth.currentUser;
+  const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+
+  const toggleSidebar = () => {
+    dispatch(setShowSidebar(!showSidebar));
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 883) {
+        dispatch(setShowSidebar(false));
+      } else {
+        dispatch(setShowSidebar(true));
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [dispatch]);
 
   const formatTime = (duration) => {
     if (duration && !isNaN(duration)) {
@@ -189,17 +218,18 @@ export default function BookDetails() {
 
   return (
     <div>
-      <SideBar />
-      <div className="hidden">
-        <LoginModal />
-        <SignUpModal />
-        <ResetModal />
-      </div>
+     {showSidebar && <SideBar />}
       <div className="input-wrapper">
-        <Input />
+        <div className="input-container">
+                  <Input />
+        <button className="nav-btn" onClick={toggleSidebar}>
+          <TableRowsIcon />
+        </button>
+        </div>
+
       </div>
 
-      <div className="flex justify-center w-[50%] ml-[320px]">
+      <div className="details flex justify-center w-[50%] ml-[320px]">
         <div className="text-wrapper">
           <div className="inner-wrapper">
             <div className="inner-book">

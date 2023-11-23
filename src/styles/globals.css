@@ -1314,6 +1314,8 @@ button:disabled {
   background-color: white;
 }
 
+/*Settings*/
+
 .settings-row {
   max-width: 1070px;
   width: 100%;
@@ -1970,6 +1972,26 @@ flex-direction: column;
   display: flex;
   align-items: center;
 }
+
+
+/* 
+
+.details {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin-left: 320px;
+  overflow: hidden;
+}
+@media (max-width: 1169px) {
+  .details{
+width: 100%;
+  margin-left: 0; 
+  flex-direction: column; 
+  }  
+
+} */
+
 
 /*Responsive*/
 
