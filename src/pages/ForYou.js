@@ -9,6 +9,9 @@ import Skeleton from "../components/Skeleton";
 import TableRowsIcon from "@mui/icons-material/TableRows";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowSidebar } from "../redux/sidebarSlice";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const ForYou = () => {
   const [selected, setSelected] = useState([]);
@@ -19,6 +22,8 @@ const ForYou = () => {
   // const [showSidebar, setShowSidebar] = useState(true);
   const dispatch = useDispatch();
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+  const audioRefs = useRef({});
+  const [audioDurations, setAudioDurations] = useState({});
 
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));
@@ -41,6 +46,47 @@ const ForYou = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
+
+
+
+
+  const formatTime = (duration) => {
+    if (duration && !isNaN(duration)) {
+      const minutes = Math.floor(duration / 60);
+      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(duration % 60);
+      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${formatMinutes}:${formatSeconds}`;
+    }
+    return "00:00";
+  };
+
+  const onLoadedMetadata = (id) => {
+    const seconds = audioRefs.current[id]?.duration || 0;
+    setAudioDurations((prevDurations) => ({ ...prevDurations, [id]: seconds }));
+  };
+
+
+  useEffect(() => {
+    const fetchAudioDuration = async () => {
+      try {
+        const audio = new Audio(selected.audioLink);
+
+        audio.addEventListener("loadedmetadata", () => {
+          setAudioDurations(audio.duration);
+        });
+
+        audio.load();
+      } catch (error) {
+        console.error("Error fetching audio duration:", error);
+      }
+    };
+
+    if (selected.audioLink) {
+      fetchAudioDuration();
+    }
+  }, [selected.audioLink]);
+
 
   useEffect(() => {
     async function getSelectedBooks() {
@@ -138,7 +184,19 @@ const ForYou = () => {
                         </div>
                         <div className="selected__book--duration-wrapper p-4 ml-[-33px] flex items-center">
                           <BsFillPlayCircleFill className="selected__book--icon w-[100%] h-[33px]" />
-                          <p className=" text-sm">3 mins 23 secs</p>
+                          {audioRefs && (
+                    <audio
+                      className="display-none"
+                      src={selected?.audioLink}
+                      ref={(audioRef) =>
+                        (audioRefs.current[selected.id] = audioRef)
+                      }
+                      onLoadedMetadata={() => onLoadedMetadata(selected.id)}
+                    />
+                  )}
+                  <div className="selected__book--duration">
+                    {formatTime(audioDurations[selected.id] || 0)}
+                  </div>
                           {/* <audio controls>
                     <source src={selected.audioLink} type="audio/mpeg" />
                   </audio>  */}
@@ -186,9 +244,39 @@ const ForYou = () => {
                               {recommended.subTitle}
                             </p>
                           </div>
-                          <div>
-                            <p>{recommended.averageRating}</p>
-                          </div>
+                          <div className="library__details--wrapper">
+                <div className="library__book--details">
+                        <div className="library__book--details-icon">
+                          <AccessTimeIcon
+                            style={{ height: "100%", width: "100%" }}
+                          />
+                        </div>
+                        <div className="library__book--details-text"></div>
+                        {audioRefs && (
+                          <audio
+                            className="display-none"
+                            src={recommended?.audioLink}
+                            ref={(audioRef) =>
+                              (audioRefs.current[recommended.id] = audioRef)
+                            }
+                            onLoadedMetadata={() => onLoadedMetadata(recommended.id)}
+                          />
+                        )}
+                        <div className="selected__book--duration">
+                          {formatTime(audioDurations[recommended.id] || 0)}
+                        </div>
+                      </div>
+                      <div className="library__book--details">
+                        <div className="library__book--details-icon">
+                          <StarBorderIcon
+                            style={{ height: "100%", width: "100%" }}
+                          />
+                        </div>
+                        <div className="library__book--details-text">
+                          {recommended.averageRating}
+                        </div>
+                      </div>
+                      </div>
                           {/* Conditionally render the book pill */}
                           {recommended.subscriptionRequired && (
                             <div className="book-pill">Premium</div>
@@ -240,16 +328,47 @@ const ForYou = () => {
                                   {suggested.subTitle}
                                 </p>
                               </div>
-                              <div>
-                                <p>{suggested.averageRating}</p>
-                              </div>
+                              <div className="library__details--wrapper">
+                              <div className="library__book--details">
+                        <div className="library__book--details-icon">
+                          <AccessTimeIcon
+                            style={{ height: "100%", width: "100%" }}
+                          />
+                        </div>
+                        <div className="library__book--details-text"></div>
+                        {audioRefs && (
+                          <audio
+                            className="display-none"
+                            src={suggested?.audioLink}
+                            ref={(audioRef) =>
+                              (audioRefs.current[suggested.id] = audioRef)
+                            }
+                            onLoadedMetadata={() => onLoadedMetadata(suggested.id)}
+                          />
+                        )}
+                        <div className="selected__book--duration">
+                          {formatTime(audioDurations[suggested.id] || 0)}
+                        </div>
+                      </div>
+                      <div className="library__book--details">
+                        <div className="library__book--details-icon">
+                          <StarBorderIcon
+                            style={{ height: "100%", width: "100%" }}
+                          />
+                        </div>
+                        <div className="library__book--details-text">
+                          {suggested.averageRating}
+                        </div>
+                      </div>
+                      </div>
+                      </div>
                               {/* Conditionally render the book pill */}
                               {suggested.subscriptionRequired && (
                                 <div className="book-pill">Premium</div>
                               )}
                             </div>
                           </div>
-                        </div>
+                      
                       )}
                     </Link>
                   </div>

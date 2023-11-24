@@ -44,7 +44,7 @@ export default function BookDetails() {
   const dispatch = useDispatch();
   const audioRefs = useRef({});
   const [audioDurations, setAudioDurations] = useState({});
-
+  const navRef = useRef(null);
   const user = auth.currentUser;
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
 
@@ -54,7 +54,7 @@ export default function BookDetails() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 883) {
+      if (window.innerWidth <= 1157) {
         dispatch(setShowSidebar(false));
       } else {
         dispatch(setShowSidebar(true));
@@ -218,7 +218,7 @@ export default function BookDetails() {
 
   return (
     <div>
-     {showSidebar && <SideBar />}
+       {showSidebar && <SideBar />}
       <div className="input-wrapper">
         <div className="input-container">
                   <Input />
@@ -228,7 +228,7 @@ export default function BookDetails() {
         </div>
 
       </div>
-
+<div className="details__container">
       <div className="details flex justify-center w-[50%] ml-[320px]">
         <div className="text-wrapper">
           <div className="inner-wrapper">
@@ -389,6 +389,7 @@ export default function BookDetails() {
             </figure>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
