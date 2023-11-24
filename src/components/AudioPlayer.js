@@ -31,9 +31,9 @@ const AudioPlayer = ({ audio }) => {
             setTimeProgress,
           }}
         />
-        <ProgressBar
+        {/* <ProgressBar
           {...{ progressBarRef, audioRef, timeProgress, duration }}
-        />
+        /> */}
       </div>
     </div>
   );

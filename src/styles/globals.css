@@ -1118,6 +1118,35 @@ button:disabled {
   cursor: not-allowed;
 }
 
+
+
+/*Responsive player*/
+
+@media (max-width: 786px) {
+  .audio__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    margin-top: 16px;
+  }
+
+  .audio__track--wrapper {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .controls {
+    position: static;
+    transform: none;
+  }
+}
+
+ 
+
+
+
+/*End of responsive player*/
+
 .audio__wrapper {
   display: flex;
   align-items: center;
@@ -1263,6 +1292,9 @@ button:disabled {
   z-index: 1;
   color: white;
   font-size: 29px;
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
 }
 
 .play-btn {
@@ -1336,6 +1368,9 @@ button:disabled {
  .progress {
   z-index: 1;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
  .progress-input {
