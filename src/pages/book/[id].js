@@ -222,14 +222,14 @@ export default function BookDetails() {
       <div className="input-wrapper">
         <div className="input-container">
                   <Input />
-        <button className="nav-btn" onClick={toggleSidebar}>
+        <button className="nav-btn-detail" onClick={toggleSidebar}>
           <TableRowsIcon />
         </button>
         </div>
 
       </div>
 <div className="details__container">
-      <div className="details flex justify-center w-[50%] ml-[320px]">
+      <div className="details flex justify-center w-[87%] ml-[60px]">
         <div className="text-wrapper">
           <div className="inner-wrapper">
             <div className="inner-book">
@@ -382,7 +382,7 @@ export default function BookDetails() {
         </div>
         <div className="inner-book--img-wrapper">
           {loading ? (
-            <Skeleton width={300} height={300} />
+            <Skeleton width={200} height={320} />
           ) : (
             <figure className="book__image--wrapper">
               <img src={posts.imageLink} className="book__image" />
