@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -6,12 +6,27 @@ import SideBar from "@component/components/SideBar";
 import DisplayTrack from "../../components/DisplayTrack";
 import AudioPlayer from "../../components/AudioPlayer";
 import Input from "../../components/Input";
+import { setShowSidebar } from "../../redux/sidebarSlice";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import { useDispatch, useSelector } from "react-redux";
+import ProgressBar from "../../components/ProgressBar";
 
 const Audio = () => {
   const [audio, setAudio] = useState();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { id, pathname } = router.query;
+  const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+  const dispatch = useDispatch();
+  const progressBarRef = useRef();
+  const audioRef = useRef();
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const toggleSidebar = () => {
+    dispatch(setShowSidebar(!showSidebar));
+  };
+  
 
   console.log(id);
 
@@ -34,25 +49,47 @@ const Audio = () => {
     getAudio();
   }, [id]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1200) {
+        dispatch(setShowSidebar(false));
+      } else {
+        dispatch(setShowSidebar(true));
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [dispatch]);
+
   return (
     <div>
-      <SideBar />
+      {showSidebar && <SideBar />}
+
       {!loading && audio ? (
         <>
-          <DisplayTrack audio={audio} />
-          <AudioPlayer audio={audio} />
+          {/* <DisplayTrack audio={audio} />
+          <AudioPlayer audio={audio} /> */}
           <div className="input-wrapper">
-            <Input />
+            <div className="input-container">
+              <Input />
+              <button className="nav-btn-player" onClick={toggleSidebar}>
+                <TableRowsIcon />
+              </button>
+            </div>
           </div>
           <div className="summary">
-<div className="audio__book--summary">
-<div className="audio__book--summary-title">
-<b>{audio.title}</b>
-</div>
-<div className="audio__book--summary-text">
-{audio.summary}
-</div>
-</div>
+            <div className="audio__book--summary">
+              <div className="audio__book--summary-title">
+                <b>{audio.title}</b>
+              </div>
+              <div className="audio__book--summary-text">{audio.summary}</div>
+            </div>
           </div>
           {/* <div>
             {audio.title}
@@ -71,24 +108,12 @@ const Audio = () => {
               </div>
             </div>
             <div className="audio__controls--wrapper">
-              <div className="audio__controls">
-                <button className="audio__controls--btn"></button>
-                {/* <button className="audio__controls--btn audio__controls--btn-play">
-                  <PlayArrowIcon />
-                </button> */}
-                <button className="audio__controls--btn"></button>
-              </div>
+            <DisplayTrack audio={audio} />
+          <AudioPlayer audio={audio} />
+
+          <ProgressBar {...{ progressBarRef, audioRef, timeProgress, duration }}/>
             </div>
-            {/* <div className="audio__progress--wrapper">
-              <div className="audio__time"></div>
-              <input
-                type="range"
-                value="0"
-                max="292.872"
-                className="audio__progress--bar"
-              />
-              <div className="audio__time">time</div>
-            </div> */}
+  
           </div>
         </>
       ) : (

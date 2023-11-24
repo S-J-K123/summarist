@@ -222,7 +222,7 @@ export default function BookDetails() {
       <div className="input-wrapper">
         <div className="input-container">
                   <Input />
-        <button className="nav-btn-detail" onClick={toggleSidebar}>
+        <button className="nav-btn" onClick={toggleSidebar}>
           <TableRowsIcon />
         </button>
         </div>

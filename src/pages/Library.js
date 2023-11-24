@@ -171,6 +171,7 @@ const Library = () => {
                           {book.averageRating}
                         </div>
                       </div>
+                      
                     </div>
                   </Link>
                 </div>
