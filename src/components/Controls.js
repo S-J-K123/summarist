@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
-  IoPlayBackSharp,
-  IoPlayForwardSharp,
-  IoPlaySkipBackSharp,
-  IoPlaySkipForwardSharp,
   IoPlaySharp,
   IoPauseSharp,
 } from "react-icons/io5";
@@ -11,7 +7,6 @@ import Forward10Icon from "@mui/icons-material/Forward10";
 import Replay10Icon from "@mui/icons-material/Replay10";
 
 const Controls = ({
-  audio,
   audioRef,
   progressBarRef,
   duration,
@@ -38,17 +33,24 @@ const Controls = ({
   const repeat = useCallback(() => {
     const currentTime = audioRef.current.currentTime;
     setTimeProgress(currentTime);
-  
+
     if (progressBarRef.current) {
       progressBarRef.current.value = currentTime;
+      const progress = (currentTime / duration) * 100;
       progressBarRef.current.style.setProperty(
         "--range-progress",
-        `${(progressBarRef.current.value / duration) * 100}%`
+        `${progress}%`
       );
     }
-  
+
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
+
+  useEffect(() => {
+    if (duration && progressBarRef.current) {
+      progressBarRef.current.max = duration;
+    }
+  }, [duration, progressBarRef]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -69,8 +71,6 @@ const Controls = ({
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
   };
-
-
 
   return (
     <div className="controls-wrapper">

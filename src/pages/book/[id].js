@@ -22,10 +22,6 @@ import { initializeAuth } from "../../redux/userSlice";
 import TableRowsIcon from "@mui/icons-material/TableRows";
 import { setShowSidebar } from "../../redux/sidebarSlice";
 
-
-
-
-
 import {
   closeSignUpModal,
   openSignUpModal,
@@ -218,178 +214,179 @@ export default function BookDetails() {
 
   return (
     <div>
-       {showSidebar && <SideBar />}
+      {showSidebar && <SideBar />}
       <div className="input-wrapper">
         <div className="input-container">
-                  <Input />
-        <button className="nav-btn" onClick={toggleSidebar}>
-          <TableRowsIcon />
-        </button>
-        </div>
-
-      </div>
-<div className="details__container">
-      <div className="details flex justify-center w-[87%] ml-[60px]">
-        <div className="text-wrapper">
-          <div className="inner-wrapper">
-            <div className="inner-book">
-              {loading ? (
-                <Skeleton width={400} height={50} />
-              ) : (
-                <>
-                  <div className="inner-book-title">{posts.title}</div>
-
-                  <div className="inner-book-author">{posts.author}</div>
-                  <div className="inner-book-subtitle">{posts.subTitle}</div>
-                </>
-              )}
-            </div>
-          </div>
-          {loading ? (
-            <Skeleton width={400} height={20} />
-          ) : (
-            <div className="inner-book-wrapper">
-              <div className="inner-book-description-wrapper">
-                <div className="inner-book-description">
-                  <div className="inner-book-icon">
-                    <StarOutlineIcon className="star" />
-                  </div>
-                  <div className="inner-book-overall-rating">
-                    {posts.averageRating}&nbsp;
-                  </div>
-                  <div className="inner-book-total-rating">
-                    ({posts.totalRating}&nbsp;ratings)
-                  </div>
-                </div>
-
-                <div className="inner-book-description">
-                  <div className="inner-book-icon">
-                    <AccessTimeIcon className="clock" />
-                  </div>
-                  {audioRefs && (
-                    <audio
-                      className="display-none"
-                      src={posts?.audioLink}
-                      ref={(audioRef) =>
-                        (audioRefs.current[posts.id] = audioRef)
-                      }
-                      onLoadedMetadata={() => onLoadedMetadata(posts.id)}
-                    />
-                  )}
-                  <div className="selected__book--duration">
-                    {formatTime(audioDurations[posts.id] || 0)}
-                  </div>
-                  <div className="inner-book-overall-rating">
-                    {posts.totalDuration}&nbsp;
-                  </div>
-                </div>
-                <div className="inner-book-description">
-                  <div className="inner-book-icon">
-                    <MicIcon className="clock" />
-                  </div>
-                  <div className="inner-book-overall-rating">
-                    {posts.type}&nbsp;
-                  </div>
-                </div>
-                <div className="inner-book-description">
-                  <div className="inner-book-icon">
-                    <LightbulbIcon className="clock" />
-                  </div>
-                  <div className="inner-book-overall-rating">
-                    {posts.keyIdeas}&nbsp; Key ideas
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="inner-book__read--btn-wrapper">
-            <button className="inner-book__read--btn">
-              <div className="inner-book__read--icon ">
-                <ImportContactsIcon className=".inner-book__read--icon svg" />
-              </div>
-              <Link href={`/player/${router.query.id}`}>
-                <div className="inner-book__read--text">Read</div>
-              </Link>
-            </button>
-            <button className="inner-book__read--btn">
-              <div className="inner-book__read--icon ">
-                <MicIcon className=".inner-book__read--icon svg" />
-              </div>
-              <Link href={`/player/${router.query.id}`}>
-                <div className="inner-book__read--text">Listen</div>
-              </Link>
-            </button>
-          </div>
-
-          {isUserLoggedIn ? (
-            <div
-              className="inner-book__bookmark"
-              onClick={
-                isBookMarked ? handleRemoveFromLibrary : handleSaveToLibrary
-              }
-            >
-              <div className="inner-book__bookmark--icon">
-                {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
-              </div>
-              <div className="inner-book__bookmark--text">
-                {isBookMarked ? "Book saved!" : "Add title to My Library"}
-              </div>
-            </div>
-          ) : (
-            <div
-              className="inner-book__bookmark"
-              onClick={handleOpenSignUpModal}
-            >
-              <div className="inner-book__bookmark--icon">
-                {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
-              </div>
-              <div className="inner-book__bookmark--text">
-                {isBookMarked ? "Book saved!" : "Add title to My Library"}
-              </div>
-            </div>
-          )}
-
-          {loading ? (
-            <Skeleton width={200} height={20} />
-          ) : (
-            <div className="inner-book__secondary--title">What's it about?</div>
-          )}
-          {loading ? (
-            <Skeleton width={0} height={5} />
-          ) : (
-            <div className="inner-book__tags--wrapper">
-              <div className="inner-book__tag">Communication Skills</div>
-              <div className="inner-book__tag">Technology & the Future</div>
-            </div>
-          )}
-          {loading ? (
-            <Skeleton width={500} height={300} />
-          ) : (
-            <div className="inner-book__book--description">
-              {posts.bookDescription}
-            </div>
-          )}
-
-          <h2 className="inner-book__secondary--title">About the author</h2>
-          {loading ? (
-            <Skeleton width={500} height={300} />
-          ) : (
-            <div className="inner-book__author--description">
-              {posts.authorDescription}
-            </div>
-          )}
-        </div>
-        <div className="inner-book--img-wrapper">
-          {loading ? (
-            <Skeleton width={200} height={320} />
-          ) : (
-            <figure className="book__image--wrapper">
-              <img src={posts.imageLink} className="book__image" />
-            </figure>
-          )}
+          <Input />
+          <button className="nav-btn" onClick={toggleSidebar}>
+            <TableRowsIcon />
+          </button>
         </div>
       </div>
+      <div className="details__container">
+        <div className="details flex justify-center w-[87%] ml-[60px]">
+          <div className="text-wrapper">
+            <div className="inner-wrapper">
+              <div className="inner-book">
+                {loading ? (
+                  <Skeleton width={400} height={50} />
+                ) : (
+                  <>
+                    <div className="inner-book-title">{posts.title}</div>
+
+                    <div className="inner-book-author">{posts.author}</div>
+                    <div className="inner-book-subtitle">{posts.subTitle}</div>
+                  </>
+                )}
+              </div>
+            </div>
+            {loading ? (
+              <Skeleton width={400} height={20} />
+            ) : (
+              <div className="inner-book-wrapper">
+                <div className="inner-book-description-wrapper">
+                  <div className="inner-book-description">
+                    <div className="inner-book-icon">
+                      <StarOutlineIcon className="star" />
+                    </div>
+                    <div className="inner-book-overall-rating">
+                      {posts.averageRating}&nbsp;
+                    </div>
+                    <div className="inner-book-total-rating">
+                      ({posts.totalRating}&nbsp;ratings)
+                    </div>
+                  </div>
+
+                  <div className="inner-book-description">
+                    <div className="inner-book-icon">
+                      <AccessTimeIcon className="clock" />
+                    </div>
+                    {audioRefs && (
+                      <audio
+                        className="display-none"
+                        src={posts?.audioLink}
+                        ref={(audioRef) =>
+                          (audioRefs.current[posts.id] = audioRef)
+                        }
+                        onLoadedMetadata={() => onLoadedMetadata(posts.id)}
+                      />
+                    )}
+                    <div className="selected__book--duration">
+                      {formatTime(audioDurations[posts.id] || 0)}
+                    </div>
+                    <div className="inner-book-overall-rating">
+                      {posts.totalDuration}&nbsp;
+                    </div>
+                  </div>
+                  <div className="inner-book-description">
+                    <div className="inner-book-icon">
+                      <MicIcon className="clock" />
+                    </div>
+                    <div className="inner-book-overall-rating">
+                      {posts.type}&nbsp;
+                    </div>
+                  </div>
+                  <div className="inner-book-description">
+                    <div className="inner-book-icon">
+                      <LightbulbIcon className="clock" />
+                    </div>
+                    <div className="inner-book-overall-rating">
+                      {posts.keyIdeas}&nbsp; Key ideas
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="inner-book__read--btn-wrapper">
+              <button className="inner-book__read--btn">
+                <div className="inner-book__read--icon ">
+                  <ImportContactsIcon className=".inner-book__read--icon svg" />
+                </div>
+                <Link href={`/player/${router.query.id}`}>
+                  <div className="inner-book__read--text">Read</div>
+                </Link>
+              </button>
+              <button className="inner-book__read--btn">
+                <div className="inner-book__read--icon ">
+                  <MicIcon className=".inner-book__read--icon svg" />
+                </div>
+                <Link href={`/player/${router.query.id}`}>
+                  <div className="inner-book__read--text">Listen</div>
+                </Link>
+              </button>
+            </div>
+
+            {isUserLoggedIn ? (
+              <div
+                className="inner-book__bookmark"
+                onClick={
+                  isBookMarked ? handleRemoveFromLibrary : handleSaveToLibrary
+                }
+              >
+                <div className="inner-book__bookmark--icon">
+                  {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
+                </div>
+                <div className="inner-book__bookmark--text">
+                  {isBookMarked ? "Book saved!" : "Add title to My Library"}
+                </div>
+              </div>
+            ) : (
+              <div
+                className="inner-book__bookmark"
+                onClick={handleOpenSignUpModal}
+              >
+                <div className="inner-book__bookmark--icon">
+                  {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
+                </div>
+                <div className="inner-book__bookmark--text">
+                  {isBookMarked ? "Book saved!" : "Add title to My Library"}
+                </div>
+              </div>
+            )}
+
+            {loading ? (
+              <Skeleton width={200} height={20} />
+            ) : (
+              <div className="inner-book__secondary--title">
+                What's it about?
+              </div>
+            )}
+            {loading ? (
+              <Skeleton width={0} height={5} />
+            ) : (
+              <div className="inner-book__tags--wrapper">
+                <div className="inner-book__tag">Communication Skills</div>
+                <div className="inner-book__tag">Technology & the Future</div>
+              </div>
+            )}
+            {loading ? (
+              <Skeleton width={500} height={300} />
+            ) : (
+              <div className="inner-book__book--description">
+                {posts.bookDescription}
+              </div>
+            )}
+
+            <h2 className="inner-book__secondary--title">About the author</h2>
+            {loading ? (
+              <Skeleton width={500} height={300} />
+            ) : (
+              <div className="inner-book__author--description">
+                {posts.authorDescription}
+              </div>
+            )}
+          </div>
+          <div className="inner-book--img-wrapper">
+            {loading ? (
+              <Skeleton width={200} height={320} />
+            ) : (
+              <figure className="book__image--wrapper">
+                <img src={posts.imageLink} className="book__image" />
+              </figure>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

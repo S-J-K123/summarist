@@ -26,7 +26,6 @@ const Audio = () => {
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));
   };
-  
 
   console.log(id);
 
@@ -108,12 +107,8 @@ const Audio = () => {
               </div>
             </div>
             <div className="audio__controls--wrapper">
-            <DisplayTrack audio={audio} />
-          <AudioPlayer audio={audio} />
-
-          <ProgressBar {...{ progressBarRef, audioRef, timeProgress, duration }}/>
+              <AudioPlayer audio={audio} />
             </div>
-  
           </div>
         </>
       ) : (

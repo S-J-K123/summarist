@@ -52,7 +52,7 @@ export default function LoginModal() {
     setLoading(true);
     try {
       await setPersistence(auth, browserLocalPersistence);
-      const email = "j@gmail.com";
+      const email = "guest@gmail.com";
       const password = "password";
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
@@ -113,7 +113,7 @@ export default function LoginModal() {
             </button>
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
             <button
-              className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto"
+              className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto cursor-not-allowed"
               onClick={() => alert("Login with Google clicked")} // Placeholder function, replace with actual Google login logic
             >
               Login with Google

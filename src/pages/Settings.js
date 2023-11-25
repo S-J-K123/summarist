@@ -21,6 +21,9 @@ import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
 import Plan from "../pages/Plan";
 import Link from "next/link";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import { setShowSidebar } from "../redux/sidebarSlice"
+import Input from "../components/Input"
 
 const Settings = () => {
   const [email, setEmail] = useState("");
@@ -30,6 +33,29 @@ const Settings = () => {
   // const isUserAuth = useSelector((state) => state.auth.isUserAuth)
   const user = auth.currentUser;
   const subscriptionPlan = user?.subscriptionPlan
+  const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+  const toggleSidebar = () => {
+    dispatch(setShowSidebar(!showSidebar));
+  };
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 840) {
+        dispatch(setShowSidebar(false));
+      } else {
+        dispatch(setShowSidebar(true));
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [dispatch]);
   
   useEffect(() => {
     const auth = getAuth();
@@ -71,21 +97,13 @@ const Settings = () => {
 
   return (
     <div>
-      <SideBar />
-      <div className="wrapper">
-        <div className="search__content">
-          <div className="search">
-            <div className="search__input--wrapper">
-              <input
-                className="search__input"
-                placeholder="Search for books"
-                type="text"
-              />
-              <div className="search__icon">
-                <SearchIcon className="svg" />
-              </div>
-            </div>
-          </div>
+     {showSidebar && <SideBar />}
+      <div className="input-wrapper">
+        <div className="input-container">
+          <Input />
+          <button className="nav-btn-settings" onClick={toggleSidebar}>
+            <TableRowsIcon />
+          </button>
         </div>
       </div>
       {email ? (

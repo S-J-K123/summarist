@@ -11,27 +11,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeAuth, setUser } from "../redux/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Accordion from "../components/Accordion";
+import { SpinnerCircularFixed } from "spinners-react";
 
 const Plan = () => {
   const dispatch = useDispatch();
   const userIsPremium = isUserPremium();
+  const [loading, setLoading] = useState(false);
 
   const user = auth.currentUser;
   const [selectedPlan, setSelectedPlan] = useState("yearly");
   const [selectedCard, setSelectedCard] = useState(null);
 
-  // Function to handle card click
   const handleCardClick = (planType) => {
+    console.log("Clicked on card with planType:", planType);
     setSelectedPlan(planType);
     setSelectedCard(planType);
   };
+
   const [yearlyDisclaimer, setYearlyDisclaimer] = useState(
     "Cancel your trial at any time before it ends, and you won’t be charged for the yearly plan."
   );
   const [monthlyDisclaimer, setMonthlyDisclaimer] = useState(
     "30-day money back guarantee, no questions asked."
   );
-  console.log(user)
+
   useEffect(() => {
     dispatch(initializeAuth());
   }, []);
@@ -51,6 +54,7 @@ const Plan = () => {
     });
     return () => unsubscribe();
   }, [user]);
+
   const accordionData = [
     {
       title: "How does the free 7-day trial work?",
@@ -75,6 +79,24 @@ const Plan = () => {
     },
   ];
 
+  const handleTrialButtonClick = async () => {
+    try {
+      setLoading(true);
+      await createYearlyCheckoutSession(user.uid);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMonthlyButtonClick = async () => {
+    try {
+      setLoading(true);
+      await createMonthlyCheckoutSession(user.uid);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <div className="wrapper wrapper__full">
@@ -92,7 +114,8 @@ const Plan = () => {
                 <img
                   src="https://summarist.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpricing-top.4d86e93a.png&w=1080&q=75"
                   className="plan__img"
-                ></img>
+                  alt="plan-image"
+                />
               </figure>
             </div>
           </div>
@@ -118,7 +141,7 @@ const Plan = () => {
                   </figure>
                   <div className="plan__features--text">
                     <b>3 million </b>
-                    people growing with Summarist everday
+                    people growing with Summarist every day
                   </div>
                 </div>
                 <div className="plan__features">
@@ -136,7 +159,7 @@ const Plan = () => {
               </div>
               <div
                 className={`plan__card ${
-                  selectedCard === "yearly" ? "plan__card--active" : ""
+                  selectedCard === "yearly" ? "plan__card--active-green" : ""
                 }`}
                 onClick={() => handleCardClick("yearly")}
               >
@@ -158,7 +181,7 @@ const Plan = () => {
               </div>
               <div
                 className={`plan__card ${
-                  selectedCard === "monthly" ? "plan__card--active" : ""
+                  selectedCard === "monthly" ? "plan__card--active-green" : ""
                 }`}
                 onClick={() => handleCardClick("monthly")}
               >
@@ -175,9 +198,16 @@ const Plan = () => {
               </div>
               <div className="plan__card--cta">
                 <span className="btn--wrapper">
-                  {selectedPlan === "yearly" ? (
+                  {loading ? (
+                    <SpinnerCircularFixed
+                      size={40}
+                      thickness={150}
+                      speed={100}
+                      color="#007bff"
+                    />
+                  ) : selectedPlan === "yearly" ? (
                     <button
-                      onClick={() => createYearlyCheckoutSession(user.uid)}
+                      onClick={() => handleTrialButtonClick()}
                       style={{ width: "300px" }}
                       className="plan__btn"
                     >
@@ -185,7 +215,7 @@ const Plan = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => createMonthlyCheckoutSession(user.uid)}
+                      onClick={() => handleMonthlyButtonClick()}
                       style={{ width: "300px" }}
                       className="plan__btn"
                     >
@@ -209,7 +239,7 @@ const Plan = () => {
           <section id="footer">
             <div className="footer__container">
               <div className="footer__row">
-                <div className="footer__top--wrapper">
+              <div className="footer__top--wrapper">
                   <div className="footer__block">
                     <div className="footer__link--title">Actions</div>
                     <div>

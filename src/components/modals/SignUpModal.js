@@ -15,6 +15,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import CloseIcon from '@mui/icons-material/Close';
+import { SpinnerCircularFixed } from "spinners-react";
+
+
 
 
 export default function () {
@@ -25,6 +28,8 @@ export default function () {
   const auth = getAuth();
   const router = useRouter();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
 
   function hideLoginModal() {
@@ -45,12 +50,25 @@ export default function () {
     dispatch(toggleSignUpModal());
   }
 
-  const handleHideSignUpModal = () => {
+  const handleHideSignUpModal = async () => {
+    setButtonClicked(true);
+    setLoading(true);
     setIsSignUpOpen(false);
-    // Open the loginModal
-    dispatch(toggleSignUpModal())
-    
+  
+    try {
+      // Perform signup operation
+      await handleSignUp();
+    } catch (error) {
+      console.error("Signup failed:", error);
+      // Handle error if needed
+    } finally {
+      setLoading(false); // Set loading to false after signup operation completes
+      // Open the loginModal
+      dispatch(toggleSignUpModal());
+    };
   };
+  
+  
 
   //   const emailSignUp = async (e: any) => {
   //   try {
@@ -131,6 +149,11 @@ export default function () {
             >
               Sign up
             </button>
+            {buttonClicked && loading && (
+          <div className="spinner">
+          <SpinnerCircularFixed size={30} />
+        </div>
+            )}{" "}
 
             <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
               <div

@@ -67,7 +67,7 @@ export default function ResetModal() {
               className="h-10 rounded-md p-4 w-[80%] m-auto border border-black"
               type={"email"}
             />
-            <button className="bg-[#2BD97C] text-black p-2 w-[80%] m-auto">
+            <button className="bg-[#2BD97C] text-black p-2 w-[80%] m-auto cursor-not-allowed">
               Send reset password link
             </button>
 

@@ -12,6 +12,8 @@ import { initializeAuth, setUser } from "../redux/userSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Skeleton from "../components/Skeleton";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import { setShowSidebar } from "../redux/sidebarSlice"
 
 const Library = () => {
   const user = auth.currentUser;
@@ -19,6 +21,10 @@ const Library = () => {
   const [savedBooks, setSavedBooks] = useState([]);
   const isUserAuth = useSelector((state) => state.user.isUserAuth);
   const [loading, setLoading] = useState(true);
+  const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+  const toggleSidebar = () => {
+    dispatch(setShowSidebar(!showSidebar));
+  };
 
   useEffect(() => {
     dispatch(initializeAuth());
@@ -112,10 +118,37 @@ const Library = () => {
   //   return <div>Loading...</div>;
   // }
 
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 840) {
+        dispatch(setShowSidebar(false));
+      } else {
+        dispatch(setShowSidebar(true));
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [dispatch]);
+
+
   return (
     <div>
-      <SideBar />
-      <Input />
+      {showSidebar && <SideBar />}
+      <div className="input-wrapper">
+        <div className="input-container">
+          <Input />
+          <button className="nav-btn-library" onClick={toggleSidebar}>
+            <TableRowsIcon />
+          </button>
+        </div>
+      </div>
       <div className="Saved__books--title">Saved Books</div>
 
       <div className="library-container ">
