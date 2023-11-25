@@ -18,6 +18,13 @@ const Plan = () => {
 
   const user = auth.currentUser;
   const [selectedPlan, setSelectedPlan] = useState("yearly");
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  // Function to handle card click
+  const handleCardClick = (planType) => {
+    setSelectedPlan(planType);
+    setSelectedCard(planType);
+  };
   const [yearlyDisclaimer, setYearlyDisclaimer] = useState(
     "Cancel your trial at any time before it ends, and you won’t be charged for the yearly plan."
   );
@@ -129,11 +136,9 @@ const Plan = () => {
               </div>
               <div
                 className={`plan__card ${
-                  selectedPlan === "yearly" ? "plan__card--active" : ""
+                  selectedCard === "yearly" ? "plan__card--active" : ""
                 }`}
-                onClick={() => {
-                  setSelectedPlan("yearly");
-                }}
+                onClick={() => handleCardClick("yearly")}
               >
                 <div className="plan__card--circle">
                   {selectedPlan === "yearly" && (
@@ -153,11 +158,9 @@ const Plan = () => {
               </div>
               <div
                 className={`plan__card ${
-                  selectedPlan === "monthly" ? "plan__card--active" : ""
+                  selectedCard === "monthly" ? "plan__card--active" : ""
                 }`}
-                onClick={() => {
-                  setSelectedPlan("monthly");
-                }}
+                onClick={() => handleCardClick("monthly")}
               >
                 <div className="plan__card--circle">
                   {selectedPlan === "monthly" && (

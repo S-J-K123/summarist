@@ -5,7 +5,7 @@ import getStripe from "./initializeStripe";
 export default async function createMonthlyCheckoutSession(uid: string) {
   const firestore = getFirestore();
 
-  const createMonthlyCheckoutSessionRef = await addDoc(
+  const createYearlyCheckoutSessionRef = await addDoc(
     collection(firestore, "users", uid, "checkout_sessions"),
     {
       price: "price_1O7lWVIF9ewxL6S04FCbuZGz",
@@ -15,7 +15,7 @@ export default async function createMonthlyCheckoutSession(uid: string) {
   );
    
 onSnapshot(
-  doc(firestore, "users", uid, "checkout_sessions", createMonthlyCheckoutSessionRef.id),
+  doc(firestore, "users", uid, "checkout_sessions", createYearlyCheckoutSessionRef.id),
   async (snap: any) => {
     const { sessionId } = snap.data() as any;
     if(sessionId) {
