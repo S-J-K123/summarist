@@ -19,7 +19,6 @@ const ForYou = () => {
   const [suggested, setSuggested] = useState([]);
   const [loading, setLoading] = useState(true);
   const navRef = useRef(null);
-  // const [showSidebar, setShowSidebar] = useState(true);
   const dispatch = useDispatch();
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
   const audioRefs = useRef({});
