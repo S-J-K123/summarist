@@ -35,7 +35,7 @@
   border: 2px solid #e1e7ea;
   border-radius: 8px;
   margin-top: 28px;
-  margin-left: 510px;
+  /* margin-left: 510px; */
 }
 
 .selected-book-line {
@@ -1068,7 +1068,7 @@ button:disabled {
   align-items: center;
   position: absolute;
   height: 40px;
-  right: -290px;
+  right: 0px;
   justify-content: flex-end;
   /* border-left: 2px solid #e1e7ea; */
   border-radius: 9px;
@@ -1105,7 +1105,7 @@ button:disabled {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   padding: 0 32px;
   /* max-width: 1070px; */
   margin: 0 auto;
@@ -2067,13 +2067,13 @@ z-index: 1;
   }
 
 }
-@media(max-width: 1070px){
+/* @media(max-width: 1070px){
   .library__details--wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
   }
-}
+} */
 
 @media (max-width: 1227px) {
   .text-wrapper {
@@ -2108,11 +2108,16 @@ z-index: 1;
     display: flex;
   }
 }
+@media (max-width: 876px) {
+  .whole-container {
+   margin-left: 0;
+  }
+}
 
 @media (max-width: 747px) {
   .nav-btn {
     visibility: visible;
-    margin-left: 299px;
+    /* margin-left: 299px; */
     padding-top: 24px;
     padding-right: 42px;
   }
@@ -2120,7 +2125,7 @@ z-index: 1;
 @media (max-width: 1157px) {
   .nav-btn-detail {
     visibility: visible;
-    margin-left: 299px;
+    /* margin-left: 299px; */
     padding-top: 24px;
     padding-right: 42px;
   }
@@ -2128,7 +2133,7 @@ z-index: 1;
 @media (max-width: 1058px) {
   .nav-btn-player {
     visibility: visible;
-    margin-left: 299px;
+    /* margin-left: 299px; */
     padding-top: 24px;
     padding-right: 42px;
   }
@@ -2136,7 +2141,7 @@ z-index: 1;
 @media (max-width: 841px) {
   .nav-btn-library {
     visibility: visible;
-    margin-left: 299px;
+    /* margin-left: 299px; */
     padding-top: 24px;
     padding-right: 42px;
   }
@@ -2144,16 +2149,33 @@ z-index: 1;
 @media (max-width: 490px) {
   .nav-btn-settings {
     visibility: visible;
-    margin-left: 299px;
+    /* margin-left: 299px; */
     padding-top: 24px;
     padding-right: 42px;
   }
 }
 
-@media (max-width: 435px) {
+/* @media (max-width: 435px) {
   .Saved__books--title {
-font-size: 50px;
+font-size: 32px;
 margin-left: 30px;
+  }
+} */
+@media (max-width: 646px) {
+  .Saved__books--title {
+font-size: 32px;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0;
+  }
+}
+
+@media (max-width: 708px) {
+  .library-container {
+margin: 0;
+justify-content: center;
+align-items: center;
   }
 }
 
