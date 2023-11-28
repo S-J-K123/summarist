@@ -224,7 +224,7 @@ export default function BookDetails() {
         </div>
       </div>
       <div className="details__container">
-        <div className="details flex justify-center w-[87%] ml-[60px]">
+        <div className="details flex justify-center w-[87%]">
           <div className="text-wrapper">
             <div className="inner-wrapper">
               <div className="inner-book">
