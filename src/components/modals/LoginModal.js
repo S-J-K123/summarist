@@ -19,7 +19,11 @@ export default function LoginModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+
+  // Manage loading state independently for each button
+  const [loadingGuest, setLoadingGuest] = useState(false);
+  const [loadingLogin, setLoadingLogin] = useState(false);
+
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const isLoginUpModal = useSelector((state) => state.modals.loginModalOpen);
@@ -34,7 +38,7 @@ export default function LoginModal() {
 
   async function handleSignIn() {
     setButtonClicked(true);
-    setLoading(true);
+    setLoadingLogin(true); // Set loading state for the login button
     try {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, email, password);
@@ -43,13 +47,13 @@ export default function LoginModal() {
     } catch (error) {
       alert(error);
     } finally {
-      setLoading(false);
+      setLoadingLogin(false);
     }
   }
 
   async function guestLogIn() {
     setButtonClicked(true);
-    setLoading(true);
+    setLoadingGuest(true); // Set loading state for the guest login button
     try {
       await setPersistence(auth, browserLocalPersistence);
       const email = "guest@gmail.com";
@@ -58,7 +62,7 @@ export default function LoginModal() {
     } catch (error) {
       alert(error);
     } finally {
-      setLoading(false);
+      setLoadingGuest(false);
       dispatch(setIsUserAuth(true));
       dispatch(toggleLoginModal());
       console.log(auth.currentUser);
@@ -81,7 +85,7 @@ export default function LoginModal() {
         is
         className="flex justify-center items-center"
       >
-        <div className=" relative w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] md:min-h-[540px] rounded-lg lg:w-[25%] lg:h-[75%] flex justify-center ml-10">
+        <div className="relative w-[70%] h-fit bg-white md:w-[560px] md:h-[600px] md:min-h-[540px] rounded-lg lg:w-[25%] lg:h-[75%] flex justify-center ml-10">
           <div className="w-full mt-8 flex flex-col">
             <div
               style={{
@@ -98,23 +102,24 @@ export default function LoginModal() {
             <h1 className="text-black flex justify-center mb-6 font-bold text-lg relative">
               Login to Summarist
             </h1>
-            {buttonClicked && loading && (
-              <div className="spinner">
-                {" "}
-                <SpinnerCircularFixed size={30} />
-              </div>
-            )}{" "}
-            {/* Show spinner only after button click */}
             <button
               onClick={guestLogIn}
-              className="bg-[#3A579D] text-white font-bold p-2 w-[80%] m-auto"
+              className={`bg-[#3A579D] text-white font-bold p-2 ${
+                loadingGuest ? 'h-[35px] w-[80%]' : 'w-[80%]'
+              } m-auto relative`}
             >
-              Login as a Guest
+              {buttonClicked && loadingGuest ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <SpinnerCircularFixed size={30} thickness={150} speed={100} />
+                </div>
+              ) : (
+                "Login as a Guest"
+              )}
             </button>
             <h1 className="text-center mt-2 text-black text-lg">or</h1>
             <button
               className="bg-[#4285f4] text-white font-bold p-2 mt-3 w-[80%] m-auto cursor-not-allowed"
-              onClick={() => alert("Login with Google clicked")} // Placeholder function, replace with actual Google login logic
+              onClick={() => alert("Login with Google clicked")}
             >
               Login with Google
             </button>
@@ -133,9 +138,17 @@ export default function LoginModal() {
             />
             <button
               onClick={handleSignIn}
-              className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto"
+              className={`bg-[#2BD97C] text-white font-bold p-2 mt-4 ${
+                loadingLogin ? 'h-[35px] w-[80%]' : 'w-[80%]'
+              } m-auto relative`}
             >
-              Login
+              {buttonClicked && loadingLogin ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <SpinnerCircularFixed size={30} thickness={150} speed={100} />
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
             <ResetModal />
             <SignUpModal />

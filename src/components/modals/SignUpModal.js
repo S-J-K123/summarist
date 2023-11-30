@@ -28,7 +28,7 @@ export default function () {
   const auth = getAuth();
   const router = useRouter();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
 
 
@@ -50,11 +50,14 @@ export default function () {
     dispatch(toggleSignUpModal());
   }
 
+
+
+
   const handleHideSignUpModal = async () => {
     setButtonClicked(true);
     setLoading(true);
     setIsSignUpOpen(false);
-  
+
     try {
       // Perform signup operation
       await handleSignUp();
@@ -65,7 +68,7 @@ export default function () {
       setLoading(false); // Set loading to false after signup operation completes
       // Open the loginModal
       dispatch(toggleSignUpModal());
-    };
+    }
   };
   
   
@@ -78,6 +81,7 @@ export default function () {
   //
   const handleCloseSignUpModal = () => {
     setIsSignUpOpen(false);
+    setLoading(false); // Reset loading state when hiding the modal
     dispatch(toggleLoginModal()); // Open the loginModal
   };
   useEffect(() => {
@@ -149,11 +153,11 @@ export default function () {
             >
               Sign up
             </button>
-            {buttonClicked && loading && (
-          <div className="spinner">
-          <SpinnerCircularFixed size={30} />
-        </div>
-            )}{" "}
+                   {loading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <SpinnerCircularFixed size={30} thickness={150} speed={100} />
+              </div>
+            )}
 
             <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
               <div
