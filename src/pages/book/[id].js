@@ -43,6 +43,7 @@ export default function BookDetails() {
   const navRef = useRef(null);
   const user = auth.currentUser;
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
+  
 
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));

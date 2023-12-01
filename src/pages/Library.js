@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import SideBar from "../components/SideBar";
 import Input from "../components/Input";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc,  deleteDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import axios from "axios";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -111,12 +111,35 @@ const Library = () => {
 
     if (isUserAuth) {
       fetchSavedBooks();
+    } else {
+      setSavedBooks([]);
     }
   }, [user, isUserAuth]);
 
   // if (!isUserAuth) {
   //   return <div>Loading...</div>;
   // }
+
+
+   const deleteBook = async (userId, bookId) => {
+    const bookRef = doc(db, "users", userId, "library", bookId);
+  
+    try {
+      await deleteDoc(bookRef);
+      console.log("Book deleted successfully");
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+  const handleDeleteBook = async (bookId) => {
+    try {
+      await deleteBook(user.uid, bookId);
+      // Optionally, update the state or perform any other actions
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+
 
 
   useEffect(() => {
@@ -207,6 +230,11 @@ const Library = () => {
                       
                     </div>
                   </Link>
+
+                  <button onClick={() => handleDeleteBook(book.id)}>
+                    Delete Book
+                  </button>
+
                 </div>
               )}
             </div>
