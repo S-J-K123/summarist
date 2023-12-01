@@ -1,6 +1,6 @@
 import React from "react";
 
-const Skeleton = ({ width, height, borderRadius }) => {
+const Skeleton = ({ width, height, borderRadius, marginBottom , marginRight}) => {
   return (
     <div
       className="skeleton-box"
@@ -9,6 +9,8 @@ const Skeleton = ({ width, height, borderRadius }) => {
         height,
         borderRadius,
         background: "#2833302e", 
+        marginBottom: "20px",
+        marginRight: "16px"
       }}
     ></div>
   );

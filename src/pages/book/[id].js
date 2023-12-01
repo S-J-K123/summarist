@@ -229,7 +229,12 @@ export default function BookDetails() {
             <div className="inner-wrapper">
               <div className="inner-book">
                 {loading ? (
-                  <Skeleton width={400} height={50} />
+                  <>
+                   <Skeleton width={180} height={50} />
+                   <Skeleton width={200} height={30} />
+                   <Skeleton width={200} height={30} />
+                  </>
+                 
                 ) : (
                   <>
                     <div className="inner-book-title">{posts.title}</div>
@@ -241,7 +246,17 @@ export default function BookDetails() {
               </div>
             </div>
             {loading ? (
-              <Skeleton width={400} height={20} />
+                  <>
+                  <div className="flex skeleton-row">
+                    <Skeleton width={100} height={30} marginBottom={10}/>
+                    <Skeleton width={100} height={30} marginBottom={10} />
+                  </div>
+                  <div className="flex skeleton-row">
+                    <Skeleton width={100} height={30} marginBottom={10} />
+                    <Skeleton width={100} height={30} marginBottom={10} />
+                  </div>
+                </>
+            
             ) : (
               <div className="inner-book-wrapper">
                 <div className="inner-book-description-wrapper">
@@ -299,6 +314,10 @@ export default function BookDetails() {
             )}
 
             <div className="inner-book__read--btn-wrapper">
+            {
+                loading ? (
+<Skeleton width={120} height={40}/>
+                ) : (
               <button className="inner-book__read--btn">
                 <div className="inner-book__read--icon ">
                   <ImportContactsIcon className=".inner-book__read--icon svg" />
@@ -307,7 +326,13 @@ export default function BookDetails() {
                   <div className="inner-book__read--text">Read</div>
                 </Link>
               </button>
-              <button className="inner-book__read--btn">
+                  )
+                }
+              {
+                loading ? (
+<Skeleton width={120} height={40}/>
+                ) : (
+                   <button className="inner-book__read--btn">
                 <div className="inner-book__read--icon ">
                   <MicIcon className=".inner-book__read--icon svg" />
                 </div>
@@ -315,38 +340,54 @@ export default function BookDetails() {
                   <div className="inner-book__read--text">Listen</div>
                 </Link>
               </button>
+                )
+              }
+             
             </div>
+            {loading ? (
+  <div className="inner-book__bookmark">
+    <div className="inner-book__bookmark--icon">
+      {/* <Skeleton width={100} height={30}  /> */}
+    </div>
+    <div className="inner-book__bookmark--text">
+      <Skeleton width={120} height={30} />
+    </div>
+  </div>
+) : (
+  <>
+    {isUserLoggedIn ? (
+      <div
+        className="inner-book__bookmark"
+        onClick={
+          isBookMarked ? handleRemoveFromLibrary : handleSaveToLibrary
+        }
+      >
+        <div className="inner-book__bookmark--icon">
+          {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
+        </div>
+        <div className="inner-book__bookmark--text">
+          {isBookMarked ? "Book saved!" : "Add title to My Library"}
+        </div>
+      </div>
+    ) : (
+      <div
+        className="inner-book__bookmark"
+        onClick={handleOpenSignUpModal}
+      >
+        <div className="inner-book__bookmark--icon">
+          {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
+        </div>
+        <div className="inner-book__bookmark--text">
+          {isBookMarked ? "Book saved!" : "Add title to My Library"}
+        </div>
+      </div>
+    )}
+  </>
+)}
 
-            {isUserLoggedIn ? (
-              <div
-                className="inner-book__bookmark"
-                onClick={
-                  isBookMarked ? handleRemoveFromLibrary : handleSaveToLibrary
-                }
-              >
-                <div className="inner-book__bookmark--icon">
-                  {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
-                </div>
-                <div className="inner-book__bookmark--text">
-                  {isBookMarked ? "Book saved!" : "Add title to My Library"}
-                </div>
-              </div>
-            ) : (
-              <div
-                className="inner-book__bookmark"
-                onClick={handleOpenSignUpModal}
-              >
-                <div className="inner-book__bookmark--icon">
-                  {isBookMarked ? <IoBookmark /> : <IoBookmarkOutline />}
-                </div>
-                <div className="inner-book__bookmark--text">
-                  {isBookMarked ? "Book saved!" : "Add title to My Library"}
-                </div>
-              </div>
-            )}
 
             {loading ? (
-              <Skeleton width={200} height={20} />
+              <Skeleton width={100} height={30} />
             ) : (
               <div className="inner-book__secondary--title">
                 What's it about?
@@ -361,16 +402,38 @@ export default function BookDetails() {
               </div>
             )}
             {loading ? (
-              <Skeleton width={500} height={300} />
+              <>
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+                <Skeleton width={600} height={20} />
+              </>
+        
+
             ) : (
               <div className="inner-book__book--description">
                 {posts.bookDescription}
               </div>
             )}
-
-            <h2 className="inner-book__secondary--title">About the author</h2>
+{
+  loading ? (
+    <Skeleton width={100} height={30}/>
+  ) : (
+       <h2 className="inner-book__secondary--title">About the author</h2>
+  )
+}
+         
             {loading ? (
-              <Skeleton width={500} height={300} />
+                  <>
+                  <Skeleton width={600} height={20} />
+                 <Skeleton width={600} height={20} />
+                 <Skeleton width={600} height={20} />
+                 <Skeleton width={600} height={20} />
+                 <Skeleton width={600} height={20} />
+                 </>
             ) : (
               <div className="inner-book__author--description">
                 {posts.authorDescription}
@@ -379,7 +442,7 @@ export default function BookDetails() {
           </div>
           <div className="inner-book--img-wrapper">
             {loading ? (
-              <Skeleton width={200} height={320} />
+              <Skeleton width={250} height={320} />
             ) : (
               <figure className="book__image--wrapper">
                 <img src={posts.imageLink} className="book__image" />
