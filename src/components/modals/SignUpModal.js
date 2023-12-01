@@ -40,6 +40,8 @@ export default function () {
   }
 
   async function handleSignUp() {
+    setButtonClicked(true);
+    setLoading(true)
     const userCredientials = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -48,15 +50,16 @@ export default function () {
     // router.push("/ForYou");
 
     dispatch(toggleSignUpModal());
+    setLoading(false)
   }
 
 
 
 
   const handleHideSignUpModal = async () => {
-    setButtonClicked(true);
-    setLoading(true);
-    setIsSignUpOpen(false);
+    // setButtonClicked(true);
+    // setLoading(true);
+    // setIsSignUpOpen(false);
 
     try {
       // Perform signup operation
@@ -65,7 +68,7 @@ export default function () {
       console.error("Signup failed:", error);
       // Handle error if needed
     } finally {
-      setLoading(false); // Set loading to false after signup operation completes
+    
       // Open the loginModal
       dispatch(toggleSignUpModal());
     }
@@ -147,17 +150,22 @@ export default function () {
               type={"password"}
             />
 
-            <button
-              onClick={handleSignUp}
-              className="bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] m-auto"
-            >
-              Sign up
-            </button>
-                   {loading && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <SpinnerCircularFixed size={30} thickness={150} speed={100} />
-              </div>
-            )}
+<button
+  onClick={handleSignUp}
+  className={`bg-[#2BD97C] text-white font-bold p-2 mt-8 w-[80%] h-[35px] m-auto relative ${
+    loading ? 'loading-button' : ''
+  }`}
+>
+  {buttonClicked && loading ? (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <SpinnerCircularFixed size={30} thickness={150} speed={100} />
+    </div>
+  ) : (
+    "Sign up"
+  )}
+</button>
+
+          
 
             <div className="bg-[#F1F6F4] flex justify-center mt-6 p-1.5">
               <div
@@ -165,6 +173,7 @@ export default function () {
                 className="text-[#116BE9] flex justify-center mb-1 bg-[#F1F6F4] pb-2 cursor-pointer"
               >
                 Already have an account?
+            
               </div>
             </div>
           </div>
