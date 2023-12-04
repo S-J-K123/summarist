@@ -121,16 +121,21 @@ const Library = () => {
   // }
 
 
-   const deleteBook = async (userId, bookId) => {
-    const bookRef = doc(db, "users", userId, "library", bookId);
-  
+  const deleteBook = async (bookId) => {
     try {
-      await deleteDoc(bookRef);
-      console.log("Book deleted successfully");
+      if (user) {
+        const bookRef = doc(db, "users", user.uid, "library", bookId);
+        await deleteDoc(bookRef);
+        console.log("Book deleted successfully");
+        const updatedBooks = savedBooks.filter((book) => book.id !== bookId);
+        setSavedBooks(updatedBooks);
+      }
     } catch (error) {
       console.error("Error deleting book:", error);
     }
   };
+
+
   const handleDeleteBook = async (bookId) => {
     try {
       await deleteBook(user.uid, bookId);
@@ -231,7 +236,7 @@ const Library = () => {
                     </div>
                   </Link>
 
-                  <button onClick={() => handleDeleteBook(book.id)}>
+                  <button onClick={() => deleteBook(book.id)}>
                     Delete Book
                   </button>
 

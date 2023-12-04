@@ -23,6 +23,13 @@ const ForYou = () => {
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
   const audioRefs = useRef({});
   const [audioDurations, setAudioDurations] = useState({});
+  
+
+
+
+
+
+
 
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));

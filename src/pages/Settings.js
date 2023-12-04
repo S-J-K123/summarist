@@ -32,7 +32,8 @@ const Settings = () => {
   const router = useRouter();
   // const isUserAuth = useSelector((state) => state.auth.isUserAuth)
   const user = auth.currentUser;
-  const subscriptionPlan = user?.subscriptionPlan
+  const subscriptionPlan = user?.subscriptionPlan;
+  const [premiumStatus, setPremiumStatus] = useState(false)
   const showSidebar = useSelector((state) => state.sidebar.showSidebar);
   const toggleSidebar = () => {
     dispatch(setShowSidebar(!showSidebar));
@@ -94,6 +95,31 @@ const Settings = () => {
   //     router.push("/"); // Navigate to the home page if not on the settings page
   //   }
   // };
+
+
+  useEffect(() => {
+    const fetchPremiumStatus = async () => {
+      try {
+        if (user) {
+          const tokenResult = await user.getIdTokenResult();
+          console.log(tokenResult);
+
+          if (
+            tokenResult.claims &&
+            tokenResult.claims.stripeRole === "premium"
+          ) {
+            setPremiumStatus(true);
+          } else {
+            setPremiumStatus(false);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching premium status:", error);
+      }
+    };
+
+    fetchPremiumStatus();
+  }, [user]);
 
   return (
     <div>
