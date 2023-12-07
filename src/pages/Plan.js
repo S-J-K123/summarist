@@ -84,16 +84,22 @@ const Plan = () => {
       setLoading(true);
       await createYearlyCheckoutSession(user.uid);
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+     }, 5000);
     }
   };
 
   const handleMonthlyButtonClick = async () => {
     try {
+      setTimeout
       setLoading(true);
       await createMonthlyCheckoutSession(user.uid);
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+         setLoading(false);
+      }, 5000);
+     
     }
   };
 
