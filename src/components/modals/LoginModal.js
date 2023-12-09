@@ -19,6 +19,7 @@ export default function LoginModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Manage loading state independently for each button
   const [loadingGuest, setLoadingGuest] = useState(false);
@@ -45,12 +46,11 @@ export default function LoginModal() {
       dispatch(toggleLoginModal());
       dispatch(setIsUserAuth(true));
     } catch (error) {
-      alert(error);
+      setErrorMessage("Invalid email or password"); // Set error message
     } finally {
       setLoadingLogin(false);
     }
   }
-
   async function guestLogIn() {
     setButtonClicked(true);
     setLoadingGuest(true); // Set loading state for the guest login button
@@ -95,7 +95,10 @@ export default function LoginModal() {
                 zIndex: "999",
               }}
             >
-              <div onClick={handleOpenSignUpModal} className="absolute top-4 right-4 cursor-pointer">
+              <div
+                onClick={handleOpenSignUpModal}
+                className="absolute top-4 right-4 cursor-pointer"
+              >
                 <CloseIcon className="w-6" />
               </div>
             </div>
@@ -105,7 +108,7 @@ export default function LoginModal() {
             <button
               onClick={guestLogIn}
               className={`bg-[#3A579D] text-white font-bold p-2 ${
-                loadingGuest ? 'h-[35px] w-[80%]' : 'w-[80%]'
+                loadingGuest ? "h-[35px] w-[80%]" : "w-[80%]"
               } m-auto relative`}
             >
               {buttonClicked && loadingGuest ? (
@@ -136,10 +139,11 @@ export default function LoginModal() {
               type={"password"}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <div className="text-red-500 text-center mt-2">{errorMessage}</div>
             <button
               onClick={handleSignIn}
               className={`bg-[#2BD97C] text-white font-bold p-2 mt-4 ${
-                loadingLogin ? 'h-[35px] w-[80%]' : 'w-[80%]'
+                loadingLogin ? "h-[35px] w-[80%]" : "w-[80%]"
               } m-auto relative`}
             >
               {buttonClicked && loadingLogin ? (

@@ -16,3 +16,4 @@ export default function userPremiumStatus(user: User) {
   }, [user]);
   return premiumStatus;
 }
+
